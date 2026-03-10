@@ -243,6 +243,99 @@ _{more aspects and alternatives to be added}_
 
 _{Explain here how the data archiving feature will be implemented}_
 
+### Updated Find Command
+
+#### Implementation
+
+The substring matching feature for the `find` command enables users to search for persons by matching any substring of their name, rather than requiring full word matches.
+
+**Design Overview:**
+
+The implementation involves three key components:
+
+1. **StringUtil** - Low-level utility class that handles substring matching
+   * Added new method: `containsSubstringIgnoreCase(String sentence, String substring)`
+   * Performs case-insensitive substring matching using `String.toLowerCase().contains()`
+   * Validates input (null checks, empty string checks)
+
+2. **NameContainsKeywordsPredicate** - Filtering logic at the model layer
+   * Modified `test()` method to use `containsSubstringIgnoreCase()` instead of `containsWordIgnoreCase()`
+   * Maintains OR search logic: multiple keywords return matching persons if ANY keyword matches
+   * Each keyword can now be a substring
+
+3. **FindCommand** - Command execution layer
+   * No changes needed; works seamlessly with the updated predicate
+   * Reports filtered results to the UI through the model
+
+**Sequence Flow:**
+
+```
+User Input: "find Jo"
+    ↓
+FindCommandParser → Creates FindCommand with NameContainsKeywordsPredicate(["Jo"])
+    ↓
+FindCommand.execute() → Calls Model.updateFilteredPersonList(predicate)
+    ↓
+NameContainsKeywordsPredicate.test(person) → For each person, checks:
+    - containsSubstringIgnoreCase("John Doe", "Jo") → true
+    - containsSubstringIgnoreCase("Jane Smith", "Jo") → false
+    ↓
+Result: "John Doe" is included in filtered list
+```
+
+**Key Changes:**
+
+| Component | Old Behavior | New Behavior |
+|-----------|-------------|-------------|
+| `StringUtil` | `containsWordIgnoreCase()` only (full word match) | Added `containsSubstringIgnoreCase()` (substring match) |
+| `NameContainsKeywordsPredicate` | Uses `containsWordIgnoreCase()` | Uses `containsSubstringIgnoreCase()` |
+| Find Command | `find Han` does not match `Hans` | `find Han` matches `Hans` |
+
+#### Design Considerations:
+
+**Aspect: Substring vs. Full Word Matching**
+
+* **Alternative 1 (current choice):** Substring matching (case-insensitive)
+  * Pros: More flexible search; users can find names with partial input (e.g., "Jo" matches "John", "Johnny", "Johanna")
+  * Pros: Simple to implement using `String.contains()`
+  * Cons: May return more results than user expects (e.g., "e" matches many names)
+
+* **Alternative 2:** Full word matching only (previous implementation)
+  * Pros: More precise results; reduces false positives
+  * Cons: Less flexible; requires exact word matches
+  * Cons: Inconvenient for users who don't remember exact names
+
+* **Alternative 3:** Regex-based matching
+  * Pros: Maximum flexibility for complex patterns
+  * Cons: Higher complexity; potential performance overhead
+  * Cons: Poor user experience for non-technical users
+
+**Aspect: Search Scope**
+
+* **Current choice:** Search only in person names
+  * Pros: Focused search; reduces noise
+  * Cons: Cannot search by address, phone, email, etc.
+  * Future enhancement: Support for multi-field search
+
+#### Testing Strategy:
+
+Comprehensive test coverage includes:
+
+1. **Unit Tests** (`StringUtilTest`):
+   - Substring at prefix, middle, suffix positions
+   - Case-insensitive matching
+   - Empty string and null validation
+
+2. **Component Tests** (`NameContainsKeywordsPredicateTest`):
+   - Single and multiple substring keywords
+   - OR logic verification
+   - Non-matching scenarios
+
+3. **Integration Tests** (`FindCommandTest`, `FindCommandParserTest`):
+   - End-to-end find command execution
+   - Parser correctly handles substring keywords
+   - Multiple persons matching different keywords
+
 
 --------------------------------------------------------------------------------------------------------------------
 
