@@ -7,6 +7,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.logic.CliHistory;
+import seedu.address.logic.commands.CommandDatabase;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -21,6 +22,7 @@ public class CommandBox extends UiPart<Region> {
 
     private final CommandExecutor commandExecutor;
     private final CliHistory commandHistory;
+    private final CommandDatabase commandBase = new CommandDatabase();
 
     @FXML
     private TextField commandTextField;
@@ -34,6 +36,16 @@ public class CommandBox extends UiPart<Region> {
         this.commandHistory = history;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+
+        // adds listener to handle Tab keypress for autocomplete
+        commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.TAB) {
+                commandTextField.setText(commandBase.completePrefix(commandTextField.getText()));
+                commandTextField.end();
+
+                event.consume();
+            }
+        });
     }
 
     /**
@@ -61,9 +73,11 @@ public class CommandBox extends UiPart<Region> {
     private void handleKeyPress(KeyEvent event) {
         if (event.getCode() == KeyCode.UP) {
             commandTextField.setText(commandHistory.getPrevious());
+            commandTextField.end();
             event.consume();
         } else if (event.getCode() == KeyCode.DOWN) {
             commandTextField.setText(commandHistory.getNext());
+            commandTextField.end();
             event.consume();
         }
     }

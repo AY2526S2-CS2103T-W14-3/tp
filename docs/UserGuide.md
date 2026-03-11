@@ -171,6 +171,18 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 
 _Details coming soon ..._
 
+## CLI Features
+
+### Accessing input history
+During the session, your inputs are recorded.
+
+While clicked into the CLI, press the `UP arrow` and `DOWN arrow` to navigate through previously entered commands.
+
+E.g. After entering `list` and `find John` into the CLI, pressing `UP` while in the empty text field will write `find John` in the textbox. Pressing `UP` again will replace it with `list`.
+
+### Autocomplete
+_Details coming soon ..._
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
