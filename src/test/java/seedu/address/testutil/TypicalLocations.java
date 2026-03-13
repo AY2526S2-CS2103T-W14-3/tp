@@ -28,21 +28,28 @@ public class TypicalLocations {
     public static final Location ALICE = new LocationBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("94351253")
+            .withVisitDate("2026-01-07")
             .withTags("friends").build();
     public static final Location BENSON = new LocationBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432")
+            .withVisitDate("2026-03-15")
             .withTags("owesMoney", "friends").build();
     public static final Location CARL = new LocationBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withEmail("heinz@example.com").withAddress("wall street").build();
+            .withEmail("heinz@example.com")
+            .withVisitDate("2026-04-09").withAddress("wall street").build();
     public static final Location DANIEL = new LocationBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends").build();
+            .withEmail("cornelia@example.com")
+            .withVisitDate("2026-08-10").withAddress("10th street").withTags("friends").build();
     public static final Location ELLE = new LocationBuilder().withName("Elle Meyer").withPhone("9482224")
-            .withEmail("werner@example.com").withAddress("michegan ave").build();
+            .withEmail("werner@example.com").withAddress("michegan ave")
+            .withVisitDate("2026-05-17").build();
     public static final Location FIONA = new LocationBuilder().withName("Fiona Kunz").withPhone("9482427")
-            .withEmail("lydia@example.com").withAddress("little tokyo").build();
+            .withEmail("lydia@example.com").withAddress("little tokyo")
+            .withVisitDate("2026-10-17").build();
     public static final Location GEORGE = new LocationBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@example.com").withAddress("4th street").build();
+            .withEmail("anna@example.com").withAddress("4th street")
+            .withVisitDate("2026-12-31").build();
 
     // Manually added
     public static final Location HOON = new LocationBuilder().withName("Hoon Meier").withPhone("8482424")

@@ -37,6 +37,7 @@ public class EditLocationDescriptorBuilder {
         descriptor.setPhone(location.getPhone());
         descriptor.setEmail(location.getEmail());
         descriptor.setAddress(location.getAddress());
+        descriptor.setVisitDate(location.getVisitDate());
         descriptor.setTags(location.getTags());
     }
 
