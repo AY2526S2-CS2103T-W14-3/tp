@@ -112,35 +112,40 @@ Examples:
 
 ### Locating locations by name: `find`
 
-Finds locations whose names contain any of the given keywords.
+Finds locations whose names contain any of the given keywords using substring matching.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case-insensitive. e.g `thai` will match `Thai Pavilion`
+* The order of the keywords does not matter. e.g. `Restaurant Marina` will match `Marina Restaurant`
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* **Substring matching is supported** e.g. `Han` will match `Hanjin Hotel`, `Jo` will match `John's Brewery`, `ast` will match `Castle Museum`
 * Locations matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+  e.g. `Ramen Cafe` will return `Ramen House`, `Cafe Mocha`
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
+* `find Restaurant` returns all locations with "Restaurant" in the name
+* `find Han` returns `Hanjin Hotel`, `Hana Sushi` (substring prefix match)
+* `find otel` returns all locations with "otel" such as `Hotel Marina`, `Motel Inn` (substring middle match)
+* `find Marina Beach` returns `Marina Park`, `Beach Resort`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find Ramen` returns all ramen restaurants (substring matching without requiring full word)
 
 ### Deleting a location : `delete`
 
-Deletes the specified location from the address book.
+Deletes one or more specified locations from the address book.
 
-Format: `delete INDEX`
+Format: `delete INDEX [MORE_INDEXES]...`
 
-* Deletes the location at the specified `INDEX`.
-* The index refers to the index number shown in the displayed location list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* Deletes the locations at the specified `INDEX` values.
+* The indices refer to the index numbers shown in the displayed location list.
+* Every index **must be a positive integer** 1, 2, 3, …​
+* Duplicate indices are not allowed.
 
 Examples:
 * `list` followed by `delete 2` deletes the 2nd location in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st location in the results of the `find` command.
+* `find Sentosa` followed by `delete 1` deletes the 1st location in the results of the `find` command.
+* `list` followed by `delete 1 3 5` deletes the 1st, 3rd, and 5th locations in the address book.
 
 ### Clearing all entries : `clear`
 
@@ -171,6 +176,22 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 
 _Details coming soon ..._
 
+## CLI Features
+
+### Accessing input history
+During the session, your inputs are recorded.
+
+While clicked into the CLI, press the `UP arrow` and `DOWN arrow` to navigate through previously entered commands.
+
+E.g. After entering `list` and `find John` into the CLI, pressing `UP` while in the empty text field will write `find John` in the textbox. Pressing `UP` again will replace it with `list`.
+
+### Autocomplete
+While having text in the command line, the user can press the `Tab` key to attempt to autocomplete the command.
+
+The autocomplete uses the current text to find matching command keywords, while being case-insensitive. If there are multiple matches, it fills to the longest shared prefix.
+
+E.g. `A` autocompletes into `add`, while `e` autocompletes to `e`, since both `exit` and `edit` are possible commands.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
@@ -193,7 +214,7 @@ Action | Format, Examples
 --------|------------------
 **Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
+**Delete** | `delete INDEX [MORE_INDEXES]...`<br> e.g., `delete 3` or `delete 1 2 3`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`

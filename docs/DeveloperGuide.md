@@ -243,6 +243,101 @@ _{more aspects and alternatives to be added}_
 
 _{Explain here how the data archiving feature will be implemented}_
 
+### Substring Matching in Find Command
+
+#### Implementation
+
+The substring matching feature for the `find` command enables users to search for locations by matching any substring of their name, rather than requiring full word matches.
+
+**Design Overview:**
+
+The implementation involves three key components:
+
+1. **StringUtil** - Low-level utility class that handles substring matching
+   * Added new method: `containsSubstringIgnoreCase(String sentence, String substring)`
+   * Performs case-insensitive substring matching using `String.toLowerCase().contains()`
+   * Validates input (null checks, empty string checks)
+
+2. **NameContainsKeywordsPredicate** - Filtering logic at the model layer
+   * Located in `seedu.address.model.location` package (works with `Location` objects)
+   * Modified `test()` method to use `containsSubstringIgnoreCase()` instead of `containsWordIgnoreCase()`
+   * Maintains OR search logic: multiple keywords return matching locations if ANY keyword matches
+   * Each keyword can now be a substring
+
+3. **FindCommand** - Command execution layer
+   * No changes needed; works seamlessly with the updated predicate
+   * Reports filtered results to the UI through the model's filtered location list
+
+**Sequence Flow:**
+
+```
+User Input: "find Jo"
+    ↓
+FindCommandParser → Creates FindCommand with NameContainsKeywordsPredicate(["Jo"])
+    ↓
+FindCommand.execute() → Calls Model.updateFilteredLocationList(predicate)
+    ↓
+NameContainsKeywordsPredicate.test(location) → For each location, checks:
+    - containsSubstringIgnoreCase("John Restaurant", "Jo") → true ✓
+    - containsSubstringIgnoreCase("Jane Cafe", "Jo") → false ✗
+    ↓
+Result: "John Restaurant" is included in filtered list
+```
+
+**Key Changes:**
+
+| Component | Old Behavior | New Behavior |
+|-----------|-------------|-------------|
+| `StringUtil` | `containsWordIgnoreCase()` only (full word match) | Added `containsSubstringIgnoreCase()` (substring match) |
+| `NameContainsKeywordsPredicate` | Uses `containsWordIgnoreCase()` with `Person` | Uses `containsSubstringIgnoreCase()` with `Location` |
+| Find Command | `find Hans` ❌ matches partial name | `find Han` ✓ matches `Hans Restaurant` |
+
+#### Design Considerations:
+
+**Aspect: Substring vs. Full Word Matching**
+
+* **Alternative 1 (current choice):** Substring matching (case-insensitive)
+  * Pros: More flexible search; users can find locations with partial input (e.g., "Jo" matches "John's Restaurant", "Johan's Cafe", "Joust Arena")
+  * Pros: Simple to implement using `String.contains()`
+  * Cons: May return more results than user expects (e.g., "e" matches many location names)
+
+* **Alternative 2:** Full word matching only (previous implementation)
+  * Pros: More precise results; reduces false positives
+  * Cons: Less flexible; requires exact word matches
+  * Cons: Inconvenient for users who don't remember exact names
+
+* **Alternative 3:** Regex-based matching
+  * Pros: Maximum flexibility for complex patterns
+  * Cons: Higher complexity; potential performance overhead
+  * Cons: Poor user experience for non-technical users
+
+**Aspect: Search Scope**
+
+* **Current choice:** Search only in location names
+  * Pros: Focused search; reduces noise
+  * Cons: Cannot search by address, phone, email, tags, etc.
+  * Future enhancement: Support for multi-field search (e.g., find by category tags, address, or distance)
+
+#### Testing Strategy:
+
+Comprehensive test coverage includes:
+
+1. **Unit Tests** (`StringUtilTest`):
+   - Substring at prefix, middle, suffix positions
+   - Case-insensitive matching
+   - Empty string and null validation
+
+2. **Component Tests** (`NameContainsKeywordsPredicateTest`):
+   - Single and multiple substring keywords
+   - OR logic verification
+   - Non-matching scenarios
+
+3. **Integration Tests** (`FindCommandTest`, `FindCommandParserTest`):
+   - End-to-end find command execution
+   - Parser correctly handles substring keywords
+   - Multiple locations matching different keywords
+   - Test data includes typical locations (e.g., restaurants, attractions, hotels)
+
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -427,14 +522,14 @@ Use case ends.
 
 ---
 
-**Use case: Delete a location**
+**Use case: Delete one or more locations**
 
 **MSS**
 
 1. User requests to list locations.
 2. AddressMe shows a list of locations.
-3. User requests to delete a specific location.
-4. AddressMe deletes the location.
+3. User requests to delete one or more locations.
+4. AddressMe deletes all specified locations.
 Use case ends.
 
 **Extensions**
@@ -444,14 +539,20 @@ Use case ends.
 Use case ends.
 
 
-* 3a. The given index is invalid.
+* 3a. At least one given index is invalid.
 * 3a1. AddressMe shows an error message.
 * 3a2. AddressMe lists the available locations again.
 Use case resumes at step 2.
 
 
-* 4a. An error occurs during deletion.
-* 4a1. AddressMe informs the user that the deletion failed.
+* 3b. Duplicate indices are provided (e.g., `delete 2 2`).
+* 3b1. AddressMe shows an error message.
+* 3b2. AddressMe lists the available locations again.
+Use case resumes at step 2.
+
+
+* 5a. An error occurs during deletion.
+* 5a1. AddressMe informs the user that the deletion failed.
 Use case ends.
 
 
@@ -463,8 +564,8 @@ Use case ends.
 
 ### Non-Functional Requirements
 
-1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed. 
-2. Should be able to hold up to 1000 locations without a noticeable sluggishness in performance for typical usage. 
+1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
+2. Should be able to hold up to 1000 locations without a noticeable sluggishness in performance for typical usage.
 3. Should display a list of 1000 entries under 0.5 seconds when searching or using the “list” command.
 4. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 5. Should work well for standard screen resolutions 1920x1080 and higher of 100% and 125% scales.
@@ -516,10 +617,13 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `delete 1`<br>
       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
+   1. Test case: `delete 1 2`<br>
+      Expected: First and second contacts are deleted from the list. Number of deleted locations shown in the status message. Timestamp in the status bar is updated.
+
    1. Test case: `delete 0`<br>
       Expected: No location is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect delete commands to try: `delete`, `delete x`, `delete 1 1`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
