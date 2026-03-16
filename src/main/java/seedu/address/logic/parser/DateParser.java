@@ -92,6 +92,15 @@ public class DateParser {
     }
 
     /**
+     * Converts a LocalDate into the output format of dates to users
+     * @param date LocalDate to convert
+     * @return a String to be printed to user that looks good
+     */
+    public static String dateToPrettyString(LocalDate date) {
+        return date.format(DateTimeFormatter.ofPattern("d MMM, yy"));
+    }
+
+    /**
      * Converts a day and month to LocalDate by taking the nearest upcoming date
      * @param today LocalDate representing the current date
      * @param dateParsed MonthDay to be converted

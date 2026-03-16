@@ -141,4 +141,12 @@ public class DateParserTest {
         assertThrows(IllegalValueException.class, ()->DateParser.parse("32/01/2026"));
         assertThrows(IllegalValueException.class, ()->DateParser.parse("12-30-2026"));
     }
+
+    @Test
+    void testPrettyStringConversion() {
+        assertEquals("5 May, 26", DateParser.dateToPrettyString(LocalDate.of(2026, 5, 5)));
+        assertEquals("31 Oct, 26", DateParser.dateToPrettyString(LocalDate.of(2026, 10, 31)));
+        assertEquals("14 Mar, 27", DateParser.dateToPrettyString(LocalDate.of(2027, 3, 14)));
+    }
+
 }
