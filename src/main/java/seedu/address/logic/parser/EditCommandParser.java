@@ -19,6 +19,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditLocationDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.location.VisitDate;
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -44,7 +45,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_DATE, PREFIX_ADDRESS);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
 
         EditLocationDescriptor editLocationDescriptor = new EditLocationDescriptor();
 
@@ -60,9 +61,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             editLocationDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
         }
-        if (argMultimap.getValue(PREFIX_DATE).isPresent()) {
-            editLocationDescriptor.setVisitDate(ParserUtil.parseVisitDate(argMultimap.getValue(PREFIX_DATE).get()));
-        }
+        parseVisitDatesForEdit(argMultimap.getAllValues(PREFIX_DATE))
+                .ifPresent(editLocationDescriptor::setVisitDates);
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editLocationDescriptor::setTags);
 
         if (!editLocationDescriptor.isAnyFieldEdited()) {
@@ -85,6 +85,21 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
+    }
+
+    private Optional<Set<VisitDate>> parseVisitDatesForEdit(Collection<String> visitDates) throws ParseException {
+        assert visitDates != null;
+
+        if (visitDates.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Collection<String> visitDateSet =
+                visitDates.size() == 1 && visitDates.contains("")
+                        ? Collections.emptySet()
+                        : visitDates;
+
+        return Optional.of(ParserUtil.parseVisitDates(visitDateSet));
     }
 
 }

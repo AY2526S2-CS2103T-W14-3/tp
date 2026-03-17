@@ -45,7 +45,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_DATE + "DATE]"
+            + "[" + PREFIX_DATE + "DATE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -103,10 +103,10 @@ public class EditCommand extends Command {
         Phone updatedPhone = editLocationDescriptor.getPhone().orElse(locationToEdit.getPhone());
         Email updatedEmail = editLocationDescriptor.getEmail().orElse(locationToEdit.getEmail());
         Address updatedAddress = editLocationDescriptor.getAddress().orElse(locationToEdit.getAddress());
-        VisitDate updatedVisitDate = editLocationDescriptor.getVisitDate().orElse(locationToEdit.getVisitDate());
+        Set<VisitDate> updatedVisitDates = editLocationDescriptor.getVisitDates().orElse(locationToEdit.getVisitDates());
         Set<Tag> updatedTags = editLocationDescriptor.getTags().orElse(locationToEdit.getTags());
 
-        return new Location(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedVisitDate, updatedTags);
+        return new Location(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedVisitDates, updatedTags);
     }
 
     @Override
@@ -142,7 +142,7 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private Address address;
-        private VisitDate visitDate;
+        private Set<VisitDate> visitDates;
         private Set<Tag> tags;
 
         public EditLocationDescriptor() {}
@@ -156,7 +156,7 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
-            setVisitDate(toCopy.visitDate);
+            setVisitDates(toCopy.visitDates);
             setTags(toCopy.tags);
         }
 
@@ -164,7 +164,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, visitDate, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, visitDates, tags);
         }
 
         public void setName(Name name) {
@@ -199,12 +199,12 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
-        public void setVisitDate(VisitDate visitDate) {
-            this.visitDate = visitDate;
+        public void setVisitDates(Set<VisitDate> visitDates) {
+            this.visitDates = (visitDates != null) ? new HashSet<>(visitDates) : null;
         }
 
-        public Optional<VisitDate> getVisitDate() {
-            return Optional.ofNullable(visitDate);
+        public Optional<Set<VisitDate>> getVisitDates() {
+            return (visitDates != null) ? Optional.of(Collections.unmodifiableSet(visitDates)) : Optional.empty();
         }
 
         /**
@@ -240,7 +240,7 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditLocationDescriptor.phone)
                     && Objects.equals(email, otherEditLocationDescriptor.email)
                     && Objects.equals(address, otherEditLocationDescriptor.address)
-                    && Objects.equals(visitDate, otherEditLocationDescriptor.visitDate)
+                    && Objects.equals(visitDates, otherEditLocationDescriptor.visitDates)
                     && Objects.equals(tags, otherEditLocationDescriptor.tags);
         }
 
@@ -251,7 +251,7 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
-                    .add("visitDate", visitDate)
+                    .add("visitDates", visitDates)
                     .add("tags", tags)
                     .toString();
         }

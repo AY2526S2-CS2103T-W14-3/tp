@@ -69,8 +69,8 @@ public class EditLocationDescriptorTest {
                 + editLocationDescriptor.getName().orElse(null) + ", phone="
                 + editLocationDescriptor.getPhone().orElse(null) + ", email="
                 + editLocationDescriptor.getEmail().orElse(null) + ", address="
-                + editLocationDescriptor.getAddress().orElse(null) + ", visitDate="
-                + editLocationDescriptor.getVisitDate().orElse(null) + ", tags="
+                + editLocationDescriptor.getAddress().orElse(null) + ", visitDates="
+                + editLocationDescriptor.getVisitDates().orElse(null) + ", tags="
                 + editLocationDescriptor.getTags().orElse(null) + "}";
         assertEquals(expected, editLocationDescriptor.toString());
     }

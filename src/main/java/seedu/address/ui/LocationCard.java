@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.Comparator;
+import java.util.stream.Collectors;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -8,6 +9,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.location.Location;
+import seedu.address.model.location.VisitDate;
 
 /**
  * An UI component that displays information of a {@code Location}.
@@ -54,7 +56,10 @@ public class LocationCard extends UiPart<Region> {
         phone.setText(location.getPhone().value);
         address.setText(location.getAddress().value);
         email.setText(location.getEmail().value);
-        visitDate.setText(location.getVisitDate().toString());
+        visitDate.setText(location.getVisitDates().stream()
+                .map(VisitDate::toString)
+                .sorted()
+                .collect(Collectors.joining(", ")));
         location.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
