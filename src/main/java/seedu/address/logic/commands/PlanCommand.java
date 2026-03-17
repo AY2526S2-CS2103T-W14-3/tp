@@ -1,0 +1,90 @@
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+
+import java.time.LocalDate;
+
+import seedu.address.logic.parser.DateParser;
+import seedu.address.model.Model;
+
+
+/**
+ * Lists all locations in the address book to the user.
+ */
+public class PlanCommand extends Command {
+
+    public static final String COMMAND_WORD = "plan";
+
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays the all the locations listed for a "
+            + "specific date in the right window.\n"
+            + "Parameters: DATE\n"
+            + "Example: " + COMMAND_WORD + " 13/3/26";
+
+    public static final String MESSAGE_ARGUMENTS = "Date: %1$s";
+
+    public static final String MESSAGE_DISPLAY_SUCCESS = "Displaying date: %1$s";
+
+    public static final String MESSAGE_CLEAR_SUCCESS = "Cleared planner display.";
+
+    private final LocalDate date;
+
+    /**
+     * @param date date to compile and display. Can be null
+     */
+    public PlanCommand(LocalDate date) {
+        this.date = date;
+    }
+
+    @Override
+    public CommandResult execute(Model model) {
+        requireNonNull(model);
+        return new CommandResult(generateSuccessMessage(date != null));
+        /*
+        model.updatePlannerLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
+
+        List<Person> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        Person personToEdit = lastShownList.get(index.getZeroBased());
+        Person editedPerson = new Person(
+                personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getAddress(), remark, personToEdit.getTags());
+
+        model.setPerson(personToEdit, editedPerson);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+         */
+    }
+
+    /**
+     * Generates a command execution success message based on whether
+     * the view is to display a date or to clear
+     * @param isDisplaying true if a date is loaded in
+     */
+    private String generateSuccessMessage(boolean isDisplaying) {
+        return isDisplaying ? String.format(MESSAGE_DISPLAY_SUCCESS, DateParser.dateToPrettyString(date))
+                : MESSAGE_CLEAR_SUCCESS;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof PlanCommand)) {
+            return false;
+        }
+
+        PlanCommand e = (PlanCommand) other;
+        if (date == null) {
+            return e.date == null;
+        }
+
+        return date.equals(e.date);
+    }
+}
