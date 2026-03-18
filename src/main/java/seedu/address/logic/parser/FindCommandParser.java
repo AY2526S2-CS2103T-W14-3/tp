@@ -52,26 +52,41 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         // 2. Parse Name prefixes (AND logic)
         for (String nameKeyword : argMultimap.getAllValues(PREFIX_NAME)) {
+            if (nameKeyword.trim().isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            }
             predicates.add(new NameContainsKeywordsPredicate(Collections.singletonList(nameKeyword)));
         }
 
         // 3. Parse Phone prefixes (AND logic)
         for (String phoneKeyword : argMultimap.getAllValues(PREFIX_PHONE)) {
+            if (phoneKeyword.trim().isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            }
             predicates.add(new PhoneContainsKeywordsPredicate(phoneKeyword));
         }
 
         // 4. Parse Email prefixes (AND logic)
         for (String emailKeyword : argMultimap.getAllValues(PREFIX_EMAIL)) {
+            if (emailKeyword.trim().isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            }
             predicates.add(new EmailContainsKeywordsPredicate(emailKeyword));
         }
 
         // 5. Parse Addresses (AND logic)
         for (String addressKeyword : argMultimap.getAllValues(PREFIX_ADDRESS)) {
+            if (addressKeyword.trim().isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            }
             predicates.add(new AddressContainsKeywordsPredicate(addressKeyword));
         }
 
         // 6. Parse Tags (AND logic for multiple tags)
         for (String tagKeyword : argMultimap.getAllValues(PREFIX_TAG)) {
+            if (tagKeyword.trim().isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            }
             predicates.add(new TagMatchesKeywordsPredicate(tagKeyword));
         }
 
