@@ -3,10 +3,14 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_ADD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_REMOVE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_ADD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_REMOVE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LOCATIONS;
 
 import java.util.Collections;
@@ -45,11 +49,18 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_DATE + "DATE] "
+            + "[" + PREFIX_DATE + "DATE]... "
             + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_DATE_ADD + "DATE]... "
+            + "[" + PREFIX_DATE_REMOVE + "DATE]... "
+            + "[" + PREFIX_TAG_ADD + "TAG]... "
+            + "[" + PREFIX_TAG_REMOVE + "TAG]...\n"
+            + "Note: t/ or d/ replaces all; t+/t-/ and d+/d-/ adds and removes (do not mix).\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_EMAIL + "alicepauline@gmail.com "
+            + PREFIX_DATE_ADD + "2026-01-01 "
+            + PREFIX_DATE_REMOVE + "2026-02-01";
 
     public static final String MESSAGE_EDIT_LOCATION_SUCCESS = "Edited Location: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
