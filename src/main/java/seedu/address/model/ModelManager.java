@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -13,6 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.location.Location;
+import seedu.address.model.location.VisitDateMatchesKeywordsPredicate;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -23,6 +25,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Location> filteredLocations;
+    private final FilteredList<Location> plannerLocations;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -35,6 +38,8 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredLocations = new FilteredList<>(this.addressBook.getLocationList());
+        plannerLocations = new FilteredList<>(
+                this.addressBook.getLocationList()).filtered(PREDICATE_HIDE_ALL_LOCATIONS);
     }
 
     public ModelManager() {
@@ -147,9 +152,27 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ObservableList<Location> getPlannerLocationList() {
+        return plannerLocations;
+    }
+
+    @Override
     public void updateFilteredLocationList(Predicate<Location> predicate) {
         requireNonNull(predicate);
         filteredLocations.setPredicate(predicate);
+    }
+
+    /**
+     * Updates planner list to show locations with a specific date
+     * @param date LocalDate to find
+     */
+    @Override
+    public void updatePlannerLocationList(LocalDate date) {
+        if (date == null) {
+            plannerLocations.setPredicate(PREDICATE_HIDE_ALL_LOCATIONS);
+        } else {
+            plannerLocations.setPredicate(new VisitDateMatchesKeywordsPredicate(date));
+        }
     }
 
     @Override

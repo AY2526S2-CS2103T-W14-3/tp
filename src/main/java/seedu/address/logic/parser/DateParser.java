@@ -15,15 +15,13 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Represents a static utility class that can convert between Strings and LocalDate
  */
 public class DateParser {
-    public static final String MESSAGE_WRONG_DATE_FORMAT = "Not a valid date! Try using a dd/mm/YYYY format.";
+    public static final String MESSAGE_WRONG_DATE_FORMAT = "Not a valid date! Try using these formats:\n"
+            + "yyyy-MM-dd, yyyy/MM/dd, d-M-yyyy, d/M/yyyy,\n"
+            + "d-M-yy, d/M/yy, d-M, d/M, day of the week (e.g. Thu or Thursday).";
 
     private static final List<DateTimeFormatter> DATE_FORMATTERS = List.of(
             DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-            DateTimeFormatter.ofPattern("dd-MM-yyyy"),
             DateTimeFormatter.ofPattern("yyyy/MM/dd"),
-            DateTimeFormatter.ofPattern("dd/MM/yyyy"),
-            DateTimeFormatter.ofPattern("dd/MM/yy"),
-            DateTimeFormatter.ofPattern("dd-MM-yy"),
             DateTimeFormatter.ofPattern("yyyy-M-d"),
             DateTimeFormatter.ofPattern("d-M-yyyy"),
             DateTimeFormatter.ofPattern("yyyy/M/d"),
@@ -79,7 +77,7 @@ public class DateParser {
         }
 
         // capitalize just the first letter (Assuming it is day of the week)
-        input = input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
+        input = formatDayOfWeek(input);
 
         // try to match day of the week e.g. Tue, Thur, Friday
         for (DateTimeFormatter formatter : DAY_OF_WEEK_FORMATTER) {
@@ -111,7 +109,10 @@ public class DateParser {
      * @return a String to be printed to user that looks good
      */
     public static String dateToPrettyString(LocalDate date) {
-        return date.format(DateTimeFormatter.ofPattern("d MMM, yy"));
+        if (date == null) {
+            return "";
+        }
+        return date.format(DateTimeFormatter.ofPattern("EEEE, d MMM yyyy"));
     }
 
     /**
@@ -130,5 +131,12 @@ public class DateParser {
         }
         // date has not passed yet
         return dateThisYear;
+    }
+
+    /**
+     * Converts a string to all lowercase except the first character, which is capitalized
+     */
+    private static String formatDayOfWeek(String input) {
+        return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
     }
 }

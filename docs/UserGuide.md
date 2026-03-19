@@ -183,6 +183,19 @@ Examples:
 * `find Sentosa` followed by `delete 1` deletes the 1st location in the results of the `find` command.
 * `list` followed by `delete 1 3 5` deletes the 1st, 3rd, and 5th locations in the address book.
 
+### Using the itinerary planner : `plan`
+
+Displays the list of locations assigned to a date.
+
+Format: `plan [DATE]`
+
+* Displays all the locations with the specific date in the GUI for easy cross-referencing
+* If used without a date input, clears the planner instead.
+
+Examples:
+* `plan 12/3/26` shows the locations planned for 12 March 2026 on the planner.
+* `plan` clears the planner page.
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.

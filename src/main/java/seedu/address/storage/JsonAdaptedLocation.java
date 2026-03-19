@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.DateParser;
 import seedu.address.model.location.Address;
 import seedu.address.model.location.Email;
 import seedu.address.model.location.Location;
@@ -142,7 +143,7 @@ class JsonAdaptedLocation {
         final Set<VisitDate> modelVisitDates = new HashSet<>();
         for (String visitDate : visitDates) {
             if (!VisitDate.isValidVisitDate(visitDate)) {
-                throw new IllegalValueException(VisitDate.MESSAGE_CONSTRAINTS);
+                throw new IllegalValueException(DateParser.MESSAGE_WRONG_DATE_FORMAT);
             }
             modelVisitDates.add(new VisitDate(visitDate));
         }

@@ -25,6 +25,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.PlanCommand;
 import seedu.address.logic.commands.ShortcutCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.location.CombinedLocationPredicate;
@@ -86,6 +87,12 @@ public class AddressBookParserTest {
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new CombinedLocationPredicate(Collections.singletonList(
                 new NameContainsKeywordsPredicate(keywords)))), command);
+    }
+
+    @Test
+    public void parseCommand_plan() throws Exception {
+        assertTrue(parser.parseCommand(PlanCommand.COMMAND_WORD) instanceof PlanCommand);
+        assertTrue(parser.parseCommand(PlanCommand.COMMAND_WORD + " 2/3/12") instanceof PlanCommand);
     }
 
     @Test

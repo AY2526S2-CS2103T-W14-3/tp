@@ -32,6 +32,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private LocationListPanel locationListPanel;
+    private PlannerListPanel plannerListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -43,6 +44,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane locationListPanelPlaceholder;
+
+    @FXML
+    private StackPane plannerPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -113,6 +117,9 @@ public class MainWindow extends UiPart<Stage> {
         locationListPanel = new LocationListPanel(logic.getFilteredLocationList());
         locationListPanelPlaceholder.getChildren().add(locationListPanel.getRoot());
 
+        plannerListPanel = new PlannerListPanel(logic.getPlannerLocationList());
+        plannerPanelPlaceholder.getChildren().add(plannerListPanel.getRoot());
+
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -177,6 +184,10 @@ public class MainWindow extends UiPart<Stage> {
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+
+            if (commandResult.getFeedbackToPlanner() != null) {
+                plannerListPanel.setPlannerHeader(commandResult.getFeedbackToPlanner());
+            }
 
             if (commandResult.isShowHelp()) {
                 handleHelp();

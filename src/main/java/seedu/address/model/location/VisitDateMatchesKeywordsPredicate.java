@@ -17,8 +17,7 @@ public class VisitDateMatchesKeywordsPredicate implements Predicate<Location> {
 
     @Override
     public boolean test(Location location) {
-        return location.getVisitDates().stream()
-                .anyMatch(visitDate -> visitDate.getValue().equals(date));
+        return location.occursOn(date);
     }
 
     @Override

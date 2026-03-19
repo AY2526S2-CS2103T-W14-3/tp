@@ -1,0 +1,409 @@
+.background {
+    -fx-background-color: linear-gradient(to bottom right, #e0f2fe, #f8fafc);
+    background-color: #e0f2fe; /* Used in the default.html file */
+}
+
+.vbox-dark {
+    -fx-background-color: linear-gradient(to bottom right, #e0f2fe, #f8fafc);
+}
+
+.label {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Consolas", "Segoe UI Semibold", monospace;
+    -fx-text-fill: #334155;
+    -fx-opacity: 0.95;
+}
+
+.label-bright {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Consolas", "Segoe UI Semibold", monospace;
+    -fx-text-fill: #0f172a;
+    -fx-opacity: 1;
+}
+
+.label-header {
+    -fx-font-size: 32pt;
+    -fx-font-family: "Consolas", "Segoe UI Light", monospace;
+    -fx-text-fill: #0f172a;
+    -fx-opacity: 1;
+}
+
+.text-field {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Consolas", "Segoe UI Semibold", monospace;
+    -fx-background-color: #f8fafc;
+    -fx-text-fill: #0f172a;
+    -fx-prompt-text-fill: #64748b;
+    -fx-border-color: #7dd3fc;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.tab-pane {
+    -fx-padding: 0 0 0 1;
+}
+
+.tab-pane .tab-header-area {
+    -fx-padding: 0;
+    -fx-min-height: 0;
+    -fx-max-height: 0;
+}
+
+.table-view {
+    -fx-base: #f8fafc;
+    -fx-control-inner-background: #f8fafc;
+    -fx-background-color: #f8fafc;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 6;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #bae6fd;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to right, #38bdf8, #2dd4bf);
+    -fx-background-radius: 12 12 0 0;
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-size: 38;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #bae6fd transparent;
+    -fx-border-insets: 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 16pt;
+    -fx-font-family: "Consolas", "Segoe UI Semibold", monospace;
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+.table-row-cell {
+    -fx-background-color: #f8fafc;
+    -fx-text-background-color: #0f172a;
+}
+
+.table-row-cell:filled:selected,
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: #bae6fd;
+    -fx-text-background-color: #0f172a;
+}
+
+.split-pane:horizontal .split-pane-divider {
+    -fx-background-color: #dbeafe;
+    -fx-border-color: transparent transparent transparent #7dd3fc;
+}
+
+.split-pane {
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-border-color: #bae6fd;
+    -fx-background-color: #eff6ff;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-border-color: #bae6fd;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.list-cell {
+    -fx-label-padding: 0;
+    -fx-graphic-text-gap: 0;
+    -fx-padding: 0;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.list-cell:empty {
+    -fx-background-color: transparent;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: #f8fafc;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #FBF4DB;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #bae6fd;
+}
+
+.list-cell:filled:selected #cardPane {
+    -fx-border-color: #0ea5e9;
+    -fx-border-width: 1.5;
+}
+
+.list-cell .label {
+    -fx-text-fill: #0f172a;
+}
+
+.cell_big_label {
+    -fx-font-family: "Consolas", "Segoe UI Semibold", monospace;
+    -fx-font-size: 16px;
+    -fx-text-fill: #0f172a;
+}
+
+.cell_small_label {
+    -fx-font-family: "Consolas", "Segoe UI", monospace;
+    -fx-font-size: 13px;
+    -fx-text-fill: #475569;
+}
+
+.stack-pane {
+    -fx-background-color: transparent;
+}
+
+.pane-with-border {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #cbd5e1;
+    -fx-border-top-width: 1px;
+}
+
+.status-bar {
+    -fx-background-color: linear-gradient(to right, #0ea5e9, #2dd4bf);
+}
+
+.result-display {
+    -fx-background-color: transparent;
+    -fx-font-family: "Consolas", "Segoe UI Light", monospace;
+    -fx-font-size: 13pt;
+    -fx-text-fill: #0f172a;
+}
+
+.result-display .label {
+    -fx-text-fill: #0f172a !important;
+}
+
+.status-bar .label {
+    -fx-font-family: "Consolas", "Segoe UI Light", monospace;
+    -fx-text-fill: white;
+    -fx-padding: 4px;
+    -fx-pref-height: 30px;
+}
+
+.status-bar-with-border {
+    -fx-background-color: linear-gradient(to right, #38bdf8, #2dd4bf);
+    -fx-border-color: #0ea5e9;
+    -fx-border-width: 1px;
+}
+
+.status-bar-with-border .label {
+    -fx-text-fill: white;
+}
+
+.grid-pane {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #dbeafe;
+    -fx-border-width: 1px;
+}
+
+.grid-pane .stack-pane {
+    -fx-background-color: transparent;
+}
+
+.context-menu {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bae6fd;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.context-menu .label {
+    -fx-text-fill: #0f172a;
+}
+
+.menu-bar {
+    -fx-background-color: linear-gradient(to right, #e0f2fe, #f0fdfa);
+    -fx-border-color: transparent transparent #bae6fd transparent;
+}
+
+.menu-bar .label {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Consolas", "Segoe UI Light", monospace;
+    -fx-text-fill: #0f172a;
+    -fx-opacity: 0.95;
+}
+
+.menu .left-container {
+    -fx-background-color: transparent;
+}
+
+.button {
+    -fx-padding: 6 20 6 20;
+    -fx-border-color: #0ea5e9;
+    -fx-border-width: 1.5;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-background-color: linear-gradient(to right, #38bdf8, #2dd4bf);
+    -fx-font-family: "Consolas", "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: white;
+    -fx-background-insets: 0;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to right, #0ea5e9, #14b8a6);
+}
+
+.button:pressed,
+.button:default:hover:pressed {
+    -fx-background-color: #f59e0b;
+    -fx-text-fill: #0f172a;
+}
+
+.button:focused {
+    -fx-border-color: #f59e0b;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.button:disabled,
+.button:default:disabled {
+    -fx-opacity: 0.45;
+    -fx-background-color: #cbd5e1;
+    -fx-text-fill: white;
+}
+
+.button:default {
+    -fx-background-color: linear-gradient(to right, #0ea5e9, #06b6d4);
+    -fx-text-fill: white;
+}
+
+.button:default:hover {
+    -fx-background-color: linear-gradient(to right, #0284c7, #0d9488);
+}
+
+.dialog-pane {
+    -fx-background-color: #f8fafc;
+}
+
+.dialog-pane > *.button-bar > *.container {
+    -fx-background-color: #f8fafc;
+}
+
+.dialog-pane > *.label.content {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0f172a;
+}
+
+.dialog-pane:header *.header-panel {
+    -fx-background-color: linear-gradient(to right, #38bdf8, #2dd4bf);
+}
+
+.dialog-pane:header *.header-panel *.label {
+    -fx-font-size: 18px;
+    -fx-font-style: normal;
+    -fx-fill: white;
+    -fx-text-fill: white;
+}
+
+.scroll-bar {
+    -fx-background-color: #e0f2fe;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #7dd3fc;
+    -fx-background-radius: 8;
+    -fx-background-insets: 3;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 1 8 1 8;
+}
+
+.scroll-bar:horizontal .increment-arrow,
+.scroll-bar:horizontal .decrement-arrow {
+    -fx-padding: 8 1 8 1;
+}
+
+#cardPane {
+    -fx-border-width: 0;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+}
+
+#commandTypeLabel {
+    -fx-font-size: 11px;
+    -fx-font-family: "Consolas", monospace;
+    -fx-text-fill: #fb7185;
+}
+
+#commandTextField {
+    -fx-background-color: #ffffff;
+    -fx-background-insets: 0;
+    -fx-border-color: #7dd3fc #7dd3fc #0ea5e9 #7dd3fc;
+    -fx-border-insets: 0;
+    -fx-border-width: 1.5;
+    -fx-font-family: "Consolas", "Segoe UI Light", monospace;
+    -fx-font-size: 13pt;
+    -fx-text-fill: #0f172a;
+    -fx-prompt-text-fill: #64748b;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+}
+
+#filterField,
+#locationWebpage {
+    -fx-effect: dropshadow(gaussian, rgba(14,165,233,0.18), 14, 0.2, 0, 2);
+}
+
+#resultDisplay .content {
+    -fx-background-color: transparent, #f8fafc, transparent, #f8fafc;
+    -fx-background-radius: 0;
+}
+
+#visitDates {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#visitDates .label {
+    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(to right, #0ea5e9, #14b8a6);
+    -fx-padding: 2 6 2 6;
+    -fx-border-radius: 999;
+    -fx-background-radius: 999;
+    -fx-font-size: 11;
+    -fx-font-family: "Consolas", monospace;
+}
+
+#tags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#tags .label {
+    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(to right, #ff1d68, #f2c447);
+    -fx-padding: 2 6 2 6;
+    -fx-border-radius: 999;
+    -fx-background-radius: 999;
+    -fx-font-size: 11;
+    -fx-font-family: "Consolas", monospace;
+}
