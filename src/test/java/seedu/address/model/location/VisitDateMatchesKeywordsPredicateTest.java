@@ -40,18 +40,20 @@ public class VisitDateMatchesKeywordsPredicateTest {
 
     @Test
     public void test_visitDateMatchesKeywords_returnsTrue() {
+        String[] testDates = {"2024-01-15"};
         // Matching date
         VisitDateMatchesKeywordsPredicate predicate =
                 new VisitDateMatchesKeywordsPredicate(LocalDate.parse("2024-01-15"));
-        assertTrue(predicate.test(new LocationBuilder().withVisitDate("2024-01-15").build()));
+        assertTrue(predicate.test(new LocationBuilder().withVisitDates(testDates).build()));
     }
 
     @Test
     public void test_visitDateDoesNotMatchKeywords_returnsFalse() {
+        String[] testDates = {"2024-01-16"};
         // Non-matching date
         VisitDateMatchesKeywordsPredicate predicate =
                 new VisitDateMatchesKeywordsPredicate(LocalDate.parse("2024-01-15"));
-        assertFalse(predicate.test(new LocationBuilder().withVisitDate("2024-01-16").build()));
+        assertFalse(predicate.test(new LocationBuilder().withVisitDates(testDates).build()));
     }
 
     @Test

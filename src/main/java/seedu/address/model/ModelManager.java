@@ -14,6 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.location.Location;
+import seedu.address.model.location.VisitDateMatchesKeywordsPredicate;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -162,7 +163,7 @@ public class ModelManager implements Model {
     }
 
     /**
-     * TODO: Updates planner list to show locations with a specific date
+     * Updates planner list to show locations with a specific date
      * @param date LocalDate to find
      */
     @Override
@@ -170,7 +171,7 @@ public class ModelManager implements Model {
         if (date == null) {
             plannerLocations.setPredicate(PREDICATE_HIDE_ALL_LOCATIONS);
         } else {
-            plannerLocations.setPredicate(location -> location.occursOn(date));
+            plannerLocations.setPredicate(new VisitDateMatchesKeywordsPredicate(date));
         }
     }
 

@@ -17,7 +17,7 @@ public class VisitDateMatchesKeywordsPredicate implements Predicate<Location> {
 
     @Override
     public boolean test(Location location) {
-        return location.getVisitDate().getValue().equals(date);
+        return location.occursOn(date);
     }
 
     @Override
