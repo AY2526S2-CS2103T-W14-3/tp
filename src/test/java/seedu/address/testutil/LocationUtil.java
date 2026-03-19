@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTAL_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
@@ -32,16 +33,26 @@ public class LocationUtil {
      */
     public static String getLocationDetails(Location location) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_NAME + location.getName().fullName + " ");
-        sb.append(PREFIX_PHONE + location.getPhone().value + " ");
-        sb.append(PREFIX_EMAIL + location.getEmail().value + " ");
-        sb.append(PREFIX_ADDRESS + location.getAddress().value + " ");
+
+        sb.append(PREFIX_NAME).append(location.getName().fullName).append(" ");
+
+        location.getPhone().ifPresent(phone ->
+                sb.append(PREFIX_PHONE).append(phone.value).append(" "));
+        location.getEmail().ifPresent(email ->
+                sb.append(PREFIX_EMAIL).append(email.value).append(" "));
+        location.getAddress().ifPresent(address ->
+                sb.append(PREFIX_ADDRESS).append(address.value).append(" "));
+        location.getPostalCode().ifPresent(postalCode ->
+                sb.append(PREFIX_POSTAL_CODE).append(postalCode.value).append(" "));
+
+        // multi-date support (IMPORTANT)
         location.getVisitDates().forEach(
                 visitDate -> sb.append(PREFIX_DATE).append(visitDate).append(" ")
         );
-        location.getTags().stream().forEach(
-            s -> sb.append(PREFIX_TAG + s.tagName + " ")
-        );
+
+        location.getTags().forEach(tag ->
+                sb.append(PREFIX_TAG).append(tag.tagName).append(" "));
+
         return sb.toString();
     }
 
@@ -50,16 +61,25 @@ public class LocationUtil {
      */
     public static String getEditLocationDescriptorDetails(EditLocationDescriptor descriptor) {
         StringBuilder sb = new StringBuilder();
-        descriptor.getName().ifPresent(name -> sb.append(PREFIX_NAME).append(name.fullName).append(" "));
-        descriptor.getPhone().ifPresent(phone -> sb.append(PREFIX_PHONE).append(phone.value).append(" "));
-        descriptor.getEmail().ifPresent(email -> sb.append(PREFIX_EMAIL).append(email.value).append(" "));
-        descriptor.getAddress().ifPresent(address -> sb.append(PREFIX_ADDRESS).append(address.value).append(" "));
+
+        descriptor.getName().ifPresent(name ->
+                sb.append(PREFIX_NAME).append(name.fullName).append(" "));
+        descriptor.getPhone().ifPresent(phone ->
+                sb.append(PREFIX_PHONE).append(phone.value).append(" "));
+        descriptor.getEmail().ifPresent(email ->
+                sb.append(PREFIX_EMAIL).append(email.value).append(" "));
+        descriptor.getAddress().ifPresent(address ->
+                sb.append(PREFIX_ADDRESS).append(address.value).append(" "));
+        descriptor.getPostalCode().ifPresent(postalCode ->
+                sb.append(PREFIX_POSTAL_CODE).append(postalCode.value).append(" "));
+
         if (descriptor.getVisitDates().isPresent()) {
             Set<VisitDate> visitDates = descriptor.getVisitDates().get();
             if (visitDates.isEmpty()) {
                 sb.append(PREFIX_DATE).append(" ");
             } else {
-                visitDates.forEach(d -> sb.append(PREFIX_DATE).append(d).append(" "));
+                visitDates.forEach(d ->
+                        sb.append(PREFIX_DATE).append(d).append(" "));
             }
         }
 
@@ -68,9 +88,11 @@ public class LocationUtil {
             if (tags.isEmpty()) {
                 sb.append(PREFIX_TAG).append(" ");
             } else {
-                tags.forEach(s -> sb.append(PREFIX_TAG).append(s.tagName).append(" "));
+                tags.forEach(s ->
+                        sb.append(PREFIX_TAG).append(s.tagName).append(" "));
             }
         }
+
         return sb.toString();
     }
 }
