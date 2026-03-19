@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_REMOVE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTAL_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_ADD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_REMOVE;
@@ -31,6 +32,7 @@ import seedu.address.model.location.Email;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.Name;
 import seedu.address.model.location.Phone;
+import seedu.address.model.location.PostalCode;
 import seedu.address.model.location.VisitDate;
 import seedu.address.model.tag.Tag;
 
@@ -49,6 +51,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_POSTAL_CODE + "POSTAL_CODE] "
             + "[" + PREFIX_DATE + "DATE]... "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "[" + PREFIX_DATE_ADD + "DATE]... "
@@ -113,12 +116,24 @@ public class EditCommand extends Command {
         assert locationToEdit != null;
 
         Name updatedName = editLocationDescriptor.getName().orElse(locationToEdit.getName());
-        Phone updatedPhone = editLocationDescriptor.getPhone().orElse(locationToEdit.getPhone());
-        Email updatedEmail = editLocationDescriptor.getEmail().orElse(locationToEdit.getEmail());
-        Address updatedAddress = editLocationDescriptor.getAddress().orElse(locationToEdit.getAddress());
+
+        Optional<Phone> updatedPhone = editLocationDescriptor.getPhone().isPresent()
+                ? Optional.of(editLocationDescriptor.getPhone().get())
+                : locationToEdit.getPhone();
+
+        Optional<Email> updatedEmail = editLocationDescriptor.getEmail().isPresent()
+                ? Optional.of(editLocationDescriptor.getEmail().get())
+                : locationToEdit.getEmail();
+
+        Optional<Address> updatedAddress = editLocationDescriptor.getAddress().isPresent()
+                ? Optional.of(editLocationDescriptor.getAddress().get())
+                : locationToEdit.getAddress();
+
+        Optional<PostalCode> updatedPostalCode = editLocationDescriptor.getPostalCode().isPresent()
+                ? Optional.of(editLocationDescriptor.getPostalCode().get())
+                : locationToEdit.getPostalCode();
 
         Set<VisitDate> updatedVisitDates;
-
         if (editLocationDescriptor.getVisitDates().isPresent()) {
             updatedVisitDates = new HashSet<>(editLocationDescriptor.getVisitDates().get());
         } else {
@@ -128,7 +143,6 @@ public class EditCommand extends Command {
         }
 
         Set<Tag> updatedTags;
-
         if (editLocationDescriptor.getTags().isPresent()) {
             updatedTags = new HashSet<>(editLocationDescriptor.getTags().get());
         } else {
@@ -137,7 +151,8 @@ public class EditCommand extends Command {
             editLocationDescriptor.getTagsToRemove().ifPresent(updatedTags::removeAll);
         }
 
-        return new Location(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedVisitDates, updatedTags);
+        return new Location(updatedName, updatedPhone, updatedEmail,
+                updatedAddress, updatedPostalCode, updatedVisitDates, updatedTags);
     }
 
     @Override
@@ -146,7 +161,6 @@ public class EditCommand extends Command {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof EditCommand)) {
             return false;
         }
@@ -173,6 +187,7 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private Address address;
+        private PostalCode postalCode;
         private Set<VisitDate> visitDates;
         private Set<Tag> tags;
 
@@ -193,6 +208,7 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
+            setPostalCode(toCopy.postalCode);
             setVisitDates(toCopy.visitDates);
             setVisitDatesToAdd(toCopy.visitDatesToAdd);
             setVisitDatesToRemove(toCopy.visitDatesToRemove);
@@ -206,7 +222,7 @@ public class EditCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(
-                    name, phone, email, address, visitDates, tags,
+                    name, phone, email, address, postalCode, visitDates, tags,
                     visitDatesToAdd, visitDatesToRemove,
                     tagsToAdd, tagsToRemove
             );
@@ -242,6 +258,14 @@ public class EditCommand extends Command {
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
+        }
+
+        public void setPostalCode(PostalCode postalCode) {
+            this.postalCode = postalCode;
+        }
+
+        public Optional<PostalCode> getPostalCode() {
+            return Optional.ofNullable(postalCode);
         }
 
         public void setVisitDates(Set<VisitDate> visitDates) {
@@ -309,7 +333,6 @@ public class EditCommand extends Command {
                 return true;
             }
 
-            // instanceof handles nulls
             if (!(other instanceof EditLocationDescriptor)) {
                 return false;
             }
@@ -319,6 +342,7 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditLocationDescriptor.phone)
                     && Objects.equals(email, otherEditLocationDescriptor.email)
                     && Objects.equals(address, otherEditLocationDescriptor.address)
+                    && Objects.equals(postalCode, otherEditLocationDescriptor.postalCode)
                     && Objects.equals(visitDates, otherEditLocationDescriptor.visitDates)
                     && Objects.equals(visitDatesToAdd, otherEditLocationDescriptor.visitDatesToAdd)
                     && Objects.equals(visitDatesToRemove, otherEditLocationDescriptor.visitDatesToRemove)
@@ -334,6 +358,7 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
+                    .add("postalCode", postalCode)
                     .add("visitDates", visitDates)
                     .add("visitDatesToAdd", visitDatesToAdd)
                     .add("visitDatesToRemove", visitDatesToRemove)

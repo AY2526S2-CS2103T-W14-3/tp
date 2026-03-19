@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.model.location.Address;
@@ -8,6 +9,7 @@ import seedu.address.model.location.Email;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.Name;
 import seedu.address.model.location.Phone;
+import seedu.address.model.location.PostalCode;
 import seedu.address.model.location.VisitDate;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -21,11 +23,14 @@ public class LocationBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_POSTAL_CODE = "640123";
+    public static final String DEFAULT_VISIT_DATE = "2026-03-12";
 
     private Name name;
-    private Phone phone;
-    private Email email;
-    private Address address;
+    private Optional<Phone> phone;
+    private Optional<Email> email;
+    private Optional<Address> address;
+    private Optional<PostalCode> postalCode;
     private Set<VisitDate> visitDates;
     private Set<Tag> tags;
 
@@ -34,10 +39,11 @@ public class LocationBuilder {
      */
     public LocationBuilder() {
         name = new Name(DEFAULT_NAME);
-        phone = new Phone(DEFAULT_PHONE);
-        email = new Email(DEFAULT_EMAIL);
-        address = new Address(DEFAULT_ADDRESS);
-        visitDates = new HashSet<>();
+        phone = Optional.of(new Phone(DEFAULT_PHONE));
+        email = Optional.of(new Email(DEFAULT_EMAIL));
+        address = Optional.of(new Address(DEFAULT_ADDRESS));
+        postalCode = Optional.of(new PostalCode(DEFAULT_POSTAL_CODE));
+        visitDates = SampleDataUtil.getVisitDateSet(DEFAULT_VISIT_DATE);
         tags = new HashSet<>();
     }
 
@@ -49,6 +55,7 @@ public class LocationBuilder {
         phone = locationToCopy.getPhone();
         email = locationToCopy.getEmail();
         address = locationToCopy.getAddress();
+        postalCode = locationToCopy.getPostalCode();
         visitDates = new HashSet<>(locationToCopy.getVisitDates());
         tags = new HashSet<>(locationToCopy.getTags());
     }
@@ -62,9 +69,9 @@ public class LocationBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Location} that we are building.
+     * Parses the {@code tags} into a {@code Set<Tag>} and sets it to the {@code Location} that we are building.
      */
-    public LocationBuilder withTags(String ... tags) {
+    public LocationBuilder withTags(String... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
         return this;
     }
@@ -73,7 +80,7 @@ public class LocationBuilder {
      * Sets the {@code Address} of the {@code Location} that we are building.
      */
     public LocationBuilder withAddress(String address) {
-        this.address = new Address(address);
+        this.address = Optional.of(new Address(address));
         return this;
     }
 
@@ -81,7 +88,7 @@ public class LocationBuilder {
      * Sets the {@code Phone} of the {@code Location} that we are building.
      */
     public LocationBuilder withPhone(String phone) {
-        this.phone = new Phone(phone);
+        this.phone = Optional.of(new Phone(phone));
         return this;
     }
 
@@ -89,7 +96,15 @@ public class LocationBuilder {
      * Sets the {@code Email} of the {@code Location} that we are building.
      */
     public LocationBuilder withEmail(String email) {
-        this.email = new Email(email);
+        this.email = Optional.of(new Email(email));
+        return this;
+    }
+
+    /**
+     * Sets the {@code PostalCode} of the {@code Location} that we are building.
+     */
+    public LocationBuilder withPostalCode(String postalCode) {
+        this.postalCode = Optional.of(new PostalCode(postalCode));
         return this;
     }
 
@@ -110,7 +125,6 @@ public class LocationBuilder {
     }
 
     public Location build() {
-        return new Location(name, phone, email, address, visitDates, tags);
+        return new Location(name, phone, email, address, postalCode, visitDates, tags);
     }
-
 }

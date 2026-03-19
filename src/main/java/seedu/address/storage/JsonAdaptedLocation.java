@@ -3,6 +3,7 @@ package seedu.address.storage;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,7 @@ import seedu.address.model.location.Email;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.Name;
 import seedu.address.model.location.Phone;
+import seedu.address.model.location.PostalCode;
 import seedu.address.model.location.VisitDate;
 import seedu.address.model.tag.Tag;
 
@@ -30,6 +32,7 @@ class JsonAdaptedLocation {
     private final String phone;
     private final String email;
     private final String address;
+    private final String postalCode;
     private final List<String> visitDates = new ArrayList<>();
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
@@ -37,21 +40,23 @@ class JsonAdaptedLocation {
      * Constructs a {@code JsonAdaptedLocation} with the given location details.
      */
     @JsonCreator
-    public JsonAdaptedLocation(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("visitDate") String visitDate,
-            @JsonProperty("visitDates") List<String> visitDates,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+    public JsonAdaptedLocation(@JsonProperty("name") String name,
+                               @JsonProperty("phone") String phone,
+                               @JsonProperty("email") String email,
+                               @JsonProperty("address") String address,
+                               @JsonProperty("postalCode") String postalCode,
+                               @JsonProperty("visitDates") List<String> visitDates,
+                               @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        if (visitDate != null) {
-            this.visitDates.add(visitDate);
-        }
+        this.postalCode = postalCode;
+
         if (visitDates != null) {
             this.visitDates.addAll(visitDates);
         }
+
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -70,12 +75,15 @@ class JsonAdaptedLocation {
      */
     public JsonAdaptedLocation(Location source) {
         name = source.getName().fullName;
-        phone = source.getPhone().value;
-        email = source.getEmail().value;
-        address = source.getAddress().value;
+        phone = source.getPhone().map(p -> p.value).orElse(null);
+        email = source.getEmail().map(e -> e.value).orElse(null);
+        address = source.getAddress().map(a -> a.value).orElse(null);
+        postalCode = source.getPostalCode().map(p -> p.value).orElse(null);
+
         visitDates.addAll(source.getVisitDates().stream()
                 .map(VisitDate::toString)
                 .collect(Collectors.toList()));
+
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -100,29 +108,37 @@ class JsonAdaptedLocation {
         }
         final Name modelName = new Name(name);
 
-        if (phone == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
+        Optional<Phone> modelPhone = Optional.empty();
+        if (phone != null) {
+            if (!Phone.isValidPhone(phone)) {
+                throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
+            }
+            modelPhone = Optional.of(new Phone(phone));
         }
-        if (!Phone.isValidPhone(phone)) {
-            throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
-        }
-        final Phone modelPhone = new Phone(phone);
 
-        if (email == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
+        Optional<Email> modelEmail = Optional.empty();
+        if (email != null) {
+            if (!Email.isValidEmail(email)) {
+                throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
+            }
+            modelEmail = Optional.of(new Email(email));
         }
-        if (!Email.isValidEmail(email)) {
-            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
-        }
-        final Email modelEmail = new Email(email);
 
-        if (address == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
+        Optional<Address> modelAddress = Optional.empty();
+        if (address != null) {
+            if (!Address.isValidAddress(address)) {
+                throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
+            }
+            modelAddress = Optional.of(new Address(address));
         }
-        if (!Address.isValidAddress(address)) {
-            throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
+
+        Optional<PostalCode> modelPostalCode = Optional.empty();
+        if (postalCode != null) {
+            if (!PostalCode.isValidPostalCode(postalCode)) {
+                throw new IllegalValueException(PostalCode.MESSAGE_CONSTRAINTS);
+            }
+            modelPostalCode = Optional.of(new PostalCode(postalCode));
         }
-        final Address modelAddress = new Address(address);
 
         final Set<VisitDate> modelVisitDates = new HashSet<>();
         for (String visitDate : visitDates) {
@@ -133,7 +149,8 @@ class JsonAdaptedLocation {
         }
 
         final Set<Tag> modelTags = new HashSet<>(locationTags);
-        return new Location(modelName, modelPhone, modelEmail, modelAddress, modelVisitDates, modelTags);
-    }
 
+        return new Location(modelName, modelPhone, modelEmail,
+                modelAddress, modelPostalCode, modelVisitDates, modelTags);
+    }
 }
