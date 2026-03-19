@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.location.CombinedLocationPredicate;
 import seedu.address.model.location.NameContainsKeywordsPredicate;
 
 /**
@@ -31,12 +30,10 @@ public class FindCommandTest {
 
     @Test
     public void equals() {
-        CombinedLocationPredicate firstPredicate =
-                new CombinedLocationPredicate(Collections.singletonList(
-                        new NameContainsKeywordsPredicate(Collections.singletonList("first"))));
-        CombinedLocationPredicate secondPredicate =
-                new CombinedLocationPredicate(Collections.singletonList(
-                        new NameContainsKeywordsPredicate(Collections.singletonList("second"))));
+        NameContainsKeywordsPredicate firstPredicate =
+                new NameContainsKeywordsPredicate(Collections.singletonList("first"));
+        NameContainsKeywordsPredicate secondPredicate =
+                new NameContainsKeywordsPredicate(Collections.singletonList("second"));
 
         FindCommand findFirstCommand = new FindCommand(firstPredicate);
         FindCommand findSecondCommand = new FindCommand(secondPredicate);
