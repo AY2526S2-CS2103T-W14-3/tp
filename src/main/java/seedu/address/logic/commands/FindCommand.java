@@ -2,33 +2,28 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.function.Predicate;
-
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
-import seedu.address.model.location.Location;
+import seedu.address.model.location.NameContainsKeywordsPredicate;
 
 /**
- * Finds and lists all locations in address book whose fields match the search criteria.
- * Search criteria can include names (any keyword), tags, addresses, and visit dates.
+ * Finds and lists all locations in address book whose name contains any of the argument keywords.
+ * Keyword matching is case insensitive.
  */
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all locations whose fields match the "
-            + "specified criteria (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Name search is based on substring match of any provided keywords.\n"
-            + "Search by multiple prefixes (n/, p/, e/, a/, t/, d/) uses AND logic.\n"
-            + "Parameters: [NAME_KEYWORD]... [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]... [d/DATE]\n"
-            + "Example: " + COMMAND_WORD + " alice n/bob p/9123 e/johndoe@example.com t/important "
-            + "a/Clementi d/2024-01-15";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all locations whose names contain any of "
+            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+            + "Example: " + COMMAND_WORD + " alice bob charlie";
 
-    private final Predicate<Location> predicate;
+    private final NameContainsKeywordsPredicate predicate;
 
-    public FindCommand(Predicate<Location> predicate) {
-        this.predicate = requireNonNull(predicate);
+    public FindCommand(NameContainsKeywordsPredicate predicate) {
+        this.predicate = predicate;
     }
 
     @Override
