@@ -46,7 +46,7 @@ public class TypicalLocations {
             .withEmail("heinz@example.com")
             .withAddress("wall street")
             .withPostalCode("452398")
-            .withVisitDate("2026-7-13").build();
+            .withVisitDate("2026-07-13").build();
     public static final Location DANIEL = new LocationBuilder().withName("Daniel Meier")
             .withPhone("87652533")
             .withEmail("cornelia@example.com")
