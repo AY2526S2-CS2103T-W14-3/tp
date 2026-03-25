@@ -1,4 +1,4 @@
-package seedu.address.model.location;
+package seedu.address.model.location.dates;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
