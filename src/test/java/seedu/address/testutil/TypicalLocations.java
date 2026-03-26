@@ -78,6 +78,8 @@ public class TypicalLocations {
             .withEmail("stefan@example.com").withAddress("little india").build();
     public static final Location IDA = new LocationBuilder().withName("Ida Mueller").withPhone("8482131")
             .withEmail("hans@example.com").withAddress("chicago ave").build();
+    public static final Location ZERO = new LocationBuilder().withOnlyName("Zero Suhm").build();
+
 
     // Manually added - Location's details found in {@code CommandTestUtil}
     public static final Location AMY = new LocationBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
