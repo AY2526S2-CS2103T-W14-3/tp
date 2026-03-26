@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Locale;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.location.dates.OneTimeDate;
+import seedu.address.model.location.dates.VisitDate;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a static utility class that can convert between Strings and LocalDate
@@ -93,6 +97,29 @@ public class DateParser {
     }
 
     /**
+     * Reads a string and converts it to a VisitDate object
+     *
+     * @param input String to be parsed into a date
+     * @return a VisitDate representation of the input
+     * @throws IllegalValueException if the string cannot fit into any VisitDate formats
+     */
+    public static VisitDate parseVisitDate(String input) throws IllegalValueException {
+        return new OneTimeDate(parse(input));
+    }
+
+    /**
+     * Reads a string and converts it to a VisitDate object,
+     * and throws no checked exception, since it expect it to be valid
+     */
+    public static VisitDate unsafeParseVisitDate(String input) {
+        try {
+            return parseVisitDate(input);
+        } catch (IllegalValueException e) {
+            throw new RuntimeException("Unsafe failure of VisitDate parsing!");
+        }
+    }
+
+    /**
      * Converts a LocalDate object back into a string to be stored on in data files
      *
      * @param date LocalDate object to be converted
@@ -113,6 +140,22 @@ public class DateParser {
             return "";
         }
         return date.format(DateTimeFormatter.ofPattern("EEEE, d MMM yyyy"));
+    }
+
+    /**
+     * Returns true if a given string is a valid visit date.
+     */
+    public static boolean isValidVisitDate(String test) {
+        if (test == null) {
+            return false;
+        }
+
+        try {
+            DateParser.parse(test);
+            return true;
+        } catch (IllegalValueException e) {
+            return false;
+        }
     }
 
     /**

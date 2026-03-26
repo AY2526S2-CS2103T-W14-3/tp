@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.location.Address;
@@ -121,11 +122,12 @@ public class ParserUtil {
      */
     public static VisitDate parseVisitDate(String visitDate) throws ParseException {
         requireNonNull(visitDate);
-        String trimmedVisitDate = visitDate.trim();
-        if (!VisitDate.isValidVisitDate(trimmedVisitDate)) {
-            throw new ParseException(VisitDate.MESSAGE_CONSTRAINTS);
+
+        try {
+            return DateParser.parseVisitDate(visitDate);
+        } catch (IllegalValueException e) {
+            throw new ParseException(DateParser.MESSAGE_WRONG_DATE_FORMAT);
         }
-        return new VisitDate(trimmedVisitDate);
     }
 
     /**
