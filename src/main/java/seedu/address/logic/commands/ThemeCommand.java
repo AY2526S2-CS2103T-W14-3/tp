@@ -22,6 +22,11 @@ public class ThemeCommand extends Command {
 
     private final Theme theme;
 
+    /**
+     * Creates a {@code ThemeCommand} to change the application theme.
+     *
+     * @param theme The theme to switch to.
+     */
     public ThemeCommand(Theme theme) {
         requireNonNull(theme);
         this.theme = theme;
