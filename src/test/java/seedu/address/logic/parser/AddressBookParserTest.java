@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
 // import seedu.address.logic.commands.AddCommand;
+import seedu.address.commons.core.Theme;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 // import seedu.address.logic.commands.EditCommand;
@@ -144,7 +145,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_theme() throws Exception {
-        assertEquals(new ThemeCommand(seedu.address.commons.core.Theme.DARK),
+        assertEquals(new ThemeCommand(Theme.DARK),
                 parser.parseCommand(ThemeCommand.COMMAND_WORD + " dark"));
     }
 

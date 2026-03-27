@@ -89,10 +89,6 @@ public class MainWindow extends UiPart<Stage> {
         return primaryStage;
     }
 
-    public Theme getCurrentTheme() {
-        return currentTheme;
-    }
-
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
     }

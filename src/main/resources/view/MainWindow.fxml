@@ -7,6 +7,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.StackPane?>
@@ -15,6 +16,9 @@
 <?import javafx.scene.layout.HBox?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
          title="Address Me" minWidth="780" minHeight="600" onCloseRequest="#handleExit">
+  <fx:define>
+    <ToggleGroup fx:id="themeToggleGroup" />
+  </fx:define>
   <icons>
     <Image url="@/images/address_me.png" />
   </icons>
@@ -34,9 +38,9 @@
           </Menu>
           <Menu mnemonicParsing="false" text="View">
             <RadioMenuItem fx:id="lightThemeMenuItem" mnemonicParsing="false"
-                           onAction="#handleLightTheme" text="Light Theme" />
+                           onAction="#handleLightTheme" text="Light Theme" toggleGroup="$themeToggleGroup" />
             <RadioMenuItem fx:id="darkThemeMenuItem" mnemonicParsing="false"
-                           onAction="#handleDarkTheme" text="Dark Theme" />
+                           onAction="#handleDarkTheme" text="Dark Theme" toggleGroup="$themeToggleGroup" />
           </Menu>
         </MenuBar>
         <SplitPane dividerPositions="0.9" orientation="VERTICAL" prefWidth="200.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" styleClass="split-pane">
