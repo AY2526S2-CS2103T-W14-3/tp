@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
@@ -16,30 +17,37 @@ import seedu.address.model.location.dates.VisitDate;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Represents a static utility class that can convert between Strings and LocalDate
+ * Represents a static utility class that can convert between Strings and LocalDate, MonthDay and DayOfWeek
  */
 public class DateParser {
     public static final String MESSAGE_WRONG_DATE_FORMAT = "Not a valid date! Try using these formats:\n"
             + "yyyy-MM-dd, yyyy/MM/dd, d-M-yyyy, d/M/yyyy,\n"
             + "d-M-yy, d/M/yy, d-M, d/M, day of the week (e.g. Thu or Thursday).";
 
-    private static final List<DateTimeFormatter> DATE_FORMATTERS = List.of(
-            DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-            DateTimeFormatter.ofPattern("yyyy/MM/dd"),
-            DateTimeFormatter.ofPattern("yyyy-M-d"),
-            DateTimeFormatter.ofPattern("d-M-yyyy"),
-            DateTimeFormatter.ofPattern("yyyy/M/d"),
-            DateTimeFormatter.ofPattern("d/M/yyyy"),
-            DateTimeFormatter.ofPattern("d/M/yy"),
-            DateTimeFormatter.ofPattern("d-M-yy")
-    );
+    public static final String MESSAGE_WRONG_MONTH_DAY_FORMAT = "Not a valid month and day format! "
+            + "Try using these:\nd-M-yy, d/M/yy, d-M, d/M.";
 
-    private static final List<DateTimeFormatter> MONTH_DAY_FORMATTERS = List.of(
-            DateTimeFormatter.ofPattern("dd-MM"),
-            DateTimeFormatter.ofPattern("dd/MM"),
-            DateTimeFormatter.ofPattern("d/M"),
-            DateTimeFormatter.ofPattern("d-M")
-    );
+    public static final String MESSAGE_WRONG_DAY_OF_WEEK_FORMAT = "Not a valid day of the week! "
+            + "\n Try the full day e.g. Monday, Wednesday, or just the first three letters! e.g. Thu, Fri"
+            + "\n The case does not matter.";
+
+    private static final DateTimeFormatter DATE_FORMATTERS = new DateTimeFormatterBuilder()
+            .appendOptional(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            .appendOptional(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+            .appendOptional(DateTimeFormatter.ofPattern("yyyy-M-d"))
+            .appendOptional(DateTimeFormatter.ofPattern("d-M-yyyy"))
+            .appendOptional(DateTimeFormatter.ofPattern("yyyy/M/d"))
+            .appendOptional(DateTimeFormatter.ofPattern("d/M/yyyy"))
+            .appendOptional(DateTimeFormatter.ofPattern("d/M/yy"))
+            .appendOptional(DateTimeFormatter.ofPattern("d-M-yy"))
+            .toFormatter();
+
+    private static final DateTimeFormatter MONTH_DAY_FORMATTERS = new DateTimeFormatterBuilder()
+            .appendOptional(DateTimeFormatter.ofPattern("dd-MM"))
+            .appendOptional(DateTimeFormatter.ofPattern("dd/MM"))
+            .appendOptional(DateTimeFormatter.ofPattern("d/M"))
+            .appendOptional(DateTimeFormatter.ofPattern("d-M"))
+            .toFormatter();
 
     private static final List<DateTimeFormatter> DAY_OF_WEEK_FORMATTER = List.of(
             DateTimeFormatter.ofPattern("EEE", Locale.ENGLISH),
@@ -53,7 +61,7 @@ public class DateParser {
      * @return a LocalDate representation of the input
      * @throws IllegalValueException if the string cannot fit into any DateTimeFormat
      */
-    public static LocalDate parse(String input) throws IllegalValueException {
+    public static LocalDate parseDate(String input) throws IllegalValueException {
         input = input.trim();
 
         if (input.isEmpty()) {
@@ -61,50 +69,70 @@ public class DateParser {
         }
 
         // try to match date formatter with year
-        for (DateTimeFormatter formatter : DATE_FORMATTERS) {
-            try {
-                return LocalDate.parse(input, formatter);
-            } catch (DateTimeParseException e) {
-                //ignore since exception is thrown below
-            }
+        try {
+            return LocalDate.parse(input, DATE_FORMATTERS);
+        } catch (DateTimeParseException e) {
+            //ignore since exception is thrown below
         }
 
         // try to match date formatter with no year
         LocalDate today = LocalDate.now();
-        for (DateTimeFormatter formatter : MONTH_DAY_FORMATTERS) {
-            try {
-                MonthDay parsed = MonthDay.parse(input, formatter);
-                return monthDayToDate(today, parsed);
-            } catch (DateTimeParseException e) {
-                //ignore since exception is thrown below
-            }
+        try {
+            MonthDay parsed = parseMonthDay(input);
+            return monthDayToDate(today, parsed);
+        } catch (IllegalValueException e) {
+            //ignore since exception is thrown below
         }
 
         // capitalize just the first letter (Assuming it is day of the week)
         input = formatDayOfWeek(input);
-
-        // try to match day of the week e.g. Tue, Thur, Friday
-        for (DateTimeFormatter formatter : DAY_OF_WEEK_FORMATTER) {
-            try {
-                DayOfWeek day = DayOfWeek.from(formatter.parse(input));
-                return today.with(TemporalAdjusters.nextOrSame(day));
-            } catch (DateTimeParseException e) {
-                //ignore since exception is thrown below
-            }
+        try {
+            DayOfWeek day = parseDayOfWeek(input);
+            return today.with(TemporalAdjusters.nextOrSame(day));
+        } catch (IllegalValueException e) {
+            //ignore since exception is thrown below
         }
 
         throw new IllegalValueException(MESSAGE_WRONG_DATE_FORMAT);
     }
 
     /**
-     * Reads a string and converts it to a VisitDate object
-     *
-     * @param input String to be parsed into a date
-     * @return a VisitDate representation of the input
-     * @throws IllegalValueException if the string cannot fit into any VisitDate formats
+     * Reads a string and converts it to a MonthDay object
      */
-    public static VisitDate parseVisitDate(String input) throws IllegalValueException {
-        return new OneTimeDate(parse(input));
+    public static MonthDay parseMonthDay(String input) throws IllegalValueException {
+        input = input.trim();
+
+        if (input.isEmpty()) {
+            throw new IllegalValueException(MESSAGE_WRONG_MONTH_DAY_FORMAT);
+        }
+
+        try {
+            MonthDay parsed = MonthDay.parse(input, MONTH_DAY_FORMATTERS);
+            return parsed;
+        } catch (DateTimeParseException e) {
+            throw new IllegalValueException(MESSAGE_WRONG_MONTH_DAY_FORMAT);
+        }
+    }
+
+    /**
+     * Reads a string and converts it to a DayOfWeek object
+     */
+    public static DayOfWeek parseDayOfWeek(String input) throws IllegalValueException {
+        input = input.trim();
+
+        if (input.isEmpty()) {
+            throw new IllegalValueException(MESSAGE_WRONG_DAY_OF_WEEK_FORMAT);
+        }
+
+        for (DateTimeFormatter formatter : DAY_OF_WEEK_FORMATTER) {
+            try {
+                return DayOfWeek.from(formatter.parse(input));
+            } catch (DateTimeParseException e) {
+                //ignore since exception is thrown below
+            }
+        }
+
+        throw new IllegalValueException(MESSAGE_WRONG_DAY_OF_WEEK_FORMAT);
     }
 
     /**
@@ -127,7 +155,7 @@ public class DateParser {
      * @param dateParsed MonthDay to be converted
      * @return The date with year adjusted
      */
-    public static LocalDate monthDayToDate(LocalDate today, MonthDay dateParsed) {
+    private static LocalDate monthDayToDate(LocalDate today, MonthDay dateParsed) {
         LocalDate dateThisYear = dateParsed.atYear(today.getYear());
 
         // the date has passed, so should refer to next year

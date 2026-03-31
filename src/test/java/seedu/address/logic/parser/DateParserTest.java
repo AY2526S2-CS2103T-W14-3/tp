@@ -19,37 +19,37 @@ public class DateParserTest {
     @Test
     void fullDateWithYear_correctFormat() throws IllegalValueException {
         LocalDate expectedDate = LocalDate.of(2026, 12, 31);
-        assertEquals(expectedDate, DateParser.parse("31-12-2026"));
-        assertEquals(expectedDate, DateParser.parse("2026-12-31"));
-        assertEquals(expectedDate, DateParser.parse("31/12/2026"));
-        assertEquals(expectedDate, DateParser.parse("2026/12/31"));
+        assertEquals(expectedDate, DateParser.parseDate("31-12-2026"));
+        assertEquals(expectedDate, DateParser.parseDate("2026-12-31"));
+        assertEquals(expectedDate, DateParser.parseDate("31/12/2026"));
+        assertEquals(expectedDate, DateParser.parseDate("2026/12/31"));
 
-        assertEquals(expectedDate, DateParser.parse("31-12-26"));
-        assertEquals(expectedDate, DateParser.parse("31/12/26"));
+        assertEquals(expectedDate, DateParser.parseDate("31-12-26"));
+        assertEquals(expectedDate, DateParser.parseDate("31/12/26"));
     }
 
     @Test
     void shortDateWithYear_correctFormat() throws IllegalValueException {
         LocalDate expectedDate = LocalDate.of(2026, 9, 3);
-        assertEquals(expectedDate, DateParser.parse("3-9-2026"));
-        assertEquals(expectedDate, DateParser.parse("2026-9-3"));
-        assertEquals(expectedDate, DateParser.parse("3/9/2026"));
-        assertEquals(expectedDate, DateParser.parse("2026/9/3"));
+        assertEquals(expectedDate, DateParser.parseDate("3-9-2026"));
+        assertEquals(expectedDate, DateParser.parseDate("2026-9-3"));
+        assertEquals(expectedDate, DateParser.parseDate("3/9/2026"));
+        assertEquals(expectedDate, DateParser.parseDate("2026/9/3"));
 
-        assertEquals(expectedDate, DateParser.parse("3-9-26"));
-        assertEquals(expectedDate, DateParser.parse("3/9/26"));
+        assertEquals(expectedDate, DateParser.parseDate("3-9-26"));
+        assertEquals(expectedDate, DateParser.parseDate("3/9/26"));
     }
 
     @Test
     void mixedDateWithYear_correctFormat() throws IllegalValueException {
         LocalDate expectedDate = LocalDate.of(2026, 9, 3);
-        assertEquals(expectedDate, DateParser.parse("03-9-2026"));
-        assertEquals(expectedDate, DateParser.parse("2026-09-3"));
-        assertEquals(expectedDate, DateParser.parse("3/09/2026"));
-        assertEquals(expectedDate, DateParser.parse("2026/9/03"));
+        assertEquals(expectedDate, DateParser.parseDate("03-9-2026"));
+        assertEquals(expectedDate, DateParser.parseDate("2026-09-3"));
+        assertEquals(expectedDate, DateParser.parseDate("3/09/2026"));
+        assertEquals(expectedDate, DateParser.parseDate("2026/9/03"));
 
-        assertEquals(expectedDate, DateParser.parse("03-9-26"));
-        assertEquals(expectedDate, DateParser.parse("3/09/26"));
+        assertEquals(expectedDate, DateParser.parseDate("03-9-26"));
+        assertEquals(expectedDate, DateParser.parseDate("3/09/26"));
     }
 
     // ---------- Partial date tests ----------
@@ -59,11 +59,11 @@ public class DateParserTest {
 
         LocalDate expected = LocalDate.of(2026, 6, 7);
         assertEquals(expected,
-                DateParser.parseMonthDay(today, MonthDay.of(6, 7)));
+                DateParser.parseDateMonthDay(today, MonthDay.of(6, 7)));
 
         expected = LocalDate.of(2026, 12, 31);
         assertEquals(expected,
-                DateParser.parseMonthDay(today, MonthDay.of(12, 31)));
+                DateParser.parseDateMonthDay(today, MonthDay.of(12, 31)));
     }
 
     @Test
@@ -72,11 +72,11 @@ public class DateParserTest {
 
         LocalDate expected = LocalDate.of(2027, 2, 20);
         assertEquals(expected,
-                DateParser.parseMonthDay(today, MonthDay.of(2, 20)));
+                DateParser.parseDateMonthDay(today, MonthDay.of(2, 20)));
 
         expected = LocalDate.of(2027, 12, 1);
         assertEquals(expected,
-                DateParser.parseMonthDay(today, MonthDay.of(12, 1)));
+                DateParser.parseDateMonthDay(today, MonthDay.of(12, 1)));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class DateParserTest {
         LocalDate today = LocalDate.of(2026, 12, 2);
 
         assertEquals(today,
-                DateParser.parseMonthDay(today, MonthDay.of(12, 2)));
+                DateParser.parseDateMonthDay(today, MonthDay.of(12, 2)));
     }
 
     @Test
@@ -92,16 +92,16 @@ public class DateParserTest {
         LocalDate today = LocalDate.now();
 
         String slashInput = today.format(DateTimeFormatter.ofPattern("d/M"));
-        assertEquals(today, DateParser.parse(slashInput));
+        assertEquals(today, DateParser.parseDate(slashInput));
 
         String dashInput = today.format(DateTimeFormatter.ofPattern("d-M"));
-        assertEquals(today, DateParser.parse(dashInput));
+        assertEquals(today, DateParser.parseDate(dashInput));
 
         String slashInputFull = today.format(DateTimeFormatter.ofPattern("dd/MM"));
-        assertEquals(today, DateParser.parse(slashInputFull));
+        assertEquals(today, DateParser.parseDate(slashInputFull));
 
         String dashInputFull = today.format(DateTimeFormatter.ofPattern("dd-MM"));
-        assertEquals(today, DateParser.parse(dashInputFull));
+        assertEquals(today, DateParser.parseDate(dashInputFull));
     }
 
     // ---------- Days of Week tests ----------
@@ -118,8 +118,8 @@ public class DateParserTest {
         for (int i = 0; i < dow.length; i++) {
             LocalDate expected = today.with(TemporalAdjusters.nextOrSame(dow[i]));
 
-            LocalDate parsedShort = DateParser.parse(shortDays[i]);
-            LocalDate parsedFull = DateParser.parse(fullDays[i]);
+            LocalDate parsedShort = DateParser.parseDate(shortDays[i]);
+            LocalDate parsedFull = DateParser.parseDate(fullDays[i]);
 
             assertEquals(expected, parsedShort, "Failed parsing short day: " + shortDays[i]);
             assertEquals(expected, parsedFull, "Failed parsing full day: " + fullDays[i]);
@@ -139,8 +139,8 @@ public class DateParserTest {
         for (int i = 0; i < dow.length; i++) {
             LocalDate expected = today.with(TemporalAdjusters.nextOrSame(dow[i]));
 
-            LocalDate parsedShort = DateParser.parse(shortDays[i]);
-            LocalDate parsedFull = DateParser.parse(fullDays[i]);
+            LocalDate parsedShort = DateParser.parseDate(shortDays[i]);
+            LocalDate parsedFull = DateParser.parseDate(fullDays[i]);
 
             assertEquals(expected, parsedShort, "Failed parsing short day: " + shortDays[i]);
             assertEquals(expected, parsedFull, "Failed parsing full day: " + fullDays[i]);
@@ -149,20 +149,20 @@ public class DateParserTest {
 
     @Test
     void testEmptyString() {
-        assertThrows(IllegalValueException.class, ()->DateParser.parse(""));
+        assertThrows(IllegalValueException.class, ()->DateParser.parseDate(""));
     }
 
     @Test
     void testInvalidFormats() {
-        assertThrows(IllegalValueException.class, ()->DateParser.parse("notadate"));
+        assertThrows(IllegalValueException.class, ()->DateParser.parseDate("notadate"));
 
-        assertThrows(IllegalValueException.class, ()->DateParser.parse("1234123"));
+        assertThrows(IllegalValueException.class, ()->DateParser.parseDate("1234123"));
     }
 
     @Test
     void testInvalidDates() {
-        assertThrows(IllegalValueException.class, ()->DateParser.parse("32/01/2026"));
-        assertThrows(IllegalValueException.class, ()->DateParser.parse("12-30-2026"));
+        assertThrows(IllegalValueException.class, ()->DateParser.parseDate("32/01/2026"));
+        assertThrows(IllegalValueException.class, ()->DateParser.parseDate("12-30-2026"));
     }
 
     @Test

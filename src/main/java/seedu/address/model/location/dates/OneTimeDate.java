@@ -38,7 +38,7 @@ public class OneTimeDate extends VisitDate {
         requireNonNull(dateString);
         //checkArgument(isValidVisitDate(dateString), MESSAGE_CONSTRAINTS);
         try {
-            this.date = DateParser.parse(dateString);
+            this.date = DateParser.parseDate(dateString);
         } catch (IllegalValueException e) {
             throw new RuntimeException(e);
         }

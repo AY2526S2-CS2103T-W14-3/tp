@@ -38,7 +38,7 @@ public class YearlyRecurringDate extends VisitDate {
         requireNonNull(dateString);
         //checkArgument(isValidVisitDate(dateString), MESSAGE_CONSTRAINTS);
         try {
-            this.date = MonthDay.from(DateParser.parse(dateString));
+            this.date = MonthDay.from(DateParser.parseDate(dateString));
         } catch (IllegalValueException e) {
             throw new RuntimeException(e);
         }

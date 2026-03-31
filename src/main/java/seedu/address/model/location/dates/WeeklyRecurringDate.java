@@ -35,7 +35,7 @@ public class WeeklyRecurringDate extends VisitDate {
         requireNonNull(dateString);
         //checkArgument(isValidVisitDate(dateString), MESSAGE_CONSTRAINTS);
         try {
-            this.day = DateParser.parse(dateString).getDayOfWeek();
+            this.day = DateParser.parseDate(dateString).getDayOfWeek();
         } catch (IllegalValueException e) {
             throw new RuntimeException(e);
         }

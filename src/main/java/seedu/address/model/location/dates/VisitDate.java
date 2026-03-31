@@ -34,7 +34,7 @@ public abstract class VisitDate {
     public static boolean isValidVisitDate(String test) {
         requireNonNull(test);
         try {
-            DateParser.parse(test);
+            DateParser.parseDate(test);
             return true;
         } catch (IllegalValueException e) {
             return false;
