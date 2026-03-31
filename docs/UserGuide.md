@@ -105,6 +105,15 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/2026-01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal d/2026-03-12 d/2026-04-12`
 
+### Recording a note : `note`
+
+Records a note that will be persisted in future milestones. Currently it validates syntax via CLI and confirms receipt.
+
+Format: `note n/NOTE d/DATE`
+
+Examples:
+* `note n/Great place d/2026-03-24`
+
 ### Listing all locations : `list`
 
 Shows a list of all locations in the address book.
@@ -273,6 +282,7 @@ E.g. `A` autocompletes into `add`, while `e` autocompletes to `e`, since both `e
 Action | Format, Examples
 --------|------------------
 **Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DATE]… [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 d/2026-01-01 t/friend t/colleague`
+**Note** | `note n/NOTE [d/DATE]` <br> e.g., `note n/Great place d/2026-03-24`
 **Clear** | `clear`
 **Delete** | `delete INDEX [MORE_INDEXES]...`<br> e.g., `delete 3` or `delete 1 2 3`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE]… [d+/DATE]… [d-/DATE]… [t/TAG]… [t+/TAG]… [t-/TAG]…`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com d+/2026-02-01`

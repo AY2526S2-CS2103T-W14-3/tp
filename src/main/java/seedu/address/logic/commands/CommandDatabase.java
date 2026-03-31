@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.logic.commands.NoteCommand;
+
 /**
  * Represents the collection of command keywords available to the user
  * and stores help metadata for built-in commands.
@@ -33,6 +35,7 @@ public class CommandDatabase {
         register(HelpCommand.COMMAND_WORD, "Show help overview or details for a command.",
                 HelpCommand.MESSAGE_USAGE);
         register(ListCommand.COMMAND_WORD, "List all saved locations.", ListCommand.MESSAGE_USAGE);
+        register(NoteCommand.COMMAND_WORD, "Record a note in AddressMe.", NoteCommand.MESSAGE_USAGE);
         register(PlanCommand.COMMAND_WORD, "Show or clear the planner for a specific date.", PlanCommand.MESSAGE_USAGE);
         register(ShortcutCommand.COMMAND_WORD, "Manage command shortcuts.", ShortcutCommand.MESSAGE_USAGE);
     }

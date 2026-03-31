@@ -11,6 +11,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_LOCATION;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
@@ -18,12 +19,11 @@ import org.junit.jupiter.api.Test;
 // import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
-// import seedu.address.logic.commands.EditCommand;
-// import seedu.address.logic.commands.EditCommand.EditLocationDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.NoteCommand;
 import seedu.address.logic.commands.PlanCommand;
 import seedu.address.logic.commands.ShortcutCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -120,6 +120,13 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_helpLink_success() throws Exception {
         assertEquals(new HelpCommand(true), parser.parseCommand("help " + HelpCommand.LINK_FLAG));
+    }
+
+    @Test
+    public void parseCommand_note_success() throws Exception {
+        assertEquals(new NoteCommand(new seedu.address.model.location.Name("Great place"),
+                Optional.of(new seedu.address.model.location.VisitDate("2026-03-24"))),
+                parser.parseCommand("note n/Great place d/2026-03-24"));
     }
 
     @Test
