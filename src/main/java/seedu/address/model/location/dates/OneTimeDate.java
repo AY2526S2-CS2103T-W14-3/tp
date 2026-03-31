@@ -4,6 +4,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.DateParser;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import static java.util.Objects.requireNonNull;
@@ -35,7 +36,7 @@ public class OneTimeDate extends VisitDate {
      */
     public OneTimeDate(String dateString) {
         requireNonNull(dateString);
-        checkArgument(isValidVisitDate(dateString), VisitDate.MESSAGE_CONSTRAINTS);
+        //checkArgument(isValidVisitDate(dateString), MESSAGE_CONSTRAINTS);
         try {
             this.date = DateParser.parse(dateString);
         } catch (IllegalValueException e) {
@@ -44,13 +45,20 @@ public class OneTimeDate extends VisitDate {
 
     }
 
+    @Override
     public boolean isOn(LocalDate date) {
         return this.date.equals(date);
     }
 
+    //TODO
+    @Override
+    public String toDataString() {
+        return date.toString();
+    }
+
     @Override
     public String toString() {
-        return DateParser.dateToPrettyString(date);
+        return date.format(DateTimeFormatter.ofPattern("EEEE, d MMM yyyy"));
     }
 
     @Override

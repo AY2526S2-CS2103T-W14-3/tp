@@ -24,6 +24,11 @@ public class EveryDayDate extends VisitDate {
     }
 
     @Override
+    public String toDataString() {
+        return "everyday";
+    }
+
+    @Override
     public String toString() {
         return "Everyday";
     }

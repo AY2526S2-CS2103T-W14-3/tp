@@ -18,6 +18,7 @@ import seedu.address.model.location.Location;
 import seedu.address.model.location.Name;
 import seedu.address.model.location.Phone;
 import seedu.address.model.location.PostalCode;
+import seedu.address.model.location.dates.OneTimeDate;
 import seedu.address.model.location.dates.VisitDate;
 import seedu.address.model.tag.Tag;
 
@@ -81,7 +82,7 @@ class JsonAdaptedLocation {
         postalCode = source.getPostalCode().map(p -> p.value).orElse(null);
 
         visitDates.addAll(source.getVisitDates().stream()
-                .map(VisitDate::toString)
+                .map(VisitDate::toDataString)
                 .collect(Collectors.toList()));
 
         tags.addAll(source.getTags().stream()
@@ -145,7 +146,8 @@ class JsonAdaptedLocation {
             if (!VisitDate.isValidVisitDate(visitDate)) {
                 throw new IllegalValueException(DateParser.MESSAGE_WRONG_DATE_FORMAT);
             }
-            modelVisitDates.add(new VisitDate(visitDate));
+            //TODO
+            modelVisitDates.add(new OneTimeDate(visitDate));
         }
 
         final Set<Tag> modelTags = new HashSet<>(locationTags);

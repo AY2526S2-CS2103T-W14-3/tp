@@ -13,6 +13,7 @@ import seedu.address.model.location.Location;
 import seedu.address.model.location.Name;
 import seedu.address.model.location.Phone;
 import seedu.address.model.location.PostalCode;
+import seedu.address.model.location.dates.OneTimeDate;
 import seedu.address.model.location.dates.VisitDate;
 import seedu.address.model.tag.Tag;
 
@@ -93,11 +94,11 @@ public class SampleDataUtil {
     }
 
     /**
-     * Returns a visit date set containing the list of strings given.
+     * Returns a visit date set containing the list of strings given. TODO
      */
     public static Set<VisitDate> getVisitDateSet(String... dates) {
         return Arrays.stream(dates)
-                .map(VisitDate::new)
+                .map(OneTimeDate::new)
                 .collect(Collectors.toSet());
     }
 }

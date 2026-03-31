@@ -74,7 +74,7 @@ public class DateParser {
         for (DateTimeFormatter formatter : MONTH_DAY_FORMATTERS) {
             try {
                 MonthDay parsed = MonthDay.parse(input, formatter);
-                return parseMonthDay(today, parsed);
+                return monthDayToDate(today, parsed);
             } catch (DateTimeParseException e) {
                 //ignore since exception is thrown below
             }
@@ -108,28 +108,6 @@ public class DateParser {
     }
 
     /**
-     * Reads a string and converts it to a VisitDate object,
-     * and throws no checked exception, since it expect it to be valid
-     */
-    public static VisitDate unsafeParseVisitDate(String input) {
-        try {
-            return parseVisitDate(input);
-        } catch (IllegalValueException e) {
-            throw new RuntimeException("Unsafe failure of VisitDate parsing!");
-        }
-    }
-
-    /**
-     * Converts a LocalDate object back into a string to be stored on in data files
-     *
-     * @param date LocalDate object to be converted
-     * @return a string representation of date/datetime
-     */
-    public static String dateToDataString(LocalDate date) {
-        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    }
-
-    /**
      * Converts a LocalDate into the output format of dates to users
      *
      * @param date LocalDate to convert
@@ -143,29 +121,13 @@ public class DateParser {
     }
 
     /**
-     * Returns true if a given string is a valid visit date.
-     */
-    public static boolean isValidVisitDate(String test) {
-        if (test == null) {
-            return false;
-        }
-
-        try {
-            DateParser.parse(test);
-            return true;
-        } catch (IllegalValueException e) {
-            return false;
-        }
-    }
-
-    /**
      * Converts a day and month to LocalDate by taking the nearest upcoming date
      *
      * @param today      LocalDate representing the current date
      * @param dateParsed MonthDay to be converted
      * @return The date with year adjusted
      */
-    public static LocalDate parseMonthDay(LocalDate today, MonthDay dateParsed) {
+    public static LocalDate monthDayToDate(LocalDate today, MonthDay dateParsed) {
         LocalDate dateThisYear = dateParsed.atYear(today.getYear());
 
         // the date has passed, so should refer to next year
