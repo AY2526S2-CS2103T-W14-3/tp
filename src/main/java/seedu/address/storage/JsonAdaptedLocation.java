@@ -143,11 +143,7 @@ class JsonAdaptedLocation {
 
         final Set<VisitDate> modelVisitDates = new HashSet<>();
         for (String visitDate : visitDates) {
-            if (!VisitDate.isValidVisitDate(visitDate)) {
-                throw new IllegalValueException(DateParser.MESSAGE_WRONG_DATE_FORMAT);
-            }
-            //TODO
-            modelVisitDates.add(new OneTimeDate(visitDate));
+            modelVisitDates.add(VisitDate.of(visitDate));
         }
 
         final Set<Tag> modelTags = new HashSet<>(locationTags);

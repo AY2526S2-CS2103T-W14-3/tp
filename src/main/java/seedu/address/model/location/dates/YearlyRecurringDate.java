@@ -30,19 +30,19 @@ public class YearlyRecurringDate extends VisitDate {
         this.date = md;
     }
 
-    /**
-     * Constructs a {@code WeeklyRecurringDate}. TODO
-     * @param dateString A valid visit date string representing a Day of the week
-     */
-    public YearlyRecurringDate(String dateString) {
-        requireNonNull(dateString);
-        //checkArgument(isValidVisitDate(dateString), MESSAGE_CONSTRAINTS);
-        try {
-            this.date = MonthDay.from(DateParser.parseDate(dateString));
-        } catch (IllegalValueException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    /**
+//     * Constructs a {@code WeeklyRecurringDate}. TODO
+//     * @param dateString A valid visit date string representing a Day of the week
+//     */
+//    public YearlyRecurringDate(String dateString) {
+//        requireNonNull(dateString);
+//        //checkArgument(isValidVisitDate(dateString), MESSAGE_CONSTRAINTS);
+//        try {
+//            this.date = MonthDay.from(DateParser.parseDate(dateString));
+//        } catch (IllegalValueException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     @Override
     public boolean isOn(LocalDate date) {
@@ -51,7 +51,7 @@ public class YearlyRecurringDate extends VisitDate {
 
     @Override
     public String toDataString() {
-        return "r-" + date.format(DATA_FORMAT);
+        return "e-" + date.format(DATA_FORMAT);
     }
 
     @Override

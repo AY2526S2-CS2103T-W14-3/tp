@@ -50,7 +50,6 @@ public class OneTimeDate extends VisitDate {
         return this.date.equals(date);
     }
 
-    //TODO
     @Override
     public String toDataString() {
         return date.toString();

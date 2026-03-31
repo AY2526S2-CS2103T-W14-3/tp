@@ -124,9 +124,9 @@ public class ParserUtil {
         requireNonNull(visitDate);
 
         try {
-            return DateParser.parseDateVisitDate(visitDate);
+            return VisitDate.of(visitDate);
         } catch (IllegalValueException e) {
-            throw new ParseException(DateParser.MESSAGE_WRONG_DATE_FORMAT);
+            throw new ParseException(e.getMessage());
         }
     }
 

@@ -84,8 +84,6 @@ public class DateParser {
             //ignore since exception is thrown below
         }
 
-        // capitalize just the first letter (Assuming it is day of the week)
-        input = formatDayOfWeek(input);
         try {
             DayOfWeek day = parseDayOfWeek(input);
             return today.with(TemporalAdjusters.nextOrSame(day));
@@ -119,6 +117,8 @@ public class DateParser {
      */
     public static DayOfWeek parseDayOfWeek(String input) throws IllegalValueException {
         input = input.trim();
+        // capitalize just the first letter (Assuming it is day of the week)
+        input = formatDayOfWeek(input);
 
         if (input.isEmpty()) {
             throw new IllegalValueException(MESSAGE_WRONG_DAY_OF_WEEK_FORMAT);
@@ -170,6 +170,7 @@ public class DateParser {
      * Converts a string to all lowercase except the first character, which is capitalized
      */
     private static String formatDayOfWeek(String input) {
+        requireNonNull(input);
         return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
     }
 }

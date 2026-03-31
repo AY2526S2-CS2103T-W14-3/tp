@@ -27,33 +27,35 @@ public class WeeklyRecurringDate extends VisitDate {
         this.day = dow;
     }
 
-    /**
-     * Constructs a {@code WeeklyRecurringDate}. TODO
-     * @param dateString A valid visit date string representing a Day of the week
-     */
-    public WeeklyRecurringDate(String dateString) {
-        requireNonNull(dateString);
-        //checkArgument(isValidVisitDate(dateString), MESSAGE_CONSTRAINTS);
-        try {
-            this.day = DateParser.parseDate(dateString).getDayOfWeek();
-        } catch (IllegalValueException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    /**
+//     * Constructs a {@code WeeklyRecurringDate}. TODO
+//     * @param dateString A valid visit date string representing a Day of the week
+//     */
+//    public WeeklyRecurringDate(String dateString) {
+//        requireNonNull(dateString);
+//        //checkArgument(isValidVisitDate(dateString), MESSAGE_CONSTRAINTS);
+//        try {
+//            this.day = DateParser.parseDate(dateString).getDayOfWeek();
+//        } catch (IllegalValueException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     @Override
     public boolean isOn(LocalDate date) {
-        return false;
+        return date.getDayOfWeek().equals(day);
     }
 
     @Override
     public String toDataString() {
-        return "r-" + day.toString();
+        return "e-" + day.toString();
     }
 
     @Override
     public String toString() {
-        return "Every " + day.toString();
+        String dayString = day.toString();
+        dayString = dayString.substring(0, 1).toUpperCase() + dayString.substring(1).toLowerCase();
+        return "Every " + dayString;
     }
 
     @Override

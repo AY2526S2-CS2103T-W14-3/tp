@@ -94,11 +94,11 @@ public class SampleDataUtil {
     }
 
     /**
-     * Returns a visit date set containing the list of strings given. TODO
+     * Returns a visit date set containing the list of strings given.
      */
     public static Set<VisitDate> getVisitDateSet(String... dates) {
         return Arrays.stream(dates)
-                .map(OneTimeDate::new)
+                .map(VisitDate::safeOf)
                 .collect(Collectors.toSet());
     }
 }
