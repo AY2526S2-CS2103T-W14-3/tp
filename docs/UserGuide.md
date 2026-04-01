@@ -107,9 +107,9 @@ Examples:
 
 ### Recording a note : `note`
 
-Records a note that will be persisted in future milestones. Currently it validates syntax via CLI and confirms receipt.
+Records a date-bound note that will be persisted in future milestones. Currently it validates syntax via CLI and confirms receipt.
 
-Format: `note n/NOTE d/DATE`
+Format: `note n/NOTE d/DATE` (DATE required)
 
 Examples:
 * `note n/Great place d/2026-03-24`
@@ -291,7 +291,7 @@ E.g. `A` autocompletes into `add`, while `e` autocompletes to `e`, since both `e
 Action | Format, Examples
 --------|------------------
 **Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DATE]… [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 d/2026-01-01 t/friend t/colleague`
-**Note** | `note n/NOTE [d/DATE]` <br> e.g., `note n/Great place d/2026-03-24`
+**Note** | `note n/NOTE d/DATE` <br> e.g., `note n/Great place d/2026-03-24`
 **DeleteNote** | `note d-/DATE` <br> e.g., `note d-/2026-03-24`
 **Clear** | `clear`
 **Delete** | `delete INDEX [MORE_INDEXES]...`<br> e.g., `delete 3` or `delete 1 2 3`
