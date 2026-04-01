@@ -42,4 +42,20 @@ public class DeleteNoteCommandTest {
         assertNotEquals(first, null);
         assertNotEquals(first, new Object());
     }
+
+    @Test
+    public void getDate() {
+        VisitDate date = new VisitDate("2026-03-24");
+        DeleteNoteCommand command = new DeleteNoteCommand(date);
+
+        assertEquals(date, command.getDate());
+    }
+
+    @Test
+    public void toStringMethod() {
+        DeleteNoteCommand command = new DeleteNoteCommand(new VisitDate("2026-03-24"));
+
+        String expected = DeleteNoteCommand.class.getCanonicalName() + "{date=2026-03-24}";
+        assertEquals(expected, command.toString());
+    }
 }
