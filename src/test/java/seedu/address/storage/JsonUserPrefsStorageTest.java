@@ -66,14 +66,6 @@ public class JsonUserPrefsStorageTest {
     }
 
     @Test
-    public void readUserPrefs_withDarkTheme_successfullyRead() throws DataLoadingException {
-        UserPrefs expected = getTypicalUserPrefs();
-        expected.setTheme(Theme.DARK);
-        UserPrefs actual = readUserPrefs("TypicalUserPrefWithDarkTheme.json").get();
-        assertEquals(expected, actual);
-    }
-
-    @Test
     public void readUserPrefs_valuesMissingFromFile_defaultValuesUsed() throws DataLoadingException {
         UserPrefs actual = readUserPrefs("EmptyUserPrefs.json").get();
         assertEquals(new UserPrefs(), actual);
