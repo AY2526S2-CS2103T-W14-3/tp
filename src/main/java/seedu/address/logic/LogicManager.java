@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.Theme;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandDatabase;
 import seedu.address.logic.commands.CommandResult;
@@ -65,6 +66,14 @@ public class LogicManager implements Logic {
             throw new CommandException(String.format(FILE_OPS_ERROR_FORMAT, ioe.getMessage()), ioe);
         }
 
+        try {
+            storage.saveShortcutMap(model.getShortcutMap());
+        } catch (AccessDeniedException e) {
+            logger.warning(String.format(FILE_OPS_PERMISSION_ERROR_FORMAT, e.getMessage()));
+        } catch (IOException ioe) {
+            logger.warning(String.format(FILE_OPS_ERROR_FORMAT, ioe.getMessage()));
+        }
+
         // Save user preferences as a best-effort operation. Failures here should not
         // cause the entire command to be reported as failed when the address book
         // has already been successfully persisted.
@@ -105,8 +114,18 @@ public class LogicManager implements Logic {
     }
 
     @Override
+    public Theme getTheme() {
+        return model.getTheme();
+    }
+
+    @Override
     public void setGuiSettings(GuiSettings guiSettings) {
         model.setGuiSettings(guiSettings);
+    }
+
+    @Override
+    public void setTheme(Theme theme) {
+        model.setTheme(theme);
     }
 
     @Override

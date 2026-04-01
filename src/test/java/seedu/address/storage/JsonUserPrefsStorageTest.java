@@ -7,13 +7,13 @@ import static seedu.address.testutil.Assert.assertThrows;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Map;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.Theme;
 import seedu.address.commons.exceptions.DataLoadingException;
 import seedu.address.model.UserPrefs;
 
@@ -58,10 +58,10 @@ public class JsonUserPrefsStorageTest {
     }
 
     @Test
-    public void readUserPrefs_withShortcuts_successfullyRead() throws DataLoadingException {
+    public void readUserPrefs_withDarkTheme_successfullyRead() throws DataLoadingException {
         UserPrefs expected = getTypicalUserPrefs();
-        expected.setShortcutMap(Map.of("a", "add", "e", "edit"));
-        UserPrefs actual = readUserPrefs("TypicalUserPrefWithShortcuts.json").get();
+        expected.setTheme(Theme.DARK);
+        UserPrefs actual = readUserPrefs("TypicalUserPrefWithDarkTheme.json").get();
         assertEquals(expected, actual);
     }
 
@@ -83,6 +83,7 @@ public class JsonUserPrefsStorageTest {
         UserPrefs userPrefs = new UserPrefs();
         userPrefs.setGuiSettings(new GuiSettings(1000, 500, 300, 100));
         userPrefs.setAddressBookFilePath(Paths.get("addressbook.json"));
+        userPrefs.setShortcutMapFilePath(Paths.get("shortcut.json"));
         return userPrefs;
     }
 
@@ -113,7 +114,7 @@ public class JsonUserPrefsStorageTest {
 
         UserPrefs original = new UserPrefs();
         original.setGuiSettings(new GuiSettings(1200, 200, 0, 2));
-        original.setShortcutMap(Map.of("a", "add"));
+        original.setTheme(Theme.DARK);
 
         Path pefsFilePath = testFolder.resolve("TempPrefs.json");
         JsonUserPrefsStorage jsonUserPrefsStorage = new JsonUserPrefsStorage(pefsFilePath);

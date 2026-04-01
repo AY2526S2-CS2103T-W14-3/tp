@@ -4,12 +4,10 @@ import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.Theme;
 
 /**
  * Represents User's preferences.
@@ -17,8 +15,9 @@ import seedu.address.commons.core.GuiSettings;
 public class UserPrefs implements ReadOnlyUserPrefs {
 
     private GuiSettings guiSettings = new GuiSettings();
+    private Theme theme = Theme.LIGHT;
     private Path addressBookFilePath = Paths.get("data" , "addressbook.json");
-    private Map<String, String> shortcutMap = new LinkedHashMap<>();
+    private Path shortcutMapFilePath = Paths.get("data", "shortcut.json");
 
     /**
      * Creates a {@code UserPrefs} with default values.
@@ -39,8 +38,9 @@ public class UserPrefs implements ReadOnlyUserPrefs {
     public void resetData(ReadOnlyUserPrefs newUserPrefs) {
         requireNonNull(newUserPrefs);
         setGuiSettings(newUserPrefs.getGuiSettings());
+        setTheme(newUserPrefs.getTheme());
         setAddressBookFilePath(newUserPrefs.getAddressBookFilePath());
-        setShortcutMap(newUserPrefs.getShortcutMap());
+        setShortcutMapFilePath(newUserPrefs.getShortcutMapFilePath());
     }
 
     public GuiSettings getGuiSettings() {
@@ -52,6 +52,16 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         this.guiSettings = guiSettings;
     }
 
+    @Override
+    public Theme getTheme() {
+        return theme;
+    }
+
+    public void setTheme(Theme theme) {
+        requireNonNull(theme);
+        this.theme = theme;
+    }
+
     public Path getAddressBookFilePath() {
         return addressBookFilePath;
     }
@@ -61,36 +71,13 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         this.addressBookFilePath = addressBookFilePath;
     }
 
-    @Override
-    public Map<String, String> getShortcutMap() {
-        return Collections.unmodifiableMap(shortcutMap);
+    public Path getShortcutMapFilePath() {
+        return shortcutMapFilePath;
     }
 
-    public void setShortcutMap(Map<String, String> shortcutMap) {
-        requireNonNull(shortcutMap);
-        this.shortcutMap = new LinkedHashMap<>(shortcutMap);
-    }
-
-    /**
-     * Returns true if a shortcut exists for {@code alias}.
-     */
-    public boolean hasShortcut(String alias) {
-        requireNonNull(alias);
-        return shortcutMap.containsKey(alias);
-    }
-
-    public void setShortcut(String alias, String commandWord) {
-        requireNonNull(alias);
-        requireNonNull(commandWord);
-        shortcutMap.put(alias, commandWord);
-    }
-
-    /**
-     * Removes the shortcut mapped to {@code alias}.
-     */
-    public void removeShortcut(String alias) {
-        requireNonNull(alias);
-        shortcutMap.remove(alias);
+    public void setShortcutMapFilePath(Path shortcutMapFilePath) {
+        requireNonNull(shortcutMapFilePath);
+        this.shortcutMapFilePath = shortcutMapFilePath;
     }
 
     @Override
@@ -106,21 +93,23 @@ public class UserPrefs implements ReadOnlyUserPrefs {
 
         UserPrefs otherUserPrefs = (UserPrefs) other;
         return guiSettings.equals(otherUserPrefs.guiSettings)
+                && theme == otherUserPrefs.theme
                 && addressBookFilePath.equals(otherUserPrefs.addressBookFilePath)
-                && shortcutMap.equals(otherUserPrefs.shortcutMap);
+                && shortcutMapFilePath.equals(otherUserPrefs.shortcutMapFilePath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, shortcutMap);
+        return Objects.hash(guiSettings, theme, addressBookFilePath, shortcutMapFilePath);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings);
+        sb.append("\nTheme : " + theme);
         sb.append("\nLocal data file location : " + addressBookFilePath);
-        sb.append("\nShortcuts : " + shortcutMap);
+        sb.append("\nShortcut file location : " + shortcutMapFilePath);
         return sb.toString();
     }
 

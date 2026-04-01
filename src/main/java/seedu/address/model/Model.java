@@ -2,11 +2,11 @@ package seedu.address.model;
 
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.util.Map;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.Theme;
 import seedu.address.model.location.Location;
 
 /**
@@ -36,9 +36,19 @@ public interface Model {
     GuiSettings getGuiSettings();
 
     /**
+     * Returns the user prefs' theme.
+     */
+    Theme getTheme();
+
+    /**
      * Sets the user prefs' GUI settings.
      */
     void setGuiSettings(GuiSettings guiSettings);
+
+    /**
+     * Sets the user prefs' theme.
+     */
+    void setTheme(Theme theme);
 
     /**
      * Returns the user prefs' address book file path.
@@ -53,7 +63,7 @@ public interface Model {
     /**
      * Returns an unmodifiable view of the user-defined shortcuts.
      */
-    Map<String, String> getShortcutMap();
+    ReadOnlyShortcutMap getShortcutMap();
 
     /**
      * Returns true if a shortcut exists for {@code alias}.
