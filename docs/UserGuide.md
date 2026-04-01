@@ -84,12 +84,13 @@ help -ug
 
 * `help` displays a summary of all supported commands in the CLI.
 * `help COMMAND_WORD` displays detailed local guidance for that command.
-* `help -ug` opens the help window for the online User Guide.
 * `COMMAND_WORD` must be an existing built-in command word.
+* `help -ug` opens the help window for the online User Guide (see below).
+
+![Help window](images/helpMessage.png)
 
 Examples:
 * `help add` shows the local guidance for the `add` command.
-
 
 ### Adding a location: `add`
 
@@ -151,6 +152,20 @@ Examples:
 * `shortcut set e edit`    Creates alias 'e' for 'edit'
 * `shortcut list`          Lists all defined shortcuts
 * `shortcut remove e`      Removes alias 'e'
+
+### Changing the application theme : `theme`
+
+Switches the application between light mode and dark mode.
+
+Format:
+```
+theme light
+theme dark
+```
+
+* Use `theme light` to switch to light mode.
+* Use `theme dark` to switch to dark mode.
+* The selected theme is saved and restored the next time the app starts.
 
 ### Editing a location : `edit`
 

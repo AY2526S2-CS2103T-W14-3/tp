@@ -36,6 +36,7 @@ public class CommandDatabase {
         register(NoteCommand.COMMAND_WORD, "Record a note or delete notes by date.", NoteCommand.MESSAGE_USAGE);
         register(PlanCommand.COMMAND_WORD, "Show or clear the planner for a specific date.", PlanCommand.MESSAGE_USAGE);
         register(ShortcutCommand.COMMAND_WORD, "Manage command shortcuts.", ShortcutCommand.MESSAGE_USAGE);
+        register(ThemeCommand.COMMAND_WORD, "Switch between light and dark themes.", ThemeCommand.MESSAGE_USAGE);
     }
 
     /**
