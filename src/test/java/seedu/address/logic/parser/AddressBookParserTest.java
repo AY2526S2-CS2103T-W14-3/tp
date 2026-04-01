@@ -11,7 +11,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_LOCATION;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
@@ -125,7 +124,7 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_note_success() throws Exception {
         assertEquals(new NoteCommand(new seedu.address.model.location.Name("Great place"),
-                Optional.of(new seedu.address.model.location.VisitDate("2026-03-24"))),
+                new seedu.address.model.location.VisitDate("2026-03-24")),
                 parser.parseCommand("note n/Great place d/2026-03-24"));
     }
 

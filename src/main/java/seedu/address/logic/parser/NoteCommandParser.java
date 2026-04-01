@@ -4,8 +4,6 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
-import java.util.Optional;
-
 import seedu.address.logic.commands.NoteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.location.Name;
@@ -20,19 +18,14 @@ public class NoteCommandParser implements Parser<NoteCommand> {
     public NoteCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DATE);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME) || !argMultimap.getPreamble().isEmpty()) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DATE) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_DATE);
 
         Name noteContent = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        Optional<VisitDate> date;
-        if (argMultimap.getValue(PREFIX_DATE).isPresent()) {
-            date = Optional.of(ParserUtil.parseVisitDate(argMultimap.getValue(PREFIX_DATE).get()));
-        } else {
-            date = Optional.empty();
-        }
+        VisitDate date = ParserUtil.parseVisitDate(argMultimap.getValue(PREFIX_DATE).get());
 
         return new NoteCommand(noteContent, date);
     }

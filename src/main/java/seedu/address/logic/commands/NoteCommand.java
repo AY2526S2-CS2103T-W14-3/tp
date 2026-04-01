@@ -2,8 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Optional;
-
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -17,21 +15,22 @@ public class NoteCommand extends Command {
 
     public static final String COMMAND_WORD = "note";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Records a note in AddressMe (work in progress).\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Records a date-tagged note in AddressMe (work in progress).\n"
             + "Parameters: "
             + "n/NOTE_CONTENT "
-            + "[d/DATE] "
+            + "d/DATE "
             + "\nExample: " + COMMAND_WORD + " n/Great place d/2026-03-24";
 
     public static final String MESSAGE_SUCCESS = "New note recorded: %1$s";
 
     private final Name noteContent;
-    private final Optional<VisitDate> date;
+    private final VisitDate date;
 
     /**
-     * Creates a NoteCommand with the given note text and optional date.
+     * Creates a NoteCommand with the given note text and date.
      */
-    public NoteCommand(Name noteContent, Optional<VisitDate> date) {
+    public NoteCommand(Name noteContent, VisitDate date) {
         requireNonNull(noteContent);
         requireNonNull(date);
         this.noteContent = noteContent;
@@ -42,10 +41,7 @@ public class NoteCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        String detail = noteContent.toString();
-        if (date.isPresent()) {
-            detail += " (" + date.get().toString() + ")";
-        }
+        String detail = noteContent.toString() + " (" + date.toString() + ")";
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, detail));
     }

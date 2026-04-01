@@ -107,9 +107,9 @@ Examples:
 
 ### Recording a note : `note`
 
-Records a note that will be persisted in future milestones. Currently it validates syntax via CLI and confirms receipt.
+Records a date-bound note that will be persisted in future milestones. Currently it validates syntax via CLI and confirms receipt.
 
-Format: `note n/NOTE d/DATE`
+Format: `note n/NOTE d/DATE` (DATE required)
 
 Examples:
 * `note n/Great place d/2026-03-24`
