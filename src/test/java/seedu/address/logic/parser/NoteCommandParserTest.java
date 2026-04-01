@@ -1,11 +1,14 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.NoteCommand;
 import seedu.address.model.location.Name;
 import seedu.address.model.location.VisitDate;
@@ -38,5 +41,23 @@ public class NoteCommandParserTest {
     public void parse_invalidPreamble_throwsParseException() {
         assertParseFailure(parser, "abc n/Great place", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 NoteCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_duplicateNamePrefix_throwsParseException() {
+        assertParseFailure(parser, " n/Great place n/Other d/2026-03-24",
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
+    }
+
+    @Test
+    public void parse_duplicateDatePrefix_throwsParseException() {
+        assertParseFailure(parser, " n/Great place d/2026-03-24 d/2026-04-01",
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_DATE));
+    }
+
+    @Test
+    public void parse_invalidDateValue_throwsParseException() {
+        assertParseFailure(parser, " n/Great place d/2026-02-99",
+                VisitDate.MESSAGE_CONSTRAINTS);
     }
 }
