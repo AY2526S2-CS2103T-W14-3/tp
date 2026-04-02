@@ -39,8 +39,8 @@ It offers a **minimalist, easy-to-learn experience** designed for digital nomads
 
 1. Ensure you have Java `17` or above installed on your machine.<br>
    You can do this by opening the Command Prompt app (for Windows users), or Terminal (for Mac/Linux users) and entering "`java -version`".<br>
-1. Download the latest version of `AddressMe.jar` from the GitHub releases page [here](https://github.com/AY2526S2-CS2103T-W14-3/tp/releases). 
-2. Place the AddressMe.jar file in a folder - this becomes your AddressMe home folder. 
+1. Download the latest version of `AddressMe.jar` from the GitHub releases page [here](https://github.com/AY2526S2-CS2103T-W14-3/tp/releases).
+2. Place the AddressMe.jar file in a folder - this becomes your AddressMe home folder.
 3. While in your home folder, right-click and select "Open in Terminal"
    ![ug_quickstart_nav_help.png](images/ug_quickstart_nav_help.png)
 4. Enter the following command into the terminal:
