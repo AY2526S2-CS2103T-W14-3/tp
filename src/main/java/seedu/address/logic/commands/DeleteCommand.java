@@ -63,7 +63,7 @@ public class DeleteCommand extends Command {
             }
 
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_LOCATION_DISPLAYED_INDEX);
+                throw new CommandException(Messages.getInvalidLocationDisplayedIndexMessage(lastShownList.size()));
             }
 
             locationsToDelete.add(lastShownList.get(targetIndex.getZeroBased()));
