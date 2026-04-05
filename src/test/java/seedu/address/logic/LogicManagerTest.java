@@ -372,7 +372,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_deleteNote_missingNote_throwsCommandException() {
+    public void execute_deleteNote_missingNote() {
         String inputCommand = "note d-/2026-03-24";
 
         assertCommandException(inputCommand, DeleteNoteCommand.MESSAGE_NO_NOTES_FOUND);
