@@ -140,10 +140,12 @@ public class ModelManagerTest {
         VisitDate date = VisitDate.of("2026-03-24");
         NoteContent note = new NoteContent("Test Note");
         modelManager.updatePlannerLocationList(LocalDate.of(2026, 3, 24));
+        NoteContent initialPlannerNote = modelManager.getPlannerNoteProperty().getValue();
         modelManager.setNote(date, note);
-        // NoteContent and VisitDate toString values
-        // Note: updatePlannerNote concatenates notes for the same date.
-        // We can verify via observation if needed, but for coverage, the call is key.
+        NoteContent updatedPlannerNote = modelManager.getPlannerNoteProperty().getValue();
+
+        assertFalse(note.equals(initialPlannerNote));
+        assertEquals(note, updatedPlannerNote);
     }
 
     @Test

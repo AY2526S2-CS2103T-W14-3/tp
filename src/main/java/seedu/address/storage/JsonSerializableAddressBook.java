@@ -68,9 +68,13 @@ class JsonSerializableAddressBook {
         }
         for (Map.Entry<String, String> entry : notes.entrySet()) {
             VisitDate visitDate = VisitDate.of(entry.getKey());
+            String noteValue = entry.getValue();
             NoteContent noteContent;
-            if (NoteContent.isValidNoteContent(entry.getValue())) {
-                noteContent = new NoteContent(entry.getValue());
+            if (noteValue == null) {
+                throw new IllegalValueException("Note value is missing. " + NoteContent.MESSAGE_CONSTRAINTS);
+            }
+            if (NoteContent.isValidNoteContent(noteValue)) {
+                noteContent = new NoteContent(noteValue);
             } else {
                 throw new IllegalValueException(NoteContent.MESSAGE_CONSTRAINTS);
             }
