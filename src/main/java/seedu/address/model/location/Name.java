@@ -59,6 +59,10 @@ public class Name {
         return fullName.equals(otherName.fullName);
     }
 
+    /*
+     * Checks name equality in a case-insensitive manner.
+     * Used by isSameLocation method in Location class.
+     */
     public boolean isSameNameIgnoreCase(Name otherName) {
         return otherName != null
                 && fullName.equalsIgnoreCase(otherName.fullName);
