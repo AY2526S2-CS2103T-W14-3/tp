@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.location.Location;
 import seedu.address.model.location.NoteContent;
 import seedu.address.model.location.dates.VisitDate;
@@ -91,6 +92,36 @@ public class AddressBookTest {
         String expected = AddressBook.class.getCanonicalName() + "{locations=" + addressBook.getLocationList()
                 + ", notes=" + addressBook.getNoteMap() + "}";
         assertEquals(expected, addressBook.toString());
+    }
+
+    @Test
+    public void removeNote_nullDate_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> addressBook.removeNote(null));
+    }
+
+    @Test
+    public void removeNote_existingDate_removesNote() throws IllegalValueException {
+        VisitDate date = VisitDate.of("2026-03-24");
+        NoteContent note = new NoteContent("Test Note");
+        addressBook.setNote(date, note);
+        assertTrue(addressBook.getNoteMap().containsKey(date));
+        addressBook.removeNote(date);
+        assertFalse(addressBook.getNoteMap().containsKey(date));
+    }
+
+    @Test
+    public void equals_sameObject_returnsTrue() {
+        assertTrue(addressBook.equals(addressBook));
+    }
+
+    @Test
+    public void equals_notAddressBook_returnsFalse() {
+        assertFalse(addressBook.equals(1));
+    }
+
+    @Test
+    public void hashCodeMethod() {
+        assertEquals(addressBook.hashCode(), addressBook.hashCode());
     }
 
     /**
