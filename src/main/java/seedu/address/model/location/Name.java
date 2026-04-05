@@ -59,6 +59,11 @@ public class Name {
         return fullName.equals(otherName.fullName);
     }
 
+    public boolean isSameNameIgnoreCase(Name otherName) {
+        return otherName != null
+                && fullName.equalsIgnoreCase(otherName.fullName);
+    }
+
     @Override
     public int hashCode() {
         return fullName.hashCode();

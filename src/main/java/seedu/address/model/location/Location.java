@@ -108,7 +108,7 @@ public class Location {
         }
 
         return otherLocation != null
-                && otherLocation.getName().equals(getName());
+                && otherLocation.getName().isSameNameIgnoreCase(getName());
     }
 
     /**
