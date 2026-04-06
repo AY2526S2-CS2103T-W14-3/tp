@@ -10,6 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.POSTAL_CODE_DESC_AMY;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalLocations.AMY;
+import static seedu.address.testutil.TypicalLocations.getTypicalAddressBook;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
@@ -25,6 +26,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.ShortcutCommand;
+import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -32,12 +34,17 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyShortcutMap;
+import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.ShortcutMap;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.location.Location;
+import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonShortcutStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.ShortcutStorage;
 import seedu.address.storage.StorageManager;
+import seedu.address.storage.UserPrefsStorage;
 import seedu.address.testutil.LocationBuilder;
 
 public class LogicManagerTest {
@@ -177,6 +184,51 @@ public class LogicManagerTest {
     @Test
     public void execute_shortcutStorageThrowsAdException_commandSucceeds() throws Exception {
         assertCommandSuccessForExceptionFromShortcutStorage(DUMMY_AD_EXCEPTION);
+    }
+
+    @Test
+    public void execute_nonPersistentCommand_doesNotTriggerStorageWrites() throws Exception {
+        CountingStorageManager storage = createCountingStorage();
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new ShortcutMap());
+        logic = new LogicManager(model, storage);
+
+        CommandResult result = logic.execute("find Meier");
+
+        assertEquals(String.format(Messages.MESSAGE_LOCATIONS_LISTED_OVERVIEW, 2), result.getFeedbackToUser());
+        assertEquals(0, storage.addressBookSaveCount);
+        assertEquals(0, storage.shortcutSaveCount);
+        assertEquals(0, storage.userPrefsSaveCount);
+    }
+
+    @Test
+    public void execute_themeCommand_savesOnlyUserPrefs() throws Exception {
+        CountingStorageManager storage = createCountingStorage();
+        logic = new LogicManager(model, storage);
+
+        assertCommandSuccess(ThemeCommand.COMMAND_WORD + " dark",
+                String.format(ThemeCommand.MESSAGE_SUCCESS, "dark"), createModelWithTheme(Theme.DARK));
+
+        assertEquals(0, storage.addressBookSaveCount);
+        assertEquals(0, storage.shortcutSaveCount);
+        assertEquals(1, storage.userPrefsSaveCount);
+    }
+
+    @Test
+    public void execute_undoCommand_savesOnlyChangedPersistentState() throws Exception {
+        CountingStorageManager storage = createCountingStorage();
+        logic = new LogicManager(model, storage);
+
+        String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + POSTAL_CODE_DESC_AMY + DATE_DESC_AMY;
+
+        logic.execute(addCommand);
+        storage.resetCounts();
+
+        assertCommandSuccess(UndoCommand.COMMAND_WORD, UndoCommand.MESSAGE_SUCCESS, new ModelManager());
+
+        assertEquals(1, storage.addressBookSaveCount);
+        assertEquals(0, storage.shortcutSaveCount);
+        assertEquals(0, storage.userPrefsSaveCount);
     }
 
     @Test
@@ -336,6 +388,51 @@ public class LogicManagerTest {
         ModelManager expectedModel = new ModelManager();
         expectedModel.setShortcut(alias, commandWord);
         return expectedModel;
+    }
+
+    private CountingStorageManager createCountingStorage() {
+        JsonAddressBookStorage addressBookStorage =
+                new JsonAddressBookStorage(temporaryFolder.resolve("CountingAddressBook.json"));
+        JsonUserPrefsStorage userPrefsStorage =
+                new JsonUserPrefsStorage(temporaryFolder.resolve("CountingUserPrefs.json"));
+        JsonShortcutStorage shortcutStorage =
+                new JsonShortcutStorage(temporaryFolder.resolve("CountingShortcut.json"));
+        return new CountingStorageManager(addressBookStorage, userPrefsStorage, shortcutStorage);
+    }
+
+    private static class CountingStorageManager extends StorageManager {
+        private int addressBookSaveCount;
+        private int shortcutSaveCount;
+        private int userPrefsSaveCount;
+
+        private CountingStorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage,
+                                       ShortcutStorage shortcutStorage) {
+            super(addressBookStorage, userPrefsStorage, shortcutStorage);
+        }
+
+        @Override
+        public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+            addressBookSaveCount++;
+            super.saveAddressBook(addressBook);
+        }
+
+        @Override
+        public void saveShortcutMap(ReadOnlyShortcutMap shortcutMap) throws IOException {
+            shortcutSaveCount++;
+            super.saveShortcutMap(shortcutMap);
+        }
+
+        @Override
+        public void saveUserPrefs(ReadOnlyUserPrefs userPrefs) throws IOException {
+            userPrefsSaveCount++;
+            super.saveUserPrefs(userPrefs);
+        }
+
+        private void resetCounts() {
+            addressBookSaveCount = 0;
+            shortcutSaveCount = 0;
+            userPrefsSaveCount = 0;
+        }
     }
 }
 
