@@ -290,8 +290,8 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/POSTAL_CODE] [d/
 </div>
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st location to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/ d+/2026-01-01` Edits the name of the 2nd location to be `Betsy Crower`, clears all existing tags, and adds a visit date of `2026-01-01`.
+*  `edit 1 p/91234567 e/contact@sundowncafe.com` Edits the phone number and email address of the 1st location to be `91234567` and `contact@sundowncafe.com` respectively.
+*  `edit 2 n/Happy Bistro t/ d+/2026-01-01` Edits the name of the 2nd location to be `Happy Bistro`, clears all existing tags, and adds a visit date of `2026-01-01`.
 *  `edit 1 d-/2025-12-25` Removes the visit date `2025-12-25` from the 1st location.
 
 ### `delete` - Deleting a location
@@ -334,12 +334,12 @@ Each morning, run `plan today` to pull up everything you have scheduled. Combine
 
 ### `note` - Recording a note
 
-Records a date-bound note that will be persisted in future milestones. Currently it validates syntax via CLI and confirms receipt.
+Records a date-bound note that will be persisted in future milestones. Currently, it validates syntax via CLI and confirms receipt.
 
 Format: `note n/NOTE d/DATE` (DATE required)
 
 Examples:
-* `note n/Great place d/2026-03-24`
+* `note n/Involves lots of walking. Bring extra water bottles. d/2026-03-24`
 
 ### `note d-` - Deleting a note
 
@@ -357,14 +357,13 @@ Reverts the most recent successful undoable change.
 Format: `undo`
 
 * `undo` currently supports only one level of history.
-* Successful `add`, `edit`, `delete`, `clear`, `shortcut set`, `shortcut remove`, and `theme` commands are undoable.
-* Commands that do not change undoable state, such as `list`, `find`, `plan`, `help`, `shortcut list`, and `note`, do not affect undo history.
+* Successful `add`, `edit`, `delete`, `clear`, `shortcut set` and `shortcut remove` commands are undoable.
+* Commands that do not change undoable state, such as `list`, `find` and `plan`, do not affect undo history.
 * `note` is not undoable yet because it currently validates input and shows a confirmation message without persisting data.
 * If there is nothing to undo, AddressMe shows an error message.
 
 Examples:
 * `delete 3` followed by `undo` restores the deleted location.
-* `theme dark` followed by `undo` restores the previous theme.
 * `shortcut set a add` followed by `undo` removes the shortcut again.
 
 ### `redo` - Redoing the last undo
@@ -374,12 +373,12 @@ Reapplies the most recent undone change.
 Format: `redo`
 
 * `redo` is available after a successful `undo` until another successful undoable command happens.
-* A new successful `add`, `edit`, `delete`, `clear`, `shortcut set`, `shortcut remove`, or `theme` command clears the redo state.
+* A new successful `add`, `edit`, `delete`, `clear`, `shortcut set` or `shortcut remove` command clears the redo state.
 * If there is nothing to redo, AddressMe shows an error message.
 
 Examples:
 * `add n/McDonalds` followed by `undo` and `redo` adds the same location back.
-* `theme dark` followed by `undo` and `redo` switches the theme back to dark.
+* `delete 1` followed by `undo` and `redo` deletes the same location.
 
 ### `shortcut` - Managing command shortcuts
 
@@ -424,7 +423,7 @@ Format: `clear`
 
 ### `exit` - Exiting the program
 
-Closes AddressMe. Your data and shortcuts are saved automatically.
+Closes AddressMe. Your data is saved after relevant commands; no need to manually save.
 
 Format: `exit`
 
@@ -438,7 +437,7 @@ Format: `exit`
 | **Edit**        | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/POSTAL_CODE] [d/DATE]… [d+/DATE]… [d-/DATE]… [t/TAG]… [t+/TAG]… [t-/TAG]…` | `edit 2 n/James Lee e/jameslee@example.com d+/e-friday`                   |
 | **Find**        | `find [KEYWORD] [MORE_KEYWORDS] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/POSTAL_CODE] [t/TAG]… [d/DATE]…`                              | `find n/Cafe t/Halal d/3/4/26`                                            |
 | **List**        | `list`                                                                                                                                    | `list`                                                                    |
-| **Note**        | `note n/NOTE d/DATE`                                                                                                                      | `note n/Great place d/2026-03-24`                                         |
+| **Note**        | `note n/NOTE d/DATE`                                                                                                                      | `note n/Involves lots of walking. Bring extra water bottles. d/2026-03-24` |
 | **Delete Note** | `note d-/DATE`                                                                                                                            | `note d-/2026-03-24`                                                      |
 | **Plan**        | `plan DATE` or `plan`                                                                                                                     | `plan d/23/9`                                                             |
 | **Shortcut**    | `shortcut set ALIAS COMMAND_WORD` / `shortcut remove ALIAS` / `shortcut list`                                                             | `shortcut set a add`, `shortcut remove a`, `shortcut list`                |
@@ -510,7 +509,7 @@ Install AddressMe on the new device, run it once to generate the data folder, th
 
 **Q:** How do I move my data to a new laptop?
 
-**A:** Install AddressMe on the new device, run it once, then copy the all .json files (found in the folder labelled "data") from the old device into the new device's data folder, replacing the files that were created.
+**A:** Install AddressMe on the new device, run it once, then copy all the .json files (found in the folder labelled "data") from the old device into the new device's data folder, replacing the files that were created.
 
 **Q:** Can I have the same location listed multiple times?
 
@@ -518,7 +517,7 @@ Install AddressMe on the new device, run it once to generate the data folder, th
 
 **Q:** Will my shortcuts and themes persist after I close AddressMe?
 
-**A:** Yes. Your shortcuts are saved in shortcut.json in the data folder, and your theme is saved in the preferences.json, all of which will be restored the next time you launch the app.
+**A:** Yes. Your shortcuts are saved in shortcut.json in the data folder, and your theme is saved in preferences.json, all of which will be restored the next time you launch the app.
 
 ### Known Issues
 

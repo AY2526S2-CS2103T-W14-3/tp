@@ -171,7 +171,6 @@ Each snapshot stores:
 
 * a copy of the `AddressBook`
 * a copy of the `ShortcutMap`
-* the current `Theme`
 
 The relevant model operations are:
 
@@ -189,7 +188,12 @@ The relevant model operations are:
 4. If execution succeeds, call `Model#commitState()`.
 5. If execution fails, call `Model#discardState()` so failed commands do not affect undo history.
 
-`add`, `edit`, `delete`, `clear`, `shortcut set`, `shortcut remove`, and `theme` return `true` for `isStateMutating()`. Non-mutating commands such as `list`, `find`, `plan`, `help`, `shortcut list`, and `note` do not change undo/redo history. `note` is excluded because it does not persist any model state yet. `undo` and `redo` themselves also do not create new history entries.
+`add`, `edit`, `delete`, `clear`, `shortcut set` and `shortcut remove` return `true` for `isStateMutating()`. Non-mutating commands such as `list`, `find` and `plan` do not change undo/redo history. `note` is excluded because it does not persist any model state yet. `undo` and `redo` themselves also do not create new history entries.
+
+Persistence is tracked separately from undo/redo history. `ModelManager` maintains dirty flags for the address book,
+shortcut map, and user preferences, and `LogicManager` only saves the storage slices that have unsaved changes after a
+successful command. As a result, read-only commands such as `list`, `find`, and `plan` do not trigger unnecessary disk
+writes, while commands such as `theme`, `undo`, and `redo` still persist the correct data.
 
 #### Behavior
 
@@ -205,7 +209,7 @@ The implementation is intentionally limited to one level:
 **Aspect: Snapshot granularity**
 
 * **Alternative 1 (current choice):** Save the whole undoable app state.
-  * Pros: Small implementation surface, keeps command classes simple, and supports address book, shortcuts, and theme uniformly.
+  * Pros: Small implementation surface, keeps command classes simple, and supports address book and shortcuts uniformly.
   * Cons: Uses more memory than command-specific inverse operations.
 
 * **Alternative 2:** Each command stores enough information to reverse itself.
@@ -539,9 +543,8 @@ Use case ends.
 
 **MSS**
 
-1. User enters the save/exit command.
-2. System saves the data.
-3. System closes the application.
+1. User enters the exit command.
+2. System closes the application.
 Use case ends.
 
 **Extensions**
@@ -710,9 +713,6 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `clear` followed by `undo`<br>
       Expected: All previously saved locations are restored.
 
-   1. Test case: `theme dark` followed by `undo`<br>
-      Expected: The previous theme is restored.
-
    1. Test case: `shortcut set a add` followed by `undo`<br>
       Expected: The shortcut `a -> add` is removed.
 
@@ -732,6 +732,3 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: `redo` again<br>
       Expected: No data changes. An error message is shown because only one redo level is supported.
-
-   1. Test case: `theme dark`, `undo`, `redo`<br>
-      Expected: The theme becomes dark again.
