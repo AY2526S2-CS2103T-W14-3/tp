@@ -253,6 +253,7 @@ public class LogicManagerTest {
         assertThrows(UnsupportedOperationException.class, () -> logic.getPlannerLocationList().remove(0));
     }
 
+    //@@author Zhenghao229
     @Test
     public void execute_addNote_success() throws Exception {
         String inputCommand = "note n/Test Note d/2026-03-24";
@@ -284,6 +285,7 @@ public class LogicManagerTest {
 
         assertCommandException(inputCommand, DeleteNoteCommand.MESSAGE_NO_NOTES_FOUND);
     }
+    //@@author
 
     /**
      * Executes the command and confirms that
