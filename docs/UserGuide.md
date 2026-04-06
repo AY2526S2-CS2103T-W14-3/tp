@@ -232,14 +232,14 @@ Format: `list`
 
 Your most powerful command. Searches across names, addresses, tags, phone numbers, emails, and visit dates. Multiple conditions are combined with AND logic - the more specific you are, the more precise your results.
 
-Format: `find [KEYWORD] [MORE_KEYWORDS] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [d/DATE]`
+Format: `find [KEYWORD] [MORE_KEYWORDS] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/POSTAL_CODE] [t/TAG] [d/DATE]`
 
 **How Search Works**
 
 | **Feature**             | **Description**                                                                                   |
 |-------------------------|---------------------------------------------------------------------------------------------------|
 | **Unprefixed keywords** | OR logic on name. `find ramen cafe` will returns locations containing 'Ramen' **OR** 'Cafe'.      |
-| **n/, p/, e/, a/**      | Substring match. `n/Bak` returns 'Bakery', 'Al-Bakar', 'Bak Kut Teh'.                             |
+| **n/, p/, e/, a/, c/**  | Substring match. `n/Bak` returns 'Bakery', 'Al-Bakar', 'Bak Kut Teh'.                             |
 | **t/TAG**               | Exact match (case-insensitive). Must match the full tag. `t/hal` does **not** match 'halal'.      |
 | **d/DATE**              | Accepts any date format or keyword [supported by AddressMe](#date-formats).                       |
 | **Multiple prefixes**   | AND logic. `n/Cafe t/Halal t/Vegetarian` returns cafes that are ALSO tagged halal and vegetarian. |
@@ -257,6 +257,8 @@ Format: `find [KEYWORD] [MORE_KEYWORDS] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 Examples:
 * `find Restaurant` returns all locations with "Restaurant" in the name.
 * `find n/Hanjin p/9123` returns locations with "Hanjin" in the name AND "9123" in the phone number.
+* `find c/123456` returns locations with postal codes containing `123456`.
+* `find n/Cafe c/589` returns locations with "Cafe" in the name AND "589" in the postal code.
 * `find t/Japanese t/Halal` returns locations that have BOTH "Japanese" AND "Halal" tags.
 * `find d/2023-10-15` returns locations visited on 15th Oct 2023.
 * `find d/2023-10-15 d/2023-11-20` returns locations visited on BOTH 15th Oct 2023 AND 20th Nov 2023.
@@ -434,7 +436,7 @@ Format: `exit`
 | **Clear**       | `clear`                                                                                                                                   | `clear`                                                                   |
 | **Delete**      | `delete INDEX [MORE_INDEXES]...`                                                                                                          | `delete 3` or `delete 1 2 3`                                              |
 | **Edit**        | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/POSTAL_CODE] [d/DATE]… [d+/DATE]… [d-/DATE]… [t/TAG]… [t+/TAG]… [t-/TAG]…` | `edit 2 n/James Lee e/jameslee@example.com d+/e-friday`                   |
-| **Find**        | `find [KEYWORD] [MORE_KEYWORDS] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]… [d/DATE]…`                                              | `find n/Cafe t/Halal d/3/4/26`                                            |
+| **Find**        | `find [KEYWORD] [MORE_KEYWORDS] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/POSTAL_CODE] [t/TAG]… [d/DATE]…`                              | `find n/Cafe t/Halal d/3/4/26`                                            |
 | **List**        | `list`                                                                                                                                    | `list`                                                                    |
 | **Note**        | `note n/NOTE d/DATE`                                                                                                                      | `note n/Great place d/2026-03-24`                                         |
 | **Delete Note** | `note d-/DATE`                                                                                                                            | `note d-/2026-03-24`                                                      |
