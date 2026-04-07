@@ -70,7 +70,6 @@ AddressMe has four main UI zones:
 | **Result Panel**  | Displays confirmation messages, search results, and errors encountered.  |
 | **Location List** | Shows all your saved locations, updated in real time after each command. |
 | **Planner Panel** | View destinations on a specific date (using the **plan** command).       |
-<div style="page-break-after: always;"></div>
 
 <div style="page-break-after: always;"></div>
 
@@ -93,7 +92,6 @@ A valid **add** command is shown below.
 | **t/TAG...**             | The ellipsis means you can submit more than one of these parameters.<br><br>e.g. "_t/_**_workplace_**_" OR "t/_**_workplace_** _t/_**_networking_**_"_                |
 | **Any order**            | Parameters can be entered in any order unless specified otherwise.<br><br>e.g. "_t/_**_workplace_** _n/_**_Nomad Hub_**_" OR "n/_**_Nomad Hub_** _t/_**_workplace_**" |
 | **Single-word commands** | Some commands take no extra parameters, like **help**, **list**, **exit**, **clear**.                                                                                 |
-<div style="page-break-after: always;"></div>
 
 <div style="page-break-after: always;"></div>
 
@@ -448,23 +446,23 @@ Format: `exit`
 
 ## 4. Command summary
 
-| **Action**      | **Format**                                                                                                                                | **Examples**                                                              |
-|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
-| **Add**         | `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/POSTAL_CODE] [d/DATE]... [t/TAG]...`                                                | `add n/Nomad Hub p/98765432 e/hi@nomad.sg a/12 Tanjong Pagar t/coworking` |
-| **Clear**       | `clear`                                                                                                                                   | `clear`                                                                   |
-| **Delete**      | `delete INDEX [MORE_INDEXES]...`                                                                                                          | `delete 3` or `delete 1 2 3`                                              |
-| **Edit**        | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/POSTAL_CODE] [d/DATE]… [d+/DATE]… [d-/DATE]… [t/TAG]… [t+/TAG]… [t-/TAG]…` | `edit 2 n/Happy Bistro e/contact@happybistro.com d+/e-friday`             |
-| **Find**        | `find [KEYWORD] [MORE_KEYWORDS] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/POSTAL_CODE] [t/TAG]… [d/DATE]…`                              | `find n/Cafe t/Halal d/3/4/26`                                            |
-| **List**        | `list`                                                                                                                                    | `list`                                                                    |
+| **Action**      | **Format**                                                                                                                                | **Examples**                                                               |
+|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| **Add**         | `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/POSTAL_CODE] [d/DATE]... [t/TAG]...`                                                | `add n/Nomad Hub p/98765432 e/hi@nomad.sg a/12 Tanjong Pagar t/coworking`  |
+| **Clear**       | `clear`                                                                                                                                   | `clear`                                                                    |
+| **Delete**      | `delete INDEX [MORE_INDEXES]...`                                                                                                          | `delete 3` or `delete 1 2 3`                                               |
+| **Edit**        | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/POSTAL_CODE] [d/DATE]… [d+/DATE]… [d-/DATE]… [t/TAG]… [t+/TAG]… [t-/TAG]…` | `edit 2 n/Happy Bistro e/contact@happybistro.com d+/e-friday`              |
+| **Find**        | `find [KEYWORD] [MORE_KEYWORDS] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/POSTAL_CODE] [t/TAG]… [d/DATE]…`                              | `find n/Cafe t/Halal d/3/4/26`                                             |
+| **List**        | `list`                                                                                                                                    | `list`                                                                     |
 | **Note**        | `note n/NOTE d/DATE`                                                                                                                      | `note n/Involves lots of walking. Bring extra water bottles. d/2026-03-24` |
-| **Delete Note** | `note d-/DATE`                                                                                                                            | `note d-/2026-03-24`                                                      |
-| **Plan**        | `plan DATE` or `plan`                                                                                                                     | `plan d/23/9`                                                             |
-| **Shortcut**    | `shortcut set ALIAS COMMAND_WORD` / `shortcut remove ALIAS` / `shortcut list`                                                             | `shortcut set a add`, `shortcut remove a`, `shortcut list`                |
-| **Theme**       | `theme THEME_NAME`                                                                                                                        | `theme light` or `theme dark`                                             |
-| **Undo**        | `undo`                                                                                                                                    | `undo`                                                                    |
-| **Redo**        | `redo`                                                                                                                                    | `redo`                                                                    |
-| **Help**        | `help` / `help COMMAND_WORD` / `help -ug`                                                                                                 | `help`, `help add`, `help -ug`         
-                                   |
+| **Delete Note** | `note d-/DATE`                                                                                                                            | `note d-/2026-03-24`                                                       |
+| **Plan**        | `plan DATE` or `plan`                                                                                                                     | `plan d/23/9`                                                              |
+| **Shortcut**    | `shortcut set ALIAS COMMAND_WORD` / `shortcut remove ALIAS` / `shortcut list`                                                             | `shortcut set a add`, `shortcut remove a`, `shortcut list`                 |
+| **Theme**       | `theme THEME_NAME`                                                                                                                        | `theme light` or `theme dark`                                              |
+| **Undo**        | `undo`                                                                                                                                    | `undo`                                                                     |
+| **Redo**        | `redo`                                                                                                                                    | `redo`                                                                     |
+| **Help**        | `help` / `help COMMAND_WORD` / `help -ug`                                                                                                 | `help`, `help add`, `help -ug`                                             |
+
 <div style="page-break-after: always;"></div>
 
 ## 5. CLI Power Features
