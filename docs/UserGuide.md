@@ -70,6 +70,7 @@ AddressMe has four main UI zones:
 | **Result Panel**  | Displays confirmation messages, search results, and errors encountered.  |
 | **Location List** | Shows all your saved locations, updated in real time after each command. |
 | **Planner Panel** | View destinations on a specific date (using the **plan** command).       |
+<div style="page-break-after: always;"></div>
 
 <div style="page-break-after: always;"></div>
 
@@ -92,6 +93,7 @@ A valid **add** command is shown below.
 | **t/TAG...**             | The ellipsis means you can submit more than one of these parameters.<br><br>e.g. "_t/_**_workplace_**_" OR "t/_**_workplace_** _t/_**_networking_**_"_                |
 | **Any order**            | Parameters can be entered in any order unless specified otherwise.<br><br>e.g. "_t/_**_workplace_** _n/_**_Nomad Hub_**_" OR "n/_**_Nomad Hub_** _t/_**_workplace_**" |
 | **Single-word commands** | Some commands take no extra parameters, like **help**, **list**, **exit**, **clear**.                                                                                 |
+<div style="page-break-after: always;"></div>
 
 <div style="page-break-after: always;"></div>
 
@@ -461,8 +463,8 @@ Format: `exit`
 | **Theme**       | `theme THEME_NAME`                                                                                                                        | `theme light` or `theme dark`                                             |
 | **Undo**        | `undo`                                                                                                                                    | `undo`                                                                    |
 | **Redo**        | `redo`                                                                                                                                    | `redo`                                                                    |
-| **Help**        | `help` / `help COMMAND_WORD` / `help -ug`                                                                                                 | `help`, `help add`, `help -ug`                                            |
-
+| **Help**        | `help` / `help COMMAND_WORD` / `help -ug`                                                                                                 | `help`, `help add`, `help -ug`         
+                                   |
 <div style="page-break-after: always;"></div>
 
 ## 5. CLI Power Features
