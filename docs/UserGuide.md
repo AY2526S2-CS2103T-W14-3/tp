@@ -93,8 +93,6 @@ A valid **add** command is shown below.
 | **Any order**            | Parameters can be entered in any order unless specified otherwise.<br><br>e.g. "_t/_**_workplace_** _n/_**_Nomad Hub_**_" OR "n/_**_Nomad Hub_** _t/_**_workplace_**" |
 | **Single-word commands** | Some commands take no extra parameters, like **help**, **list**, **exit**, **clear**.                                                                                 |
 
-<div style="page-break-after: always;"></div>
-
 ### Date Formats
 
 AddressMe even accepts a large range of date inputs so you can type dates flexibly.
@@ -427,6 +425,8 @@ Format: `theme THEME_NAME`
 * Use `theme light` and `theme dark` to switch to light and dark mode respectively.
 * The selected theme is saved and restored the next time the app starts.
 
+<div style="page-break-after: always;"></div>
+
 ### `clear` - Clearing all entries
 
 Clears all entries from the address book. Use with caution.
@@ -522,6 +522,7 @@ Install AddressMe on the new device, run it once to generate the data folder, th
 
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## 7. FAQ & Known Issues
 ### Frequently Asked Questions
@@ -537,7 +538,6 @@ Install AddressMe on the new device, run it once to generate the data folder, th
 **Q:** Will my shortcuts and themes persist after I close AddressMe?
 
 **A:** Yes. Your shortcuts are saved in shortcut.json in the data folder, and your theme is saved in preferences.json, all of which will be restored the next time you launch the app.
-<div style="page-break-after: always;"></div>
 
 ### Known Issues
 
