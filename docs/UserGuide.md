@@ -410,9 +410,9 @@ shortcut list
 * `COMMAND_WORD` must be a default command word.
 
 **Examples:**
-* `shortcut set a add` <br>Now typing `a n/...` behaves exactly like `add n/..`.
-* `shortcut list`      <br>Displays all current shortcuts.
-* `shortcut remove a`  <br>Removes alias 'a'.
+* `shortcut set a add`: Now typing `a n/...` behaves exactly like `add n/..`.
+* `shortcut list`: Displays all current shortcuts.
+* `shortcut remove a`: Removes alias 'a'.
 
 ### `theme` - Customize your application
 
@@ -499,7 +499,8 @@ Press `Tab` while typing a command to autocomplete it.
 
 Your data is saved to disk automatically after every command that changes it. You do not need to save manually.
 
-Data is stored at: `[home folder]/data/addressbook.json`
+Location data is stored at: `[home folder]/data/addressbook.json`
+Shortcuts are stored at: `[home folder]/data/shortcut.json`
 
 ### Editing the data file directly
 
@@ -517,7 +518,7 @@ Values outside acceptable ranges may cause unexpected behaviour.
 
 ### Transferring Data to Another Device
 
-Install AddressMe on the new device, run it once to generate the data folder, then replace the empty addressbook.json with your existing data file from the old device.
+Install AddressMe on the new device, run it once to generate the data folder, then replace any .json files with your existing data files from the old device.
 
 
 
