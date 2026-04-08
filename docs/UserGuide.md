@@ -104,6 +104,21 @@ A valid **add** command is shown below.
 | **Any order**            | Parameters can be entered in any order unless specified otherwise.<br><br>e.g. "_t/_**_workplace_** _n/_**_Nomad Hub_**_" OR "n/_**_Nomad Hub_** _t/_**_workplace_**" |
 | **Single-word commands** | Some commands take no extra parameters, like **help**, **list**, **exit**, **clear**.                                                                                 |
 
+### Name Formats
+
+Location names can include letters, numbers, spaces, and common symbols such as `& @ ( ) [ ] . , - '`.
+The name must contain at least one letter or number (i.e. cannot consist only of symbols).
+
+This allows realistic names such as `AT&T Store` or `Raffles @ Marina`.
+
+These rules apply to all commands that use names (e.g. add, edit).
+
+### Phone Formats
+
+Can start with `+` and may include spaces or hyphens between digits (e.g. ``91231234`, `9123 1234`, `+65 9124-1234`).
+
+Must contain at least one digit and be no longer than 15 characters.
+
 ### Date Formats
 
 AddressMe even accepts a large range of date inputs so you can type dates flexibly.
@@ -225,10 +240,11 @@ Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/POSTAL_CODE] [d/DA
 <div markdown="block" class="alert alert-info">
 
 **:information_source: Field Guide:**<br>
-**n/**: Name of the location (e.g. the cafe, clinic, or coworking space). Must contain at least one alphanumeric
-character.
+**n/**: Name of the location (e.g. the cafe, clinic, or coworking space). 
 
-**p/**: Phone number of the location.
+Letters, numbers and some common symbols are allowed. See [name format](#name-formats) for details.
+
+**p/**: Phone number - accepts any supported [phone format](#phone-formats).
 
 **e/**: Email address.
 
