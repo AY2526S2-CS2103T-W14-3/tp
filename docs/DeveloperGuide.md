@@ -792,3 +792,13 @@ testers are expected to do more *exploratory* testing.
 3. Clearing the planner
    1. Type `plan` in the Command line. 
    Expected: The planner is cleared and the header resets. The locations can still be view in the left list.
+
+---
+## **Appendix: Planned Enhancements**
+
+Team size: 5
+
+1. Support autocomplete for tags. Typing `t/a`, `t+/a` or `t-/a` then pressing `Tab` would autocomplete with any existing tags.
+   This is done by having a persistent tag management system, and storing tags in data files.
+2. Currently, the implementation of different commands have slightly differing formats. <br>Sometimes, commands take in strings with the `n/` prefix, like in `add`, but in `find` it does not. Then, in `plan` it doesn't take in a date with the `d/` prefix either.
+<br>Standardise ALL commands to use the prefixes for every variable. This applies even for INDEX, with proposed tag i/. This makes it clearer to the user that every field must be prefixed.
