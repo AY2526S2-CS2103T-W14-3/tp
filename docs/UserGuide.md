@@ -33,6 +33,9 @@ AddressMe is the app for you!
 ---
 <div style="page-break-after: always;"></div>
 <h2>Table of Contents</h2>
+
+---
+
 * Table of Contents
 {:toc}
 
