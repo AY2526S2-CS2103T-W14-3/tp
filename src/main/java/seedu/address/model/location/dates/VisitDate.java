@@ -85,4 +85,9 @@ public abstract class VisitDate {
      * Returns string to order dates to compare in chronological order
      */
     public abstract String toSortString();
+
+    /**
+     * Only for testing usage, converts VisitDate back to input form
+     */
+    public abstract String toInputString();
 }

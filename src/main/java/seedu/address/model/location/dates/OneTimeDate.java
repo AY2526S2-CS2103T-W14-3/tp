@@ -68,4 +68,9 @@ public class OneTimeDate extends VisitDate {
     public int hashCode() {
         return date.hashCode();
     }
+
+    @Override
+    public String toInputString() {
+        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
 }
