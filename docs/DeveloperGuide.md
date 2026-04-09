@@ -145,14 +145,15 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S2-CS2103T-W14-3/tp/blob/master/src/main/java/seedu/address/storage/Storage.java)
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
 The `Storage` component,
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
-* depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
+* can save address book data, user preference data, and shortcut mappings in JSON format, and read them back into corresponding model objects.
+* exposes the `Storage` interface, which extends `AddressBookStorage`, `UserPrefsStorage`, and `ShortcutStorage`, so clients can depend on either the unified API or a narrower storage interface when needed.
+* is implemented by `StorageManager`, which delegates each persistence concern to `JsonAddressBookStorage`, `JsonUserPrefsStorage`, and `JsonShortcutStorage` respectively.
+* depends on classes in the `Model` component because it serializes and deserializes model-owned data such as the address book, user preferences, and shortcut map.
 
 ### Common classes
 
