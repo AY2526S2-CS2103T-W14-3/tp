@@ -387,9 +387,9 @@ Format: `undo`
 * `undo` currently supports only one level of history.
 * If there is nothing to undo, AddressMe shows an error message.
 
-| **Undo-able**                                                                                      | **Does not Affect**                |
-|----------------------------------------------------------------------------------------------------|------------------------------------|
-| Successful `add`, `edit`, `delete`, `clear`, `note`, `shortcut set` and `shortcut remove` commands | `list`, `find` and `plan` commands |
+| **Undo-able**                                                                                      | **Does not Affect**                                 |
+|----------------------------------------------------------------------------------------------------|-----------------------------------------------------|
+| Successful `add`, `edit`, `delete`, `clear`, `note`, `shortcut set` and `shortcut remove` commands | `help`, `list`, `find`, `plan` and `theme` commands |
 
 **Examples:**
 
