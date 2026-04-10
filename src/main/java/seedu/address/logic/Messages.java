@@ -71,7 +71,7 @@ public class Messages {
         }
 
         builder.append("; Tags: ");
-        if (location.getVisitDates().isEmpty()) {
+        if (location.getTags().isEmpty()) {
             builder.append("-");
         } else {
             builder.append(location.getTags().stream()
