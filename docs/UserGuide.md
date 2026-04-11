@@ -116,7 +116,7 @@ These rules apply to all commands that use names (e.g. add, edit).
 
 Can start with `+` and may include spaces or hyphens between digits (e.g. `91231234`, `9123 1234`, `+65 9124-1234`).
 
-Must contain at least one digit and be no longer than 15 characters.
+Must contain at least 3 digits and be no longer than 15 characters.
 
 ### Date Formats
 
@@ -249,7 +249,7 @@ Letters, numbers and some common symbols are allowed. See [name format](#name-fo
 
 **a/**: Street address.
 
-**c/**: Postal code - must be alphanumeric.
+**c/**: Postal code - must be alphanumeric and shorter than 16 characters.
 
 **d/**: Visit date - accepts any supported [date format](#date-formats). Repeat for multiple dates.
 

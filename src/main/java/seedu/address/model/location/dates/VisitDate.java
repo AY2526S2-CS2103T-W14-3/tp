@@ -13,7 +13,7 @@ import seedu.address.logic.parser.DateParser;
  */
 public abstract class VisitDate {
 
-    public static final String MESSAGE_CONSTRAINTS_EMPTY = "The date cannot be empty!.";
+    public static final String MESSAGE_CONSTRAINTS_EMPTY = "The date cannot be empty!";
     public static final String MESSAGE_CONSTRAINTS_RECURRING = "Recurring dates must be yearly or weekly. Try these"
             + " formats:\ne-d/M, e-d/M, every d/M to indicate it happening every year.\nevery Tuesday, e-fri as "
             + "examples of dates occurring every Tuesday or Friday.\nDates must be valid.";
