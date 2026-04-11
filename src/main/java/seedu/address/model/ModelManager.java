@@ -344,6 +344,7 @@ public class ModelManager implements Model {
     public void removeNote(VisitDate date) {
         requireNonNull(date);
         addressBook.removeNote(date);
+        hasUnsavedAddressBookChanges = true;
 
         // update UI if needed
         if (currentPlannedDate != null && date.isOn(currentPlannedDate)) {

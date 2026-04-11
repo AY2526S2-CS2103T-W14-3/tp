@@ -351,6 +351,19 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void removeNote_existingNote_marksAddressBookDirty() throws Exception {
+        VisitDate date = VisitDate.of("2026-03-24");
+        NoteContent note = new NoteContent("Involves lots of walking. Bring extra water bottles.");
+
+        modelManager.setNote(date, note);
+        modelManager.markAddressBookSaved();
+
+        modelManager.removeNote(date);
+
+        assertTrue(modelManager.hasUnsavedAddressBookChanges());
+    }
+
+    @Test
     public void removeNote_nullDate_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> modelManager.removeNote(null));
     }
