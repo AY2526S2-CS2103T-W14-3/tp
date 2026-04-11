@@ -660,11 +660,6 @@ Use case resumes at step 2.
 Use case resumes at step 2.
 
 
-* 5a. An error occurs during deletion.
-* 5a1. System informs the user that the deletion failed.
-Use case ends.
-
-
 * *a. At any time, the user cancels the delete operation.
 * *a1. System aborts the delete operation.
 Use case ends.
