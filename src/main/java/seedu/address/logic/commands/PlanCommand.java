@@ -21,7 +21,7 @@ public class PlanCommand extends Command {
             + "Parameters: [DATE]\n"
             + "Example: " + COMMAND_WORD + " 13/3/26";
 
-    public static final String MESSAGE_DATE_USAGE =  "Try these formats with a valid date:\n"
+    public static final String MESSAGE_DATE_USAGE = "Try these formats with a valid date:\n"
             + "yyyy-MM-dd, yyyy/MM/dd, d-M-yyyy, d/M/yyyy,\n"
             + "d-M-yy, d/M/yy, d-M, d/M, day of the week (e.g. Thu or Thursday).";
 
