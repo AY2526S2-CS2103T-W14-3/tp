@@ -532,21 +532,20 @@ Use case ends.
 
 **Extensions**
 
-**2a. The alias violates validation constraints.**
+* 2a. The alias violates validation constraints.
 (e.g. contains illegal characters, matches a reserved keyword, or conflicts with an existing alias)
-2a1. System rejects the request and shows an appropriate error message.
-Use case ends.
+  * 2a1. System rejects the request and shows an appropriate error message.
+  Use case ends.
 
 
-**2b. The referenced command word is invalid.**
-(e.g. command does not exist or is not eligible for aliasing)
-2b1. System shows an error message indicating that the command is invalid.
-Use case ends.
+* 2b. The referenced command word is invalid.
+  * 2b1. System shows an error message indicating that the command is invalid.
+  Use case ends.
 
 
-**3a. Saving the shortcut fails due to a storage I/O error.**
-3a1. System shows an error message and does not persist the shortcut.
-Use case ends.
+* 3a. Saving the shortcut fails due to a storage I/O error.
+  * 3a1. System shows an error message and does not persist the shortcut.
+  Use case ends.
 
 ---
 
