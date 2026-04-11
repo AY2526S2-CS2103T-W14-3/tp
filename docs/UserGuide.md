@@ -495,7 +495,7 @@ Format: `theme THEME_NAME`
 
 ### `clear` - Clearing all entries
 
-Clears all entries from the address book. Use with caution.
+Clears all data from the AddressMe, including all locations and notes.
 
 Format: `clear`
 
