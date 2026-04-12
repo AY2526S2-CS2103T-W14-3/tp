@@ -745,7 +745,7 @@ testers are expected to do more *exploratory* testing.
 3. Opening the user guide
 
     1. Test case: `help -ug`  
-       Expected: The user guide is opened in a new window or browser.
+       Expected: The link to the user guide is opened in a new window.
 
 4. Invalid usage
 
