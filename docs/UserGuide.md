@@ -397,7 +397,7 @@ Adds or deletes notes for specific or recurring dates. Use this together with th
 
 Formats:
 
-* `note n/NOTE d/DATE` : Adds a note to a date
+* `note n/NOTE d/DATE` : Adds or overwrites a note on a date
 * `note d-/DATE` : Deletes the note for that date
 
 **Behaviour:**
