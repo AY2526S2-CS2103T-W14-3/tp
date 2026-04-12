@@ -236,6 +236,23 @@ public class LogicManagerTest {
     }
 
     @Test
+    public void execute_deleteNote_savesAddressBook() throws Exception {
+        CountingStorageManager storage = createCountingStorage();
+        logic = new LogicManager(model, storage);
+
+        model.setNote(VisitDate.of("2026-03-24"), new NoteContent("Test Note"));
+        model.markAddressBookSaved();
+
+        assertCommandSuccess("note d-/2026-03-24",
+                String.format(DeleteNoteCommand.MESSAGE_SUCCESS, VisitDate.of("2026-03-24")),
+                new ModelManager());
+
+        assertEquals(1, storage.addressBookSaveCount);
+        assertEquals(0, storage.shortcutSaveCount);
+        assertEquals(0, storage.userPrefsSaveCount);
+    }
+
+    @Test
     public void getMethods_success() {
         assertEquals(model.getAddressBook(), logic.getAddressBook());
         assertEquals(model.getAddressBookFilePath(), logic.getAddressBookFilePath());
