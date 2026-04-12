@@ -401,7 +401,7 @@ command: description
 Parameters: ...
 Example: ...
 ```
-Multi-purpose commaands:
+Multi-purpose commands:
 ```
 command: description
 Usage:
