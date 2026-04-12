@@ -37,7 +37,7 @@ AddressMe is the app for you!
 ---
 
 * Table of Contents
-{:toc}
+  {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
@@ -45,6 +45,7 @@ AddressMe is the app for you!
 ## 1. Quick Start
 
 ---
+
 ### Installation
 
 1. Ensure you have Java `17` or above installed on your machine.<br>
@@ -75,12 +76,12 @@ avoid compatibility issues.
 
 AddressMe has four main UI zones:
 
-| **Feature**       | **Description**                                                          |
-|-------------------|--------------------------------------------------------------------------|
-| **Command Box**   | Type your commands here and press Enter to execute.                      |
-| **Result Panel**  | Displays confirmation messages, search results, and errors encountered.  |
-| **Location List** | Shows all your saved locations, updated in real time after each command. |
-| **Planner Panel** | View destinations on a specific date (using the **plan** command).       |
+| **Feature**       | **Description**                                                              |
+|-------------------|------------------------------------------------------------------------------|
+| **Command Box**   | Type your commands here and press Enter to execute.                          |
+| **Result Panel**  | Displays confirmation messages, search results, and errors encountered.      |
+| **Location List** | Shows all your saved locations, updated in real time after each command.     |
+| **Planner List**  | View destinations and notes on a specific date (using the **plan** command). |
 
 <div style="page-break-after: always;"></div>
 
@@ -103,6 +104,29 @@ A valid **add** command is shown below.
 | **t/TAG...**             | The ellipsis means you can submit more than one of these parameters.<br><br>e.g. "_t/_**_workplace_**_" OR "t/_**_workplace_** _t/_**_networking_**_"_                |
 | **Any order**            | Parameters can be entered in any order unless specified otherwise.<br><br>e.g. "_t/_**_workplace_** _n/_**_Nomad Hub_**_" OR "n/_**_Nomad Hub_** _t/_**_workplace_**" |
 | **Single-word commands** | Some commands take no extra parameters, like **help**, **list**, **exit**, **clear**.                                                                                 |
+
+### Name Formats
+
+Location names can include letters, numbers, spaces, and common symbols such as `& @ ( ) [ ] . , - '`.
+The name must contain at least one letter or number (i.e. cannot consist only of symbols).
+
+This allows realistic names such as `AT&T Store` or `Raffles @ Marina`.
+
+These rules apply to all commands that use names (e.g. add, edit).
+
+### Phone Formats
+
+Can start with `+` and may include spaces or hyphens between digits (e.g. `91231234`, `9123 1234`, `+65 9124-1234`).
+
+Must contain at least 3 digits and be no longer than 15 characters.
+
+### Tag Formats
+
+May include alphanumeric characters, spaces or hyphens.
+
+Must contain at least one alphanumeric character.
+
+All Tag inputs are translated and stored as lowercase.
 
 ### Date Formats
 
@@ -311,20 +335,6 @@ Format:
 | **t+/ or d+/** | Add one or more tags or dates without removing existing ones.           |
 | **t-/ or d-/** | Remove a specific tag or date without affecting others.                 |
 
-**Tags behave as a set (no duplicates, order does not matter).**
-
-* Duplicate tags provided in `add` or `edit` commands are ignored.
-* When using `t-/` or `d-/`, if a specified tag or date does not exist, it is ignored and the command still succeeds.
-
-<div markdown="block" class="alert alert-info">
-
-:information_source: When both `t+` and `t-/` are used in the same command, removal takes precedence.  
-If a tag appears in both `t+/` and `t-/`, it will be removed.  
-
-This also applies to existing tags — if a tag already exists and is both added and removed in the same command, it will still be removed.
-
-</div>
-
 <div markdown="block" class="alert alert-warning">
 
 :warning: You cannot mix `t/` with `t+/` or `t-/` in the same command. Similarly, `d/` cannot be combined with `d+/` or
@@ -498,8 +508,6 @@ Format: `exit`
 | **Undo**     | `undo`                                                                                                                                    | `undo`                                                                    |
 | **Redo**     | `redo`                                                                                                                                    | `redo`                                                                    |
 | **Help**     | `help` / `help COMMAND_WORD` / `help -ug`                                                                                                 | `help`, `help add`, `help -ug`                                            |
-
-
 
 
 ## 5. CLI Power Features

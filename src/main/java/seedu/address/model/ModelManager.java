@@ -243,6 +243,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean hasMoreLocation(Location location) {
+        requireNonNull(location);
+        return addressBook.hasMoreLocation(location);
+    }
+
+    @Override
     public void deleteLocation(Location target) {
         addressBook.removeLocation(target);
         hasUnsavedAddressBookChanges = true;
@@ -252,7 +258,6 @@ public class ModelManager implements Model {
     public void addLocation(Location location) {
         addressBook.addLocation(location);
         hasUnsavedAddressBookChanges = true;
-        updateFilteredLocationList(PREDICATE_SHOW_ALL_LOCATIONS);
     }
 
     @Override
@@ -344,6 +349,7 @@ public class ModelManager implements Model {
     public void removeNote(VisitDate date) {
         requireNonNull(date);
         addressBook.removeNote(date);
+        hasUnsavedAddressBookChanges = true;
 
         // update UI if needed
         if (currentPlannedDate != null && date.isOn(currentPlannedDate)) {

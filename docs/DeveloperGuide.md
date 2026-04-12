@@ -31,6 +31,8 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 :bulb: **Tip:** The `.puml` files used to create diagrams are in this document `docs/diagrams` folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
 </div>
 
+<div style="page-break-after: always;"></div>
+
 ### Architecture
 
 <img src="images/ArchitectureDiagram.png" width="280" />
@@ -41,7 +43,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S2-CS2103T-W14-3/tp/blob/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2526S2-CS2103T-W14-3/tp/blob/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -73,13 +75,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S2-CS2103T-W14-3/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `LocationListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S2-CS2103T-W14-3/tp/blob/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S2-CS2103T-W14-3/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -88,9 +90,11 @@ The `UI` component,
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Location` object residing in the `Model`.
 
+<div style="page-break-after: always;"></div>
+
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S2-CS2103T-W14-3/tp/blob/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -119,8 +123,10 @@ How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
+<div style="page-break-after: always;"></div>
+
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S2-CS2103T-W14-3/tp/blob/master/src/main/java/seedu/address/model/Model.java)
 
 <img src="images/ModelClassDiagram.png" width="450" />
 
@@ -135,23 +141,27 @@ The `Model` component,
 * manages note data used by the planner through `NoteContent`.
 * does not depend on any of the other three components, as the `Model` represents domain entities that should make sense on their own.
 
+<div style="page-break-after: always;"></div>
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S2-CS2103T-W14-3/tp/blob/master/src/main/java/seedu/address/storage/Storage.java)
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
 The `Storage` component,
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
-* depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
+* can save address book data, user preference data, and shortcut mappings in JSON format, and read them back into corresponding model objects.
+* exposes the `Storage` interface, which extends `AddressBookStorage`, `UserPrefsStorage`, and `ShortcutStorage`, so clients can depend on either the unified API or a narrower storage interface when needed.
+* is implemented by `StorageManager`, which delegates each persistence concern to `JsonAddressBookStorage`, `JsonUserPrefsStorage`, and `JsonShortcutStorage` respectively.
+* depends on classes in the `Model` component because it serializes and deserializes model-owned data such as the address book, user preferences, and shortcut map.
 
 ### Common classes
 
 Classes used by multiple components are in the `seedu.address.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
 
 ## **Implementation**
 
@@ -166,7 +176,7 @@ also implemented as a factory, taking in Strings to return a VisitDate of its ap
 - toString() returns a nicely formatted string displayed to the user
 - toDataString() returns a string that can be re-parsed into the VisitDate, and is used to store data as files.
 
-<img src="images/VisitDateClassDiagram.png" width="550" />
+<img src="images/VisitDateClassDiagram.png"/>
 
 **To note:** EveryDayDate uses the Singleton pattern as every EveryDayDate should be the same.
 It has a public static EverydayDate as an attribute for access.
@@ -175,7 +185,7 @@ It has a public static EverydayDate as an attribute for access.
 The `plan` command updates the user's GUI as well as the headers. This means it needs to pass information 
 to the view controllers. We do this via the CommandResult class.
 
-<img src="images/PlanSequenceDiagram.png" width="600" />
+<img src="images/PlanSequenceDiagram.png"/>
 
 ### Undo/redo feature
 
@@ -247,10 +257,6 @@ The implementation is intentionally limited to one level:
 * **Alternative 2:** Let each command decide when to save snapshots.
   * Pros: Commands can create a  snapshot at very precise points in execution.
   * Cons: Easier to forget in new commands, and failure handling becomes duplicated across commands.
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
 
 ### Substring Matching in Find Command
 
@@ -380,7 +386,39 @@ The multi-date support feature allows a `Location` to have multiple visit dates.
 | `EditCommand` | Overwrites single visit date | Supports cumulative add/remove or overwrite |
 | `Storage` | Saves/loads `visitDate` | Saves/loads `visitDates` (with backward compatibility) |
 
+### Help Message Consistency
+
+Help messages were made more consistent by using two standardized formats:
+
+* a compact `Parameters`/`Example` format for single-purpose commands
+* a Usage-based format for commands with multiple forms
+
+Typical structure:
+
+Single-purpose commands:
+```
+command: description
+Parameters: ...
+Example: ...
+```
+Multi-purpose commands:
+```
+command: description
+Usage:
+  command form 1 – description
+  command form 2 – description
+Examples:
+  example 1
+  example 2
+```
+
+This improves readability without forcing all commands into one rigid structure. 
+
+Commands such as `help`, `note`, and `shortcut` has all their modes specified in the `Usage` format with more than one example, while simpler commands remain concise.
+
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
@@ -472,13 +510,13 @@ Use case ends.
 **Extensions**
 
 * 2a. The given details are invalid.
-* 2a1. System shows an error message, and if it can handle gracefully with incomplete data, will show the details it managed to add.
-Use case resumes at step 3.
+  * 2a1. System shows an error message, and if it can handle gracefully with incomplete data, will show the details it managed to add.
+  Use case resumes at step 3.
 
 
 * 2b. The given location name is invalid.
-* 2b1. System shows an error message and informs the user it is unable to add the entry.
-Use case ends.
+  * 2b1. System shows an error message and informs the user it is unable to add the entry.
+  Use case ends.
 
 ---
 
@@ -494,21 +532,20 @@ Use case ends.
 
 **Extensions**
 
-**2a. The alias violates validation constraints.**
+* 2a. The alias violates validation constraints.
 (e.g. contains illegal characters, matches a reserved keyword, or conflicts with an existing alias)
-2a1. System rejects the request and shows an appropriate error message.
-Use case ends.
+  * 2a1. System rejects the request and shows an appropriate error message.
+  Use case ends.
 
 
-**2b. The referenced command word is invalid.**
-(e.g. command does not exist or is not eligible for aliasing)
-2b1. System shows an error message indicating that the command is invalid.
-Use case ends.
+* 2b. The referenced command word is invalid.
+  * 2b1. System shows an error message indicating that the command is invalid.
+  Use case ends.
 
 
-**3a. Saving the shortcut fails due to a storage I/O error.**
-3a1. System shows an error message and does not persist the shortcut.
-Use case ends.
+* 3a. Saving the shortcut fails due to a storage I/O error.
+  * 3a1. System shows an error message and does not persist the shortcut.
+  Use case ends.
 
 ---
 
@@ -526,24 +563,26 @@ Use case ends.
 
 * 2a. The list is empty.
 Use case ends.
+
+
 * 3a. The given index is invalid (out of range or non-numeric).
-* 3a1. System shows an error message: "Invalid index. Please enter a valid location index."
-Use case resumes at step 2.
+  * 3a1. System shows an error message: "Invalid index. Please enter a valid location index."
+  Use case resumes at step 2.
 
 
 * 3b. The provided email format is invalid.
-* 3b1. System shows an error message regarding the invalid email.
-Use case resumes at step 2.
+  * 3b1. System shows an error message regarding the invalid email.
+  Use case resumes at step 2.
 
 
 * 3c. The provided phone number format is invalid.
-* 3c1. System shows an error message regarding the invalid phone number.
-Use case resumes at step 2.
+  * 3c1. System shows an error message regarding the invalid phone number.
+  Use case resumes at step 2.
 
 
 * 3d. The edited details result in a duplicate entry (it matches an existing entry's name + phone/email).
-* 3d1. System rejects the edit, leaves the original record unchanged, and shows an error message.
-Use case resumes at step 2.
+  * 3d1. System rejects the edit, leaves the original record unchanged, and shows an error message.
+  Use case resumes at step 2.
 
 ---
 
@@ -558,8 +597,8 @@ Use case ends.
 **Extensions**
 
 * 2a. The list is empty.
-* 2a1. System informs the user the list is empty.
-Use case ends.
+  * 2a1. System informs the user the list is empty.
+  Use case ends.
 
 ---
 
@@ -576,8 +615,8 @@ Use case ends.
 **Extensions**
 
 * 1a. The entered date is invalid.
-* 1a1. System informs the user of correct date and command format.
-  Use case ends.
+  * 1a1. System informs the user of correct date and command format.
+    Use case ends.
 
 ---
 
@@ -589,7 +628,6 @@ Use case ends.
 2. System closes the application.
 Use case ends.
 
-**Extensions**
 
 ---
 
@@ -606,25 +644,20 @@ Use case ends.
 **Extensions**
 
 * 2a. The list of locations is empty.
-* 2a1. System informs the user that there are no locations to delete.
-Use case ends.
+  * 2a1. System informs the user that there are no locations to delete.
+  Use case ends.
 
 
 * 3a. At least one given index is invalid.
-* 3a1. System shows an error message.
-* 3a2. System lists the available locations again.
-Use case resumes at step 2.
+  * 3a1. System shows an error message.
+  * 3a2. System lists the available locations again.
+  Use case resumes at step 2.
 
 
 * 3b. Duplicate indices are provided (e.g., `delete 2 2`).
-* 3b1. System shows an error message.
-* 3b2. System lists the available locations again.
-Use case resumes at step 2.
-
-
-* 5a. An error occurs during deletion.
-* 5a1. System informs the user that the deletion failed.
-Use case ends.
+  * 3b1. System shows an error message.
+  * 3b2. System lists the available locations again.
+  Use case resumes at step 2.
 
 
 * *a. At any time, the user cancels the delete operation.
@@ -646,8 +679,8 @@ Use case ends.
 **Extensions**
 
 * 2a. There is no stored undo state.
-* 2a1. System shows an error message.
-Use case ends.
+  * 2a1. System shows an error message.
+  Use case ends.
 
 ---
 
@@ -664,10 +697,8 @@ Use case ends.
 **Extensions**
 
 * 2a. There is no stored redo state.
-* 2a1. System shows an error message.
-Use case ends.
-
-*{More to be added}*
+  * 2a1. System shows an error message.
+  Use case ends.
 
 ### Non-Functional Requirements
 
@@ -678,9 +709,6 @@ Use case ends.
 5. Should work well for standard screen resolutions 1920x1080 and higher of 100% and 125% scales.
 6. Should be usable for resolutions 1280x720 and higher and for screen scales 150%.
 
-
-*{More to be added}*
-
 ### Glossary
 
 * **Mainstream OS**: Windows, macOS, and Linux.
@@ -688,6 +716,8 @@ Use case ends.
 * **Tag**: A label used to group similar saved locations.
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
 
 ## **Appendix: Instructions for manual testing**
 
@@ -697,6 +727,30 @@ Given below are instructions to test the app manually.
 testers are expected to do more *exploratory* testing.
 
 </div>
+
+### Help Command
+
+#### Viewing help information
+
+1. Viewing general help
+
+    1. Test case: `help`  
+       Expected: A summary of all commands is displayed in the help window or output area.
+
+2. Viewing help for a specific command
+
+    1. Test case: `help add`  
+       Expected: Detailed usage information for the `add` command is displayed.
+
+3. Opening the user guide
+
+    1. Test case: `help -ug`  
+       Expected: The link to the user guide is opened in a new window.
+
+4. Invalid usage
+
+    1. Test case: `help unknowncommand`  
+       Expected: An error message is shown indicating the command is invalid.
 
 ### Launch and shutdown
 
@@ -747,7 +801,7 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `delete 1 1`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+
 
 ### Undoing and redoing changes
 
@@ -793,13 +847,60 @@ testers are expected to do more *exploratory* testing.
    1. Type `plan` in the Command line. 
    Expected: The planner is cleared and the header resets. The locations can still be view in the left list.
 
+### Flexible Name and Phone Input
+
+1. Adding locations with flexible names
+
+    1. Test case:  
+       `add n/McDonald's @ Orchard a/Some address c/123456`  
+       Expected: Location is successfully added.
+
+    2. Test case:  
+       `add n/!!! a/Some address`  
+       Expected: Error message shown (no alphanumeric character).
+
+2. Adding locations with flexible phone numbers
+
+    1. Test case:  
+       `add n/Test p/+65 9123 1234`  
+       Expected: Location is successfully added.
+
+    2. Test case:  
+       `add n/Test p/123-456-789`  
+       Expected: Location is successfully added.
+
+    3. Test case:  
+       `add n/Test p/-1234`  
+       Expected: Error message shown.
+
+
+### Editing Fields to Empty
+
+1. Clearing a field using edit
+
+    1. Prerequisites: At least one location exists with a phone number
+
+    2. Test case:  
+       `edit 1 p/`  
+       Expected: Phone number of the location is removed.
+
+    3. Test case:  
+       `edit 1 n/`  
+       Expected: Name cannot be empty, error message shown (if applicable).
+
 ---
+
+<div style="page-break-after: always;"></div>
+
 ## **Appendix: Planned Enhancements**
 
 Team size: 5
 
-1. Support autocomplete for tags. Typing `t/a`, `t+/a` or `t-/a` then pressing `Tab` would autocomplete with any existing tags.
-   This is done by having a persistent tag management system, and storing tags in data files.
-2. Currently, the implementation of different commands have slightly differing formats. <br>Sometimes, commands take in strings with the `n/` prefix, like in `add`, but in `find` it does not. Then, in `plan` it doesn't take in a date with the `d/` prefix either.
-<br>Standardise ALL commands to use the prefixes for every variable. This applies even for INDEX, with proposed tag i/. This makes it clearer to the user that every field must be prefixed.
-
+1. **Support autocomplete for tags.** Typing `t/a`, `t+/a` or `t-/a` then pressing `Tab` would autocomplete with any existing tags.
+   This is done by having a persistent tag management system, storing tags in data files, and loading them into a TagManager class upon startup.
+2. Currently, the implementation of different commands have slightly differing formats. Sometimes, commands take in strings with the `n/` prefix, like in `add`, but in `find` it does not. Then, in `plan` it doesn't take in a date with the `d/` prefix either.
+<br>**Standardise ALL commands to use the prefixes for every variable**. This applies even for `INDEX`, with proposed tag `i/`. This makes it clearer to the user that every field must be prefixed.
+3. **Support data archiving/hiding.** Old locations that is no longer needed can be archived for the future, so they don't appear but still recoverable.
+4. **Implement a range for date fields in `plan` and `find`**. This can allow users to view plans over a weekend for example, or to find locations over a range too.
+5. **Add an archiving system** to automatically manage past dates, enabling users to filter or hide outdated notes and locations.
+6. **Support multi-word shortcuts.** Shortcuts could expand to full commands such as `shortcut set theme dark dark`, so typing `dark` runs `theme dark`.
