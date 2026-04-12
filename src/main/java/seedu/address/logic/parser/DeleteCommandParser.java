@@ -27,6 +27,12 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
 
+        for (String indexToken : indexTokens) {
+            if (!isInteger(indexToken)) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+            }
+        }
+
         List<Index> indexes = new ArrayList<>();
         for (String indexToken : indexTokens) {
             Index index;
@@ -42,6 +48,10 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
         }
 
         return new DeleteCommand(indexes);
+    }
+
+    private static boolean isInteger(String token) {
+        return token.matches("[+-]?\\d+");
     }
 
 }
