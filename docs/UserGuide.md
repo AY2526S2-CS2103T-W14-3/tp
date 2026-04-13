@@ -174,6 +174,7 @@ Alternatively, typing `today` also works!
 | **Yearly**         | `e-DAY_MONTH`, `every DAY_MONTH`   <br>Example: `add n/Mom's House d/every 25/12` adds an entry that happens every 25 December. |
 
 ---
+<div style="page-break-after: always;"></div>
 
 ### Start Your First Commands
 
@@ -298,7 +299,9 @@ Format: `find [KEYWORD] [MORE_KEYWORDS] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]
 | **d/DATE**              | Accepts any [non-recurring date format](#date-formats) supported by AddressMe.                    |
 | **Multiple prefixes**   | AND logic. `n/Cafe t/Halal t/Vegetarian` returns cafes that are ALSO tagged halal and vegetarian. |
 | **Multiple dates**      | AND logic. `d/2026-04-01 d/2026-05-01` returns locations with **BOTH** dates on record.           |
-| **Mixed logic**         | OR then AND. Unprefixed keywords are OR-ed first, then the result is AND-ed with prefixes.         |
+| **Mixed logic**         | OR then AND. Unprefixed keywords are OR-ed first, then the result is AND-ed with prefixes.        |
+
+<div style="page-break-after: always;"></div>
 
 <div markdown="block" class="alert alert-info">
 
@@ -332,6 +335,8 @@ Format:
 * Existing values will be updated to the input.
 * To clear a field, provide the prefix without a value (e.g. `p/` to clear phone).
 * This applies to optional fields such as phone, email, postal code and address.
+
+<div style="page-break-after: always;"></div>
 
 **Tag and Date Editing Modes**
 
@@ -442,6 +447,8 @@ Examples:
 * `note n/Weekly reminder d/e-Sunday`
 * `note d-/2026-04-12`
 * `note d-/e-Sunday`
+
+<div style="page-break-after: always;"></div>
 
 ### `undo` - Reverting the last change
 

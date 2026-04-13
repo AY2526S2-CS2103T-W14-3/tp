@@ -67,11 +67,15 @@ Each of the four main components (also shown in the diagram above),
 * defines its *API* in an `interface` with the same name as the Component.
 * implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
 
+<div style="page-break-after: always;"></div>
+
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
 <img src="images/ComponentManagers.png" width="300" />
 
 The sections below give more details of each component.
+
+<div style="page-break-after: always;"></div>
 
 ### UI component
 
@@ -149,6 +153,8 @@ The `Model` component,
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
+<div style="page-break-after: always;"></div>
+
 The `Storage` component,
 * can save address book data, planner notes, user preference data, and shortcut mappings in JSON format, and read them back into corresponding model objects.
 * exposes the `Storage` interface, which extends `AddressBookStorage`, `UserPrefsStorage`, and `ShortcutStorage`, so clients can depend on either the unified API or a narrower storage interface when needed.
@@ -182,6 +188,8 @@ also implemented as a factory, taking in Strings to return a VisitDate of its ap
 **To note:** EveryDayDate uses the Singleton pattern as every EveryDayDate should be the same.
 It has a public static EverydayDate as an attribute for access.
 
+<div style="page-break-after: always;"></div>
+
 ### PlanCommand MCV Patterns
 The `plan` command updates the user's GUI as well as the headers. This means it needs to pass information 
 to the view controllers. We do this via the CommandResult class.
@@ -189,7 +197,6 @@ to the view controllers. We do this via the CommandResult class.
 <img src="images/PlanSequenceDiagram.png"/>
 
 ### Undo/redo feature
-
 #### Implementation
 
 Undo/redo is implemented as a single-level snapshot mechanism in `ModelManager`, scoped to undoable application state.
@@ -253,8 +260,9 @@ The implementation is intentionally limited to one level:
   * Pros: Commands can create a  snapshot at very precise points in execution.
   * Cons: Easier to forget in new commands, and failure handling becomes duplicated across commands.
 
-### Advanced Filtering in Find Command
+<div style="page-break-after: always;"></div>
 
+### Advanced Filtering in Find Command
 #### Implementation
 
 The `find` command has been enhanced to support substring matching alongside complex AND/OR logic across multiple fields (e.g., names, addresses, tags, dates). This enables users to perform highly flexible yet precise searches.
@@ -414,6 +422,7 @@ Commands such as `help`, `note`, and `shortcut` has all their modes specified in
 
 **Value proposition**: It allows for much more efficient searching for destinations and planning routes between points, and a much more accessible and seamless UI for users to list, edit or delete the destinations (by contacts and address) they are interested in for overseas trips, leisure or social visits.
 
+<div style="page-break-after: always;"></div>
 
 ### User stories
 
@@ -659,6 +668,8 @@ Use case ends.
   * 2a1. System shows an error message.
   Use case ends.
 
+<div style="page-break-after: always;"></div>
+
 ### Non-Functional Requirements
 
 1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
@@ -684,11 +695,9 @@ Given below are instructions to test the app manually.
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
 testers are expected to do more *exploratory* testing.
-
 </div>
 
 ### Help Command
-
 #### Viewing help information
 
 1. Viewing general help
@@ -863,3 +872,4 @@ Team size: 5
 4. **Implement a range for date fields in `plan` and `find`**. This can allow users to view plans over a weekend for example, or to find locations over a range too.
 5. **Add an archiving system** to automatically manage past dates, enabling users to filter or hide outdated notes and locations.
 6. **Support multi-word shortcuts.** Shortcuts could expand to full commands such as `shortcut set theme dark dark`, so typing `dark` runs `theme dark`.
+7. **Add support for time to VisitDates** to more precisely plan schedules, meetings or reservations. It would be implemented as an optional add-on of the `d/` prefix.
