@@ -562,8 +562,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-<div style="page-break-after: always;"></div>
-
 **Use case: List all locations**
 
 **MSS**
@@ -668,8 +666,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2a. There is no stored redo state.
     * 2a1. System shows an error message.<br>
       Use case ends.
-
-<div style="page-break-after: always;"></div>
 
 ### Non-Functional Requirements
 
