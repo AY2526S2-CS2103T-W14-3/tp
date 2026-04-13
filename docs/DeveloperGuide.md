@@ -801,6 +801,8 @@ testers are expected to do more *exploratory* testing.
     1. Type `plan` in the Command line.<br>
        Expected: The planner is cleared and the header resets. The locations can still be view in the left list.
 
+<div style="page-break-after: always;"></div>
+
 ### Flexible Name and Phone Input
 
 1. Adding locations with flexible names
