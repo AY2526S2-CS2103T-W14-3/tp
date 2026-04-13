@@ -855,3 +855,4 @@ Team size: 5
 5. **Add an archiving system** to automatically manage past dates, enabling users to filter or hide outdated notes and locations.
 6. **Support multi-word shortcuts.** Shortcuts could expand to full commands such as `shortcut set theme dark dark`, so typing `dark` runs `theme dark`.
 7. **Support multi-level undo.** Instead of storing only one undo and redo snapshot, the app can maintain undo and redo stacks so users can reverse or reapply multiple successful undoable commands in sequence.
+8. **Add support for time to VisitDates** to more precisely plan schedules, meetings or reservations. It would be implemented as an optional add-on of the `d/` prefix.
