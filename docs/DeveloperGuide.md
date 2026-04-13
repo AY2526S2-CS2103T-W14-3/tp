@@ -283,6 +283,8 @@ The implementation involves the following key components:
    * **Boolean Precedence:** The parser groups all unprefixed keywords into a single `NameContainsKeywordsPredicate` (internal OR logic). This predicate is then bundled with all other field-specific predicates into a `CombinedLocationPredicate`, which evaluates them using **AND logic**. This ensures that unstructured keywords act as a base filter that must be satisfied alongside every specific prefix constraint.
    * Reports filtered results to the UI through the model's filtered location list
 
+![Interactions Inside the Logic Component for the `find` Command](images/FindSequenceDiagram.png)
+
 #### Design Considerations:
 
 **Aspect: Substring vs. Full Word Matching**
