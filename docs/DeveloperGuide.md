@@ -481,19 +481,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1. User inputs the details of a location.
 2. User submits the details to the system.
 3. System confirms the addition.
-4. System shows the updated list.
-Use case ends.
+4. System shows the updated list.<br>
+   Use case ends.
 
 **Extensions**
 
-* 2a. The given details are invalid.
-  * 2a1. System shows an error message, and if it can handle gracefully with incomplete data, will show the details it managed to add.
-  Use case resumes at step 3.
+* 2a. At least one of the given details are invalid.
+    * 2a1. System shows an error message.<br>
+      Use case resumes at step 1.
 
 
-* 2b. The given location name is invalid.
-  * 2b1. System shows an error message and informs the user it is unable to add the entry.
-  Use case ends.
+* 2b. The name field is empty.
+    * 2b1. System shows an error message and informs the user the name cannot be blank.<br>
+      Use case ends.
 
 ---
 
@@ -504,25 +504,25 @@ Use case ends.
 1. User requests to create a shortcut for an existing command.
 2. System validates the shortcut and the referenced command.
 3. System saves the shortcut.
-4. System confirms that the shortcut has been created.
+4. System confirms that the shortcut has been created.<br>
    Use case ends.
 
 **Extensions**
 
 * 2a. The alias violates validation constraints.
-(e.g. contains illegal characters, matches a reserved keyword, or conflicts with an existing alias)
-  * 2a1. System rejects the request and shows an appropriate error message.
-  Use case ends.
+  (e.g. contains illegal characters, matches a reserved keyword, or conflicts with an existing alias)
+    * 2a1. System rejects the request and shows an appropriate error message.<br>
+      Use case ends.
 
 
 * 2b. The referenced command word is invalid.
-  * 2b1. System shows an error message indicating that the command is invalid.
-  Use case ends.
+    * 2b1. System shows an error message indicating that the command is invalid.<br>
+      Use case ends.
 
 
 * 3a. Saving the shortcut fails due to a storage I/O error.
-  * 3a1. System shows an error message and does not persist the shortcut.
-  Use case ends.
+    * 3a1. System shows an error message and does not persist the shortcut.<br>
+      Use case ends.
 
 ---
 
@@ -531,34 +531,34 @@ Use case ends.
 **MSS**
 
 1. User requests to edit a specific location in the list by providing its index and the new details to be updated.
-2. System updates the location and shows a success message with the updated details.
-Use case ends.
+2. System updates the location and shows a success message with the updated details.<br>
+   Use case ends.
 
 **Extensions**
 
 * 1a. The given index is out of range.
-    * 1a1. System shows an invalid index error message.
+    * 1a1. System shows an invalid index error message.<br>
       Use case resumes at step 1.
 
 
 * 1b. The given index is not a valid integer.
-  * 1b1. System shows an invalid command format error message.
-  Use case resumes at step 1.
+    * 1b1. System shows an invalid command format error message.<br>
+      Use case resumes at step 1.
 
 
 * 1c. The provided email format is invalid.
-  * 1c1. System shows an error message regarding the invalid email.
-  Use case resumes at step 1.
+    * 1c1. System shows an error message regarding the invalid email.<br>
+      Use case resumes at step 1.
 
 
 * 1d. The provided phone number format is invalid.
-  * 1d1. System shows an error message regarding the invalid phone number.
-  Use case resumes at step 1.
+    * 1d1. System shows an error message regarding the invalid phone number.<br>
+      Use case resumes at step 1.
 
 
 * 1e. The edited details result in a duplicate entry (it matches an existing entry's name + phone/email).
-  * 1e1. System rejects the edit, leaves the original record unchanged, and shows an error message.
-  Use case resumes at step 1.
+    * 1e1. System rejects the edit, leaves the original record unchanged, and shows an error message.<br>
+      Use case resumes at step 1.
 
 ---
 
@@ -569,14 +569,14 @@ Use case ends.
 **MSS**
 
 1. User enters the list command.
-2. System shows a list of locations.
-Use case ends.
+2. System shows a list of locations.<br>
+   Use case ends.
 
 **Extensions**
 
 * 2a. The list is empty.
-  * 2a1. System informs the user the list is empty.
-  Use case ends.
+    * 2a1. System informs the user the list is empty.<br>
+      Use case ends.
 
 ---
 
@@ -587,14 +587,14 @@ Use case ends.
 1. User enters the plan command with the desired date.
 2. System shows all the locations that fall on that date.
 3. User edits a location to add it to the date.
-4. System shows the updated schedule on that day.
+4. System shows the updated schedule on that day.<br>
    Use case ends.
 
 **Extensions**
 
 * 1a. The entered date is invalid.
-  * 1a1. System informs the user of correct date and command format.
-    Use case ends.
+    * 1a1. System informs the user of correct date and command format.
+      Use case ends.
 
 ---
 
@@ -603,8 +603,8 @@ Use case ends.
 **MSS**
 
 1. User enters the exit command.
-2. System closes the application.
-Use case ends.
+2. System closes the application.<br>
+   Use case ends.
 
 
 ---
@@ -614,24 +614,24 @@ Use case ends.
 **MSS**
 
 1. User requests to delete one or more locations by specifying their indices.
-2. System deletes all specified locations.
-Use case ends.
+2. System deletes all specified locations.<br>
+   Use case ends.
 
 **Extensions**
 
 * 1a. At least one given index is out of range.
-  * 1a1. System shows an invalid index error message.
-  Use case resumes at step 1.
+    * 1a1. System shows an invalid index error message.<br>
+      Use case resumes at step 1.
 
 
 * 1b. Duplicate indices are provided (e.g., `delete 2 2`).
-  * 1b1. System shows a duplicate indices error message.
-  Use case resumes at step 1.
+    * 1b1. System shows a duplicate indices error message.<br>
+      Use case resumes at step 1.
 
-    
+
 * 1c. At least one given index are not valid integers.
-  * 1c1. System shows an invalid command format error message.
-    Use case resumes at step 1.
+    * 1c1. System shows an invalid command format error message.<br>
+      Use case resumes at step 1.
 
 ---
 
@@ -642,14 +642,14 @@ Use case ends.
 1. User executes a successful command.
 2. User wants to undo the command.
 3. System restores the previous state.
-4. System shows a success message.
-Use case ends.
+4. System shows a success message.<br>
+   Use case ends.
 
 **Extensions**
 
 * 2a. There is no stored undo state.
-  * 2a1. System shows an error message.
-  Use case ends.
+    * 2a1. System shows an error message.<br>
+      Use case ends.
 
 ---
 
@@ -660,14 +660,14 @@ Use case ends.
 1. User successfully undoes an undoable change.
 2. User wants to redo the change.
 3. System reapplies the undone state.
-4. System shows a success message.
-Use case ends.
+4. System shows a success message.<br>
+   Use case ends.
 
 **Extensions**
 
 * 2a. There is no stored redo state.
-  * 2a1. System shows an error message.
-  Use case ends.
+    * 2a1. System shows an error message.<br>
+      Use case ends.
 
 <div style="page-break-after: always;"></div>
 
@@ -699,76 +699,70 @@ testers are expected to do more *exploratory* testing.
 </div>
 
 ### Help Command
-#### Viewing help information
 
 1. Viewing general help
-
-    1. Test case: `help`  
+    1. Test case: `help`<br>
        Expected: A summary of all commands is displayed in the help window or output area.
 
 2. Viewing help for a specific command
-
-    1. Test case: `help add`  
+    1. Test case: `help add`<br>
        Expected: Detailed usage information for the `add` command is displayed.
 
 3. Opening the user guide
-
-    1. Test case: `help -ug`  
+    1. Test case: `help -ug`<br>
        Expected: The link to the user guide is opened in a new window.
 
 4. Invalid usage
-
-    1. Test case: `help unknowncommand`  
+    1. Test case: `help unknowncommand`<br>
        Expected: An error message is shown indicating the command is invalid.
 
 ### Launch and shutdown
 
 1. Initial launch
+    1. Download the jar file and copy into an empty folder.
+    2. Run `java -jar AddressMe.jar` in terminal.<br>
+       Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-   1. Download the jar file and copy into an empty folder
-
-   1. Run `java -jar AddressMe.jar` in terminal. Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
-
-1. Saving window preferences
-
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
-
-   1. Re-launch the app by double-clicking the jar file.<br>
+2. Saving window preferences
+    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+    2. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
 ### Autocomplete
 
 1. Autocomplete a command with no shared prefix
-    1. Press `Tab` after typing `a`. Expected: the command line now shows `add`
+    1. Press `Tab` after typing `a`.<br>
+       Expected: the command line now shows `add`
 
-1. Autocomplete command with shared prefix
-   1. Press `Tab` after typing `e`. Expected: the command line still shows `e` (Since `exit` and `edit` exist)
+2. Autocomplete command with shared prefix
+    1. Press `Tab` after typing `e`.<br>
+       Expected: the command line still shows `e` (Since `exit` and `edit` exist)
 
 ### CLI History
 1. Recalling previous commands
-   1. With an empty command line, press `UP` repeatedly. Expected: Command line scrolls through previous commands
-   2. Now press `DOWN` repeatedly. Expected: Command line goes forward through commands and becomes blank again.
-1. Recalling commands after an error
-   1. Enter an erroneous command (the text should turn red)
-   1. Press `UP` once. Expected: Should see the command entered before the erroneous command.
+    1. With an empty command line, press `UP` repeatedly.<br>
+       Expected: Command line scrolls through previous commands
+    2. Now press `DOWN` repeatedly.<br>
+       Expected: Command line goes forward through commands and becomes blank again.
+
+2. Recalling commands after an error
+    1. Enter an erroneous command.<br>
+       Expected: The text should turn red.
+    2. Then, press `UP` once.<br>
+       Expected: Should see the command entered before the erroneous command.
 
 ### Deleting a location
 
 1. Deleting a location while all locations are being shown
-
-   1. Prerequisites: List all locations using the `list` command. Multiple locations in the list.
-
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-
-   1. Test case: `delete 1 2`<br>
-      Expected: First and second contacts are deleted from the list. Number of deleted locations shown in the status message. Timestamp in the status bar is updated.
-
-   1. Test case: `delete 0`<br>
-      Expected: No location is deleted. Error details shown in the status message. Status bar remains the same.
-
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `delete 1 1`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+    1. List all locations using the `list` command. Ensure there are at least 2 locations in the list.
+    2. Test case: `delete 1`<br>
+       Expected: First contact is deleted from the list. Details of the deleted contact shown in result panel.
+    3. Test case: `delete 1 2`<br>
+       Expected: First and second contacts are deleted from the list. Details of the deleted locations are shown in result panel.
+    4. Test case: `delete 0`<br>
+       Expected: No location is deleted. Error message shown.
+    5. Other incorrect delete commands to try: `delete`, `delete x`, `delete 1 1`, `...` (where x is larger than the list size)<br>
+       Expected: No location is deleted. Error message shown.
 
 
 
@@ -776,75 +770,62 @@ testers are expected to do more *exploratory* testing.
 
 1. Undo after a successful modifying command
 
-   1. Prerequisites: Start with at least one location in the list.
-
-   1. Test case: `delete 1` followed by `undo`<br>
-      Expected: The deleted location reappears. A success message for `undo` is shown.
-
-   1. Test case: `clear` followed by `undo`<br>
-      Expected: All previously saved locations are restored.
-
-   1. Test case: `shortcut set a add` followed by `undo`<br>
-      Expected: The shortcut `a -> add` is removed.
+    1. Prerequisites: Start with at least one location in the list.
+    2. Test case: `delete 1` followed by `undo`<br>
+       Expected: The deleted location reappears. A success message for `undo` is shown.
+    3. Test case: `clear` followed by `undo`<br>
+       Expected: All previously saved locations are restored.
+    4. Test case: `shortcut set a add` followed by `undo`<br>
+       Expected: The shortcut `a -> add` is removed.
 
 2. Undo when no undo state exists
 
-   1. Prerequisites: Fresh app start with no prior successful undoable command.
-
-   1. Test case: `undo`<br>
-      Expected: No data changes. An error message is shown.
+    1. Prerequisites: Fresh app start with no prior successful undoable command.
+    2. Test case: `undo`<br>
+       Expected: No data changes. An error message is shown.
 
 3. Redo after undo
 
-   1. Prerequisites: Execute `add n/Test Place`, then `undo`.
-
-   1. Test case: `redo`<br>
-      Expected: `Test Place` is added back. A success message for `redo` is shown.
-
-   1. Test case: `redo` again<br>
-      Expected: No data changes. An error message is shown because only one redo level is supported.
-
-<div style="page-break-after: always;"></div>
+    1. Prerequisites: Execute `add n/Test Place`, then `undo`.
+    2. Test case: `redo`<br>
+       Expected: `Test Place` is added back. A success message for `redo` is shown.
+    3. Test case: `redo` again<br>
+       Expected: No data changes. An error message is shown because only one redo level is supported.
 
 ### Using Planner Panel
 
 1. Viewing Locations and Notes
-   1. After adding dates to locations and notes, use `plan DATE` where DATE is the same date. 
-   Expected: The locations and notes added should appear in the planner and the header changes to DATE.
+    1. After adding dates to locations and notes, use `plan DATE` where DATE is the same date.<br>
+       Expected: The locations and notes added should appear in the planner and the header changes to DATE.
 2. Changing entities with Planner open
-   1. `delete` a location or `note d-/` a note currently in the open planner. Expected: The planner is updated and the entity disappears.
-   2. `undo` your action. Expected: The item reappears in the planner.
+    1. `delete` a location or `note d-/` a note currently in the open planner.<br>
+       Expected: The planner is updated and the entity disappears.
+    2. `undo` your action. Expected: The item reappears in the planner.
 3. Clearing the planner
-   1. Type `plan` in the Command line. 
-   Expected: The planner is cleared and the header resets. The locations can still be view in the left list.
+    1. Type `plan` in the Command line.<br>
+       Expected: The planner is cleared and the header resets. The locations can still be view in the left list.
 
 ### Flexible Name and Phone Input
 
 1. Adding locations with flexible names
 
-    1. Test case:  
-       `add n/McDonald's @ Orchard a/Some address c/123456`  
+    1. Test case: `add n/McDonald's @ Orchard a/Some address c/123456`<br>  
        Expected: Location is successfully added.
 
-    2. Test case:  
-       `add n/!!! a/Some address`  
+    2. Test case: `add n/!!! a/Some address`<br>
        Expected: Error message shown (no alphanumeric character).
 
 2. Adding locations with flexible phone numbers
 
-    1. Test case:  
-       `add n/Test p/+65 9123 1234`  
+    1. Test case: `add n/Test p/+65 9123 1234`<br>
        Expected: Location is successfully added.
 
-    2. Test case:  
-       `add n/Test2 p/123-456-789`
+    2. Test case: `add n/Test p/123-456-789`<br>  
        Expected: Location is successfully added.
 
-    3. Test case:  
-       `add n/Test3 p/-1234`  
+    3. Test case: `add n/Test p/-1234`<br>
        Expected: Error message shown.
 
-<div style="page-break-after: always;"></div>
 
 ### Editing Fields to Empty
 
@@ -852,12 +833,10 @@ testers are expected to do more *exploratory* testing.
 
     1. Prerequisites: At least one location exists with a phone number
 
-    2. Test case:  
-       `edit 1 p/`  
+    2. Test case: `edit 1 p/`<br>   
        Expected: Phone number of the location is removed.
 
-    3. Test case:  
-       `edit 1 n/`  
+    3. Test case: `edit 1 n/`<br>
        Expected: Name cannot be empty, error message shown (if applicable).
 
 ---
@@ -870,10 +849,9 @@ Team size: 5
 
 1. **Support autocomplete for tags.** Typing `t/a`, `t+/a` or `t-/a` then pressing `Tab` would autocomplete with any existing tags.
    This is done by having a persistent tag management system, storing tags in data files, and loading them into a TagManager class upon startup.
-2. Currently, the implementation of different commands have slightly differing formats. Sometimes, commands take in strings with the `n/` prefix, like in `add`, but in `find` it does not. Then, in `plan` it doesn't take in a date with the `d/` prefix either.
-<br>**Standardise ALL commands to use the prefixes for every variable**. This applies even for `INDEX`, with proposed tag `i/`. This makes it clearer to the user that every field must be prefixed.
+2. **Standardise ALL commands to use the prefixes for every variable**. This applies even for `INDEX`, with proposed tag `i/`. Currently, the implementation of different commands have slightly differing formats. Sometimes, commands take in strings with the `n/` prefix, like in `add`, but in `find` it does not. Then, in `plan` it doesn't take in a date with the `d/` prefix either. Thus, this enhancement will improve consistency across the different commands.
 3. **Support data archiving/hiding.** Old locations that is no longer needed can be archived for the future, so they don't appear but still recoverable.
 4. **Implement a range for date fields in `plan` and `find`**. This can allow users to view plans over a weekend for example, or to find locations over a range too.
 5. **Add an archiving system** to automatically manage past dates, enabling users to filter or hide outdated notes and locations.
 6. **Support multi-word shortcuts.** Shortcuts could expand to full commands such as `shortcut set theme dark dark`, so typing `dark` runs `theme dark`.
-7. **Add support for time to VisitDates** to more precisely plan schedules, meetings or reservations. It would be implemented as an optional add-on of the `d/` prefix.
+7. **Support multi-level undo.** Instead of storing only one undo and redo snapshot, the app can maintain undo and redo stacks so users can reverse or reapply multiple successful undoable commands in sequence.
